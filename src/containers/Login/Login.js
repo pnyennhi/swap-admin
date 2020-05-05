@@ -31,7 +31,7 @@ const Login = () => {
       >
         <div className="page-content d-flex align-items-center justify-content-center">
           <div className="row w-100 mx-0 auth-page">
-            <div className="col-md-8 col-xl-4 mx-auto">
+            <div className="col-sm-8 col-md-6 col-lg-6 col-xl-4 mx-auto">
               <div className="card">
                 <div className="row">
                   <div className="col-md-12">
