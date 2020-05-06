@@ -57,6 +57,7 @@ const Login = () => {
                             onChange={(e) => {
                               setUsername(e.target.value.trim());
                             }}
+                            required
                           />
                         </div>
                         <div className="form-group">
@@ -75,6 +76,7 @@ const Login = () => {
                             onChange={(e) => {
                               setPassword(e.target.value);
                             }}
+                            required
                           />
                         </div>
                         <p
