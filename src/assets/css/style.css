@@ -31128,7 +31128,7 @@ address p {
 
 .sidebar .sidebar-header {
   background: #ffffff;
-  height: 60px;
+  height: 50px;
   border-bottom: 1px solid #f2f4f9;
   display: -webkit-flex;
   display: flex;
@@ -31154,7 +31154,7 @@ address p {
   -webkit-transition: opacity 0.5s ease;
   transition: opacity 0.5s ease;
   font-weight: 900;
-  font-size: 25px;
+  font-size: 23px;
   letter-spacing: -1px;
   color: #031a61;
 }
