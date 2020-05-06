@@ -12,7 +12,7 @@ import {
   subscribe,
 } from "../../../components/svg/icon";
 
-const SideBar = () => {
+const SideBar = (props) => {
   return (
     <div className="sidebar-dark">
       <nav className="sidebar">
@@ -20,7 +20,12 @@ const SideBar = () => {
           <a href="#" className="sidebar-brand">
             ADMIN <span>website</span>
           </a>
-          <div className="sidebar-toggler not-active">
+          <div
+            className="sidebar-toggler not-active"
+            onClick={() => {
+              props.onToggle();
+            }}
+          >
             <span></span>
             <span></span>
             <span></span>
