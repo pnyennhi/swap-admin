@@ -32,7 +32,11 @@ const SideBar = (props) => {
           </div>
         </div>
         <div className="sidebar-body">
-          <ul className="nav">
+          <ul
+            className="nav"
+            onMouseOver={() => props.onOpen()}
+            onMouseOut={() => props.onOpen()}
+          >
             {/* <li className="nav-item">
               <Link to="/">
                 <a href="dashboard-one.html" className="nav-link">
