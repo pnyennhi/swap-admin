@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { profile, editProfile, logout } from "../../../components/svg/icon";
 
 const TopBar = () => {
+  const [show, setShow] = useState(false);
+
+  const handleToggleDropdown = () => {
+    setShow(!show);
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-content">
@@ -11,15 +17,15 @@ const TopBar = () => {
           <li className="nav-item dropdown nav-profile">
             <a
               className="nav-link dropdown-toggle"
-              href="#"
               id="profileDropdown"
+              onClick={() => handleToggleDropdown()}
             >
               <img
                 src="https://pickaface.net/gallery/avatar/20130319_083314_1174_admin.png"
                 alt="profile"
               />
             </a>
-            <div className="dropdown-menu">
+            <div className={show ? "dropdown-menu show" : "dropdown-menu"}>
               <div className="dropdown-header d-flex flex-column align-items-center">
                 <div className="figure mb-3">
                   <img
