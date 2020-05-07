@@ -31433,7 +31433,7 @@ address p {
 }
 
 .sidebar .sidebar-body {
-  max-height: calc(100% - 60px);
+  max-height: calc(100% - 50px);
   position: relative;
   border-right: 1px solid #f2f4f9;
   height: 100%;
