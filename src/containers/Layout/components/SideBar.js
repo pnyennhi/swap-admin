@@ -12,6 +12,8 @@ import {
   subscribe,
 } from "../../../components/svg/icon";
 
+import { NavLink } from "react-router-dom";
+
 const SideBar = (props) => {
   return (
     <nav className="sidebar">
@@ -36,14 +38,6 @@ const SideBar = (props) => {
           onMouseOver={() => props.onOpen()}
           onMouseOut={() => props.onOpen()}
         >
-          {/* <li className="nav-item">
-              <Link to="/">
-                <a href="dashboard-one.html" className="nav-link">
-                  <i className="link-icon flex">{dashboard}</i>
-                  <span className="link-title">Dashboard</span>
-                </a>
-              </Link>
-            </li> */}
           <li className="nav-item">
             <a href="dashboard-one.html" className="nav-link">
               <i className="link-icon flex">{dashboard}</i>
@@ -56,12 +50,12 @@ const SideBar = (props) => {
               <span className="link-title">Quản lí người dùng</span>
             </a>
           </li>
-          <li className="nav-item">
-            <a href="dashboard-one.html" className="nav-link">
+          <NavLink to="/book" className="nav-item">
+            <a className="nav-link">
               <i className="link-icon flex">{book}</i>
               <span className="link-title">Quản lí sách</span>
             </a>
-          </li>
+          </NavLink>
           <li className="nav-item">
             <a href="dashboard-one.html" className="nav-link">
               <i className="link-icon flex">{type}</i>

@@ -12,6 +12,7 @@ const TopBar = (props) => {
   const handleLogout = () => {
     localStorage.removeItem("user");
     // window.location.assign("/login");
+    props.onLogout(null);
   };
 
   return (

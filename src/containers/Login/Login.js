@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 
 import bgSrc from "../../assets/images/background.jpg";
 
-const Login = () => {
+const Login = (props) => {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [error, setError] = useState(null);
@@ -23,6 +23,10 @@ const Login = () => {
           })
         );
         // window.location.assign("/login");
+        props.onLogin({
+          username: "admin",
+          name: "Nguyen Van Admin",
+        });
       } else setError("Your email or password is incorrect");
     }
   };

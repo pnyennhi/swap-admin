@@ -35,7 +35,10 @@ const Layout = (props) => {
           onOpen={handleToggleOpenSidebarFolded}
         />
         <div className="page-wrapper" style={{ minHeight: "0" }}>
-          <TopBar onToggleSidebar={handleToggleSidebarResponsive} />
+          <TopBar
+            onToggleSidebar={handleToggleSidebarResponsive}
+            onLogout={props.onLogout}
+          />
           <div className="page-content">{props.children}</div>
         </div>
       </div>
