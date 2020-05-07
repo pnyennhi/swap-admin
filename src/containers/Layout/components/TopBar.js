@@ -9,6 +9,11 @@ const TopBar = (props) => {
     setShow(!show);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    // window.location.assign("/login");
+  };
+
   return (
     <nav className="navbar">
       <a
@@ -76,7 +81,7 @@ const TopBar = (props) => {
                   </li>
 
                   <li className="nav-item">
-                    <a href="" className="nav-link">
+                    <a className="nav-link" onClick={() => handleLogout()}>
                       <i data-feather="log-out">{logout}</i>
                       <span>Log Out</span>
                     </a>
