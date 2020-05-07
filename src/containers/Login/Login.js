@@ -15,7 +15,14 @@ const Login = () => {
     if (form.current.checkValidity()) {
       if (username === "admin" && password === "123") {
         setError(null);
-        alert("HELLO");
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            username: "admin",
+            name: "Nguyen Van Admin",
+          })
+        );
+        // window.location.assign("/login");
       } else setError("Your email or password is incorrect");
     }
   };
