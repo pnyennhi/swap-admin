@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { add } from "../../components/svg/icon";
 import BookTable from "./components/BookTable";
 import { books as fakeBooks } from "../../FakeData";
@@ -28,7 +28,7 @@ const Book = () => {
     setBooks(newBooks);
   };
 
-  const handleSelectOneBook = (id) => {
+  const handleSelectOneBook = (e, id) => {
     const selectedIndex = selectedBooks.indexOf(id);
     let newSelectedBooks = [...selectedBooks];
     console.log(newSelectedBooks);
@@ -40,6 +40,11 @@ const Book = () => {
     }
 
     setSelectedBooks(newSelectedBooks);
+  };
+
+  const handleSelectAll = (e) => {
+    if (e.target.checked) setSelectedBooks(books.map((book) => book.id));
+    else setSelectedBooks([]);
   };
 
   return (
@@ -71,11 +76,12 @@ const Book = () => {
                 </div>
               </div>
 
-              {/* Table */}
               <BookTable
                 books={books}
+                selectedBooks={selectedBooks}
                 onDelete={handledeletedBook}
                 onSelect={handleSelectOneBook}
+                onSelectAll={handleSelectAll}
               />
 
               {deletedBook && (

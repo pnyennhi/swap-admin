@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { edit, del } from "../../../components/svg/icon";
-import CheckBox from "../../../components/CheckBox";
-import DeleteBookModal from "./DeleteBookModal";
 
 const BookTable = (props) => {
+  const { books, selectedBooks, onDelete, onSelect, onSelectAll } = props;
   return (
     <div class="table-responsive">
       <table id="dataTableExample" class="table">
         <tr>
           <th>
-            <CheckBox />
+            <input type="checkbox" onChange={(e) => onSelectAll(e)} />
           </th>
           <th>Id</th>
           <th>Tên</th>
@@ -23,13 +22,15 @@ const BookTable = (props) => {
         </tr>
 
         <tbody>
-          {props.books.map((book) => (
+          {books.map((book) => (
             <tr>
               <td>
-                <CheckBox
-                  onChange={() => {
-                    props.onSelect(book.id);
+                <input
+                  type="checkbox"
+                  onChange={(e) => {
+                    onSelect(e, book.id);
                   }}
+                  checked={selectedBooks.indexOf(book.id) > -1 ? true : false}
                 />
               </td>
               <td>{book.id}</td>
@@ -46,7 +47,7 @@ const BookTable = (props) => {
                 <button
                   className="icon-button"
                   onClick={() => {
-                    props.onDelete(book.id);
+                    onDelete(book.id);
                   }}
                 >
                   {del}
