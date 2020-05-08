@@ -1,0 +1,32 @@
+export const books = [
+  {
+    id: 1,
+    name: "Thám Tử Lừng Danh Conan - Tập 96",
+    author: "Gosho Aoyama",
+    type: "Truyện tranh",
+    publisher: "NXB Lao Động",
+    quatity: 100,
+    sold: 0,
+    price: 16000,
+  },
+  {
+    id: 2,
+    name: "Đọc Vị Bất Kì Ai (Tái Bản)",
+    author: "TS. David J. Lieberman",
+    type: "Sách kinh tế",
+    publisher: "NXB Lao Động",
+    quatity: 20,
+    sold: 20,
+    price: 52000,
+  },
+  {
+    id: 3,
+    name: "Sự Cứu Rỗi Của Thánh Nữ",
+    author: "Higashino Keigo",
+    type: "Sách văn học",
+    publisher: "NXB Lao Động",
+    quatity: 20,
+    sold: 20,
+    price: 52000,
+  },
+];
