@@ -9,7 +9,7 @@ const Login = (props) => {
 
   const user = {
     username: "admin",
-    fisrtName: "Nguyen Van",
+    firstName: "Nguyen Van",
     lastName: "Admin",
   };
 
