@@ -16893,7 +16893,7 @@ a.close.disabled {
 }
 
 .modal {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 1050;
@@ -39345,4 +39345,13 @@ div.tagsinput span.tag a {
   display: flex;
 }
 
-/*# sourceMappingURL=../maps/demo_1/style.css.map */
+.icon-button {
+  width: fit-content;
+  padding: 0;
+  background: none;
+  border: none;
+}
+
+.icon-button:focus {
+  outline: none;
+}
