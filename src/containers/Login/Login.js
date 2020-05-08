@@ -7,6 +7,12 @@ const Login = (props) => {
   const [password, setPassword] = useState(null);
   const [error, setError] = useState(null);
 
+  const user = {
+    username: "admin",
+    fisrtName: "Nguyen Van",
+    lastName: "Admin",
+  };
+
   const form = useRef();
 
   const handleLogin = (e) => {
@@ -15,19 +21,8 @@ const Login = (props) => {
     if (form.current.checkValidity()) {
       if (username === "admin" && password === "123") {
         setError(null);
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            username: "admin",
-            name: "Nguyen Van Admin",
-          })
-        );
-        // window.location.assign("/login");
-        props.onLogin({
-          username: "admin",
-          fisrtName: "Nguyen Van",
-          lastName: "Admin",
-        });
+        localStorage.setItem("user", JSON.stringify(user));
+        props.onLogin(user);
       } else setError("Your email or password is incorrect");
     }
   };
