@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { edit, del } from "../../../components/svg/icon";
+import { edit, del, book } from "../../../components/svg/icon";
 
 const BookTable = (props) => {
   const { books, selectedBooks, onDelete, onSelect, onSelectAll } = props;
@@ -8,7 +8,13 @@ const BookTable = (props) => {
       <table id="dataTableExample" class="table">
         <tr>
           <th>
-            <input type="checkbox" onChange={(e) => onSelectAll(e)} />
+            <input
+              type="checkbox"
+              checked={
+                selectedBooks.length === books.length && books.length > 0
+              }
+              onChange={(e) => onSelectAll(e)}
+            />
           </th>
           <th>Id</th>
           <th>Tên</th>
@@ -30,7 +36,7 @@ const BookTable = (props) => {
                   onChange={(e) => {
                     onSelect(e, book.id);
                   }}
-                  checked={selectedBooks.indexOf(book.id) > -1 ? true : false}
+                  checked={selectedBooks.indexOf(book.id) > -1}
                 />
               </td>
               <td>{book.id}</td>

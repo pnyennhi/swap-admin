@@ -2,7 +2,7 @@ import React from "react";
 import Modal from "../../../components/Modal";
 
 const DeleteModal = (props) => {
-  const { show, bookId, onClose, onDelete } = props;
+  const { show, bookIds, onClose, onDelete } = props;
   return (
     <Modal show={show}>
       <div className="modal-header">
@@ -14,10 +14,12 @@ const DeleteModal = (props) => {
         </button>
       </div>
       <div className="modal-body">
-        <p>Bạn có chắc chắn muốn xóa sách (Id: {bookId}) này không?</p>
+        <p>
+          Bạn có chắc chắn muốn xóa sách (Id: {bookIds.join(", ")}) này không?
+        </p>
       </div>
       <div className="modal-footer">
-        <button className="btn btn-secondary" onClick={() => onDelete(bookId)}>
+        <button className="btn btn-secondary" onClick={() => onDelete(bookIds)}>
           Xóa
         </button>
         <button className="btn btn-primary" onClick={() => onClose()}>

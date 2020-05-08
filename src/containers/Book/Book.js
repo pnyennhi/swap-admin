@@ -8,24 +8,34 @@ const Book = () => {
   const [books, setBooks] = useState(fakeBooks);
   const [selectedBooks, setSelectedBooks] = useState([]);
   const [deletedBook, setDeletedBook] = useState(null);
+  const [showDeleteModal, setShowDeletedModal] = useState(false);
 
-  const handledeletedBook = (id) => {
+  const handleSetDeletedBook = (id) => {
     setDeletedBook(id);
   };
 
   const handleCloseDeleteModal = () => {
     setDeletedBook(null);
+    setShowDeletedModal(false);
   };
 
-  const handleDeleteOneBook = (id) => {
-    //delete one book API
+  const handleDeleteBook = (ids) => {
+    //delete book API
+    //id is an array
     setDeletedBook(null);
-    handleDeleteBooks([id]);
+    setShowDeletedModal(false);
+    handleDeleteBooks(ids);
   };
 
   const handleDeleteBooks = (delIds) => {
     const newBooks = books.filter((book) => delIds.indexOf(book.id) === -1);
     setBooks(newBooks);
+    const newSelectedBooks = selectedBooks.filter(
+      (bookId) => delIds.indexOf(bookId) === -1
+    );
+    console.log(newSelectedBooks);
+
+    setSelectedBooks(newSelectedBooks);
   };
 
   const handleSelectOneBook = (e, id) => {
@@ -68,6 +78,19 @@ const Book = () => {
                     />
                   </div>
                 </div>
+                {selectedBooks.length > 0 && (
+                  <div class="col-sm-12 col-md-2 text-right">
+                    <a
+                      className="btn btn-primary mr-2 mb-2 mb-md-0 text-white"
+                      onClick={() => {
+                        setShowDeletedModal(true);
+                      }}
+                    >
+                      <i className="mr-2">{add}</i>
+                      Delete
+                    </a>
+                  </div>
+                )}
                 <div class="col-sm-12 col-md-2 text-right">
                   <a className="btn btn-primary mr-2 mb-2 mb-md-0 text-white">
                     <i className="mr-2">{add}</i>
@@ -79,17 +102,17 @@ const Book = () => {
               <BookTable
                 books={books}
                 selectedBooks={selectedBooks}
-                onDelete={handledeletedBook}
+                onDelete={handleSetDeletedBook}
                 onSelect={handleSelectOneBook}
                 onSelectAll={handleSelectAll}
               />
 
-              {deletedBook && (
+              {(Boolean(deletedBook) || showDeleteModal) && (
                 <DeleteBookModal
-                  show={deletedBook === null ? false : true}
-                  bookId={deletedBook}
+                  show={Boolean(deletedBook) || showDeleteModal}
+                  bookIds={showDeleteModal ? selectedBooks : [deletedBook]}
                   onClose={handleCloseDeleteModal}
-                  onDelete={handleDeleteOneBook}
+                  onDelete={handleDeleteBook}
                 />
               )}
             </div>
