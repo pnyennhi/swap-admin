@@ -2,14 +2,29 @@ import React, { useState } from "react";
 import { add } from "../../components/svg/icon";
 import BookTable from "./components/BookTable";
 import { books as fakeBooks } from "../../FakeData";
+import DeleteBookModal from "./components/DeleteBookModal";
 
 const Book = () => {
   const [books, setBooks] = useState(fakeBooks);
+  const [selectedBooks, setSelectedBooks] = useState([]);
+  const [deletedBook, setDeletedBook] = useState(null);
 
-  const handleChangeBooks = (delIds) => {
+  const handledeletedBook = (id) => {
+    setDeletedBook(id);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setDeletedBook(null);
+  };
+
+  const handleDeleteOneBook = (id) => {
+    //delete one book API
+    setDeletedBook(null);
+    handleDeleteBooks([id]);
+  };
+
+  const handleDeleteBooks = (delIds) => {
     const newBooks = books.filter((book) => delIds.indexOf(book.id) === -1);
-    console.log(newBooks);
-
     setBooks(newBooks);
   };
 
@@ -43,90 +58,16 @@ const Book = () => {
               </div>
 
               {/* Table */}
-              <BookTable books={books} onChangeBooks={handleChangeBooks} />
+              <BookTable books={books} onDelete={handledeletedBook} />
 
-              <div class="row">
-                <div class="col-sm-12 col-md-5">
-                  <div
-                    class="dataTables_info"
-                    id="dataTableExample_info"
-                    role="status"
-                    aria-live="polite"
-                  >
-                    Showing 1 to 10 of 22 entries
-                  </div>
-                </div>
-                <div class="col-sm-12 col-md-7">
-                  <div
-                    class="dataTables_paginate paging_simple_numbers"
-                    id="dataTableExample_paginate"
-                  >
-                    <ul class="pagination">
-                      <li
-                        class="paginate_button page-item previous disabled"
-                        id="dataTableExample_previous"
-                      >
-                        <a
-                          href="#"
-                          aria-controls="dataTableExample"
-                          data-dt-idx="0"
-                          tabindex="0"
-                          class="page-link"
-                        >
-                          Previous
-                        </a>
-                      </li>
-                      <li class="paginate_button page-item active">
-                        <a
-                          href="#"
-                          aria-controls="dataTableExample"
-                          data-dt-idx="1"
-                          tabindex="0"
-                          class="page-link"
-                        >
-                          1
-                        </a>
-                      </li>
-                      <li class="paginate_button page-item ">
-                        <a
-                          href="#"
-                          aria-controls="dataTableExample"
-                          data-dt-idx="2"
-                          tabindex="0"
-                          class="page-link"
-                        >
-                          2
-                        </a>
-                      </li>
-                      <li class="paginate_button page-item ">
-                        <a
-                          href="#"
-                          aria-controls="dataTableExample"
-                          data-dt-idx="3"
-                          tabindex="0"
-                          class="page-link"
-                        >
-                          3
-                        </a>
-                      </li>
-                      <li
-                        class="paginate_button page-item next"
-                        id="dataTableExample_next"
-                      >
-                        <a
-                          href="#"
-                          aria-controls="dataTableExample"
-                          data-dt-idx="4"
-                          tabindex="0"
-                          class="page-link"
-                        >
-                          Next
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+              {deletedBook && (
+                <DeleteBookModal
+                  show={deletedBook === null ? false : true}
+                  bookId={deletedBook}
+                  onClose={handleCloseDeleteModal}
+                  onDelete={handleDeleteOneBook}
+                />
+              )}
             </div>
           </div>
         </div>

@@ -4,22 +4,6 @@ import CheckBox from "../../../components/CheckBox";
 import DeleteBookModal from "./DeleteBookModal";
 
 const BookTable = (props) => {
-  const [showDeleteModal, setShowDeleteModal] = useState(null);
-
-  const handleShowDeleteModal = (id) => {
-    setShowDeleteModal(id);
-  };
-
-  const handleCloseDeleteModal = () => {
-    setShowDeleteModal(null);
-  };
-
-  const handleDeleteOneBook = (id) => {
-    //delete one book API
-    setShowDeleteModal(null);
-    props.onChangeBooks([id]);
-  };
-
   return (
     <div class="table-responsive">
       <table id="dataTableExample" class="table">
@@ -58,7 +42,7 @@ const BookTable = (props) => {
                 <button
                   className="icon-button"
                   onClick={() => {
-                    handleShowDeleteModal(book.id);
+                    props.onDelete(book.id);
                   }}
                 >
                   {del}
@@ -68,14 +52,14 @@ const BookTable = (props) => {
           ))}
         </tbody>
       </table>
-      {showDeleteModal && (
+      {/* {showDeleteModal && (
         <DeleteBookModal
           show={showDeleteModal === null ? false : true}
           bookId={showDeleteModal}
           onClose={handleCloseDeleteModal}
           onDelete={handleDeleteOneBook}
         />
-      )}
+      )} */}
     </div>
   );
 };
