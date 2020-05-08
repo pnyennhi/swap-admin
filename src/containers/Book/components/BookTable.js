@@ -26,7 +26,11 @@ const BookTable = (props) => {
           {props.books.map((book) => (
             <tr>
               <td>
-                <CheckBox />
+                <CheckBox
+                  onChange={() => {
+                    props.onSelect(book.id);
+                  }}
+                />
               </td>
               <td>{book.id}</td>
               <td>{book.name}</td>

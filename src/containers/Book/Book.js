@@ -28,6 +28,20 @@ const Book = () => {
     setBooks(newBooks);
   };
 
+  const handleSelectOneBook = (id) => {
+    const selectedIndex = selectedBooks.indexOf(id);
+    let newSelectedBooks = [...selectedBooks];
+    console.log(newSelectedBooks);
+
+    if (selectedIndex === -1) {
+      newSelectedBooks.push(id);
+    } else {
+      newSelectedBooks.splice(selectedIndex, 1);
+    }
+
+    setSelectedBooks(newSelectedBooks);
+  };
+
   return (
     <>
       <nav class="page-breadcrumb">
@@ -58,7 +72,11 @@ const Book = () => {
               </div>
 
               {/* Table */}
-              <BookTable books={books} onDelete={handledeletedBook} />
+              <BookTable
+                books={books}
+                onDelete={handledeletedBook}
+                onSelect={handleSelectOneBook}
+              />
 
               {deletedBook && (
                 <DeleteBookModal
