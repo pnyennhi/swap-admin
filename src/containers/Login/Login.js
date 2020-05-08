@@ -25,7 +25,8 @@ const Login = (props) => {
         // window.location.assign("/login");
         props.onLogin({
           username: "admin",
-          name: "Nguyen Van Admin",
+          fisrtName: "Nguyen Van",
+          lastName: "Admin",
         });
       } else setError("Your email or password is incorrect");
     }

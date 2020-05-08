@@ -5,13 +5,14 @@ import { profile, editProfile, logout } from "../../../components/svg/icon";
 const TopBar = (props) => {
   const [show, setShow] = useState(false);
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const handleToggleDropdown = () => {
     setShow(!show);
   };
 
   const handleLogout = () => {
     localStorage.removeItem("user");
-    // window.location.assign("/login");
     props.onLogout(null);
   };
 
@@ -41,7 +42,7 @@ const TopBar = (props) => {
       </a>
       <div className="navbar-content">
         <ul className="navbar-nav">
-          <li className="nav-item">Hi, Admin</li>
+          <li className="nav-item">Hi, {user.lastName}</li>
           <li className="nav-item dropdown nav-profile">
             <a
               className="nav-link dropdown-toggle"
@@ -62,8 +63,10 @@ const TopBar = (props) => {
                   />
                 </div>
                 <div className="info text-center">
-                  <p className="name font-weight-bold mb-0">Nguyễn Văn An</p>
-                  <p className="email text-muted mb-3">admin01</p>
+                  <p className="name font-weight-bold mb-0">
+                    {user.firstName} {user.lastName}
+                  </p>
+                  <p className="email text-muted mb-3">{user.username}</p>
                 </div>
               </div>
               <div className="dropdown-body">
