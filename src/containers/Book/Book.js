@@ -8,7 +8,9 @@ const Book = () => {
   const [books, setBooks] = useState(fakeBooks);
   const [selectedBooks, setSelectedBooks] = useState([]);
   const [deletedBook, setDeletedBook] = useState(null);
+  const [searchedBooks, setSearchedBooks] = useState([]);
   const [showDeleteModal, setShowDeletedModal] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
 
   const handleSetDeletedBook = (id) => {
     setDeletedBook(id);
@@ -57,6 +59,19 @@ const Book = () => {
     else setSelectedBooks([]);
   };
 
+  const handleSearchBooks = (e) => {
+    var key = e.target.value;
+    var results = books.filter(
+      (book) =>
+        JSON.stringify(book).toLowerCase().search(key.toLowerCase()) > -1
+    );
+    console.log(results);
+    if (key) setIsSearching(true);
+    else setIsSearching(false);
+
+    setSearchedBooks(results);
+  };
+
   return (
     <>
       <nav class="page-breadcrumb">
@@ -71,10 +86,11 @@ const Book = () => {
                 <div class="col-sm-12 col-md-8">
                   <div id="dataTableExample_filter" class="dataTables_filter">
                     <input
-                      type="search"
                       class="form-control"
                       placeholder="Search"
-                      aria-controls="dataTableExample"
+                      onChange={(e) => {
+                        handleSearchBooks(e);
+                      }}
                     />
                   </div>
                 </div>
@@ -100,7 +116,11 @@ const Book = () => {
               </div>
 
               <BookTable
-                books={books}
+                books={
+                  searchedBooks.length > 0 || isSearching
+                    ? searchedBooks
+                    : books
+                }
                 selectedBooks={selectedBooks}
                 onDelete={handleSetDeletedBook}
                 onSelect={handleSelectOneBook}
