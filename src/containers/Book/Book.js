@@ -11,7 +11,7 @@ const Book = () => {
   const [deletedBook, setDeletedBook] = useState(null);
   const [searchedBooks, setSearchedBooks] = useState([]);
   const [showDeleteModal, setShowDeletedModal] = useState(false);
-  const [showAddModal, setShowAddModal] = useState(true);
+  const [showAddModal, setShowAddModal] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
 
   const handleSetDeletedBook = (id) => {

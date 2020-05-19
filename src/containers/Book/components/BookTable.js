@@ -1,8 +1,20 @@
 import React, { useState } from "react";
 import { edit, del, book } from "../../../components/svg/icon";
+import EditBookModal from "./EditBookModal";
 
 const BookTable = (props) => {
   const { books, selectedBooks, onDelete, onSelect, onSelectAll } = props;
+
+  const [editedBook, setEditedBook] = useState(null);
+
+  const handleSetEditedBook = (id) => {
+    setEditedBook(id);
+  };
+
+  const handleCloseEditModal = () => {
+    setEditedBook(null);
+  };
+
   return (
     <div class="table-responsive">
       <table id="dataTableExample" class="table">
@@ -44,11 +56,16 @@ const BookTable = (props) => {
               <td>{book.author}</td>
               <td>{book.type}</td>
               <td>{book.publisher}</td>
-              <td>{book.quatity}</td>
+              <td>{book.inputQuantity}</td>
               <td>{book.sold}</td>
               <td>{book.price}</td>
               <td>
-                <button className="icon-button">{edit}</button>
+                <button
+                  className="icon-button"
+                  onClick={() => handleSetEditedBook(book)}
+                >
+                  {edit}
+                </button>
                 {"  "}
                 <button
                   className="icon-button"
@@ -63,14 +80,13 @@ const BookTable = (props) => {
           ))}
         </tbody>
       </table>
-      {/* {showDeleteModal && (
-        <DeleteBookModal
-          show={showDeleteModal === null ? false : true}
-          bookId={showDeleteModal}
-          onClose={handleCloseDeleteModal}
-          onDelete={handleDeleteOneBook}
+      {Boolean(editedBook) && (
+        <EditBookModal
+          show={Boolean(editedBook)}
+          book={editedBook}
+          onClose={handleCloseEditModal}
         />
-      )} */}
+      )}
     </div>
   );
 };
