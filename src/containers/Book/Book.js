@@ -3,6 +3,7 @@ import { add } from "../../components/svg/icon";
 import BookTable from "./components/BookTable";
 import { books as fakeBooks } from "../../FakeData";
 import DeleteBookModal from "./components/DeleteBookModal";
+import AddBookModal from "./components/AddBookModal";
 
 const Book = () => {
   const [books, setBooks] = useState(fakeBooks);
@@ -10,6 +11,7 @@ const Book = () => {
   const [deletedBook, setDeletedBook] = useState(null);
   const [searchedBooks, setSearchedBooks] = useState([]);
   const [showDeleteModal, setShowDeletedModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(true);
   const [isSearching, setIsSearching] = useState(false);
 
   const handleSetDeletedBook = (id) => {
@@ -19,6 +21,10 @@ const Book = () => {
   const handleCloseDeleteModal = () => {
     setDeletedBook(null);
     setShowDeletedModal(false);
+  };
+
+  const handleCloseAddModal = () => {
+    setShowAddModal(false);
   };
 
   const handleDeleteBook = (ids) => {
@@ -108,7 +114,12 @@ const Book = () => {
                   </div>
                 )}
                 <div class="col-sm-12 col-md-2 text-right">
-                  <a className="btn btn-primary mr-2 mb-2 mb-md-0 text-white">
+                  <a
+                    className="btn btn-primary mr-2 mb-2 mb-md-0 text-white"
+                    onClick={() => {
+                      setShowAddModal(true);
+                    }}
+                  >
                     <i className="mr-2">{add}</i>
                     Thêm
                   </a>
@@ -133,6 +144,14 @@ const Book = () => {
                   bookIds={showDeleteModal ? selectedBooks : [deletedBook]}
                   onClose={handleCloseDeleteModal}
                   onDelete={handleDeleteBook}
+                />
+              )}
+
+              {showAddModal && (
+                <AddBookModal
+                  show={showAddModal}
+                  onClose={handleCloseAddModal}
+                  // onAdd={handleAddBook}
                 />
               )}
             </div>
