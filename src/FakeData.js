@@ -85,3 +85,37 @@ export const books = [
     coverType: "soft",
   },
 ];
+export const users = [
+  {
+    id: 1,
+    username: "abc",
+    name: "Nguyen Van A",
+    registerDate: "10/05/2019",
+    role: 1,
+    status: "active",
+  },
+  {
+    id: 2,
+    username: "def",
+    name: "Nguyen Van A",
+    registerDate: "10/05/2019",
+    role: 1,
+    status: "active",
+  },
+  {
+    id: 3,
+    username: "ghi",
+    name: "Nguyen Van A",
+    registerDate: "10/05/2019",
+    role: 0,
+    status: "active",
+  },
+  {
+    id: 4,
+    username: "mno",
+    name: "Nguyen Van A",
+    registerDate: "10/05/2019",
+    role: 0,
+    status: "active",
+  },
+];
