@@ -5,6 +5,7 @@ import {
   Route,
   Link,
   Redirect,
+  Switch,
 } from "react-router-dom";
 
 import "./assets/css/style.css";
@@ -12,6 +13,7 @@ import "./assets/css/style.css";
 import Login from "./containers/Login/Login";
 import Layout from "./containers/Layout/Layout";
 import Book from "./containers/Book/Book";
+import User from "./containers/User/User";
 
 function App() {
   const storedUser = localStorage.getItem("user");
@@ -25,20 +27,26 @@ function App() {
     return (
       <Router>
         <Layout onLogout={handleLog}>
-          <Route path="/book" component={Book} />
-          <Redirect exact from="/" to="/book" />
+          <Switch>
+            <Route path="/book" component={Book} />
+            <Route path="/user" component={User} />
+            <Redirect exact from="/" to="/book" />
+            <Redirect exact from="/login" to="/book" />
+          </Switch>
         </Layout>
       </Router>
     );
   } else {
     return (
       <Router>
-        <Route
-          exact
-          path="/login"
-          render={() => <Login onLogin={handleLog} />}
-        />
-        <Redirect exact from="/" to="/login" />
+        <Switch>
+          <Route
+            exact
+            path="/login"
+            render={() => <Login onLogin={handleLog} />}
+          />
+          <Redirect exact from="/" to="/login" />
+        </Switch>
       </Router>
     );
   }
