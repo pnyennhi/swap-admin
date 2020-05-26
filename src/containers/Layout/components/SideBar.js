@@ -44,12 +44,12 @@ const SideBar = (props) => {
               <span className="link-title">Dashboard</span>
             </a>
           </li>
-          <li className="nav-item">
+          <NavLink to="/user" className="nav-item">
             <a href="dashboard-one.html" className="nav-link">
               <i className="link-icon flex">{user}</i>
               <span className="link-title">Quản lí người dùng</span>
             </a>
-          </li>
+          </NavLink>
           <NavLink to="/book" className="nav-item">
             <a className="nav-link">
               <i className="link-icon flex">{book}</i>
