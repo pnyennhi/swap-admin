@@ -3,7 +3,14 @@ import { edit, del, book } from "../../../components/svg/icon";
 import EditBookModal from "./EditBookModal";
 
 const BookTable = (props) => {
-  const { books, selectedBooks, onDelete, onSelect, onSelectAll } = props;
+  const {
+    books,
+    selectedBooks,
+    onDelete,
+    onSelect,
+    onSelectAll,
+    onSort,
+  } = props;
 
   const [editedBook, setEditedBook] = useState(null);
 
@@ -17,7 +24,7 @@ const BookTable = (props) => {
 
   return (
     <div class="table-responsive">
-      <table id="dataTableExample" class="table">
+      <table BookID="dataTableExample" class="table dataTable">
         <tr>
           <th>
             <input
@@ -28,11 +35,41 @@ const BookTable = (props) => {
               onChange={(e) => onSelectAll(e)}
             />
           </th>
-          <th>Id</th>
-          <th>Tên</th>
-          <th>Tác giả</th>
-          <th>Thể loại</th>
-          <th>Nhà xuất bản</th>
+          <th
+            onClick={() => {
+              onSort("BookID");
+            }}
+          >
+            ID
+          </th>
+          <th
+            onClick={() => {
+              onSort("Name");
+            }}
+          >
+            Tên
+          </th>
+          <th
+            onClick={() => {
+              onSort("Author");
+            }}
+          >
+            Tác giả
+          </th>
+          <th
+            onClick={() => {
+              onSort("CategoryID");
+            }}
+          >
+            Thể loại
+          </th>
+          <th
+            onClick={() => {
+              onSort("PublisherID");
+            }}
+          >
+            Nhà xuất bản
+          </th>
           <th>Nhập</th>
           <th>Bán</th>
           <th>Giá bán</th>
@@ -46,19 +83,19 @@ const BookTable = (props) => {
                 <input
                   type="checkbox"
                   onChange={(e) => {
-                    onSelect(e, book.id);
+                    onSelect(e, book.BookID);
                   }}
-                  checked={selectedBooks.indexOf(book.id) > -1}
+                  checked={selectedBooks.indexOf(book.BookID) > -1}
                 />
               </td>
-              <td>{book.id}</td>
-              <td>{book.name}</td>
-              <td>{book.author}</td>
-              <td>{book.type}</td>
-              <td>{book.publisher}</td>
-              <td>{book.inputQuantity}</td>
-              <td>{book.sold}</td>
-              <td>{book.price}</td>
+              <td>{book.BookID}</td>
+              <td>{book.Name}</td>
+              <td>{book.Author}</td>
+              <td>{book.CategoryID}</td>
+              <td>{book.PublisherID}</td>
+              <td>{book.QuantityIn}</td>
+              <td>{book.QuantityOut}</td>
+              <td>{book.Price}</td>
               <td>
                 <button
                   className="icon-button"
@@ -70,7 +107,7 @@ const BookTable = (props) => {
                 <button
                   className="icon-button"
                   onClick={() => {
-                    onDelete(book.id);
+                    onDelete(book.BookID);
                   }}
                 >
                   {del}
