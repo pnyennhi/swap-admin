@@ -11033,7 +11033,7 @@ pre code {
   border-top: 1px solid #e8ebf1;
 }
 
-.table thead th {
+.table  th {
   vertical-align: bottom;
   border-bottom: 2px solid #e8ebf1;
 }
@@ -11056,14 +11056,14 @@ pre code {
   border: 1px solid #e8ebf1;
 }
 
-.table-bordered thead th,
-.table-bordered thead td {
+.table-bordered  th,
+.table-bordered  td {
   border-bottom-width: 2px;
 }
 
 .table-borderless th,
 .table-borderless td,
-.table-borderless thead th,
+.table-borderless  th,
 .table-borderless tbody+tbody {
   border: 0;
 }
@@ -11085,7 +11085,7 @@ pre code {
 
 .table-primary th,
 .table-primary td,
-.table-primary thead th,
+.table-primary  th,
 .table-primary tbody+tbody {
   border-color: #b6bbfa;
 }
@@ -11107,7 +11107,7 @@ pre code {
 
 .table-secondary th,
 .table-secondary td,
-.table-secondary thead th,
+.table-secondary  th,
 .table-secondary tbody+tbody {
   border-color: #b9c1ce;
 }
@@ -11129,7 +11129,7 @@ pre code {
 
 .table-success th,
 .table-success td,
-.table-success thead th,
+.table-success  th,
 .table-success tbody+tbody {
   border-color: #83daa9;
 }
@@ -11151,7 +11151,7 @@ pre code {
 
 .table-info th,
 .table-info td,
-.table-info thead th,
+.table-info  th,
 .table-info tbody+tbody {
   border-color: #afe7e7;
 }
@@ -11173,7 +11173,7 @@ pre code {
 
 .table-warning th,
 .table-warning td,
-.table-warning thead th,
+.table-warning  th,
 .table-warning tbody+tbody {
   border-color: #fddc7e;
 }
@@ -11195,7 +11195,7 @@ pre code {
 
 .table-danger th,
 .table-danger td,
-.table-danger thead th,
+.table-danger  th,
 .table-danger tbody+tbody {
   border-color: #ff95af;
 }
@@ -11217,7 +11217,7 @@ pre code {
 
 .table-light th,
 .table-light td,
-.table-light thead th,
+.table-light  th,
 .table-light tbody+tbody {
   border-color: whitesmoke;
 }
@@ -11239,7 +11239,7 @@ pre code {
 
 .table-dark th,
 .table-dark td,
-.table-dark thead th,
+.table-dark  th,
 .table-dark tbody+tbody {
   border-color: #8f9399;
 }
@@ -11261,7 +11261,7 @@ pre code {
 
 .table-primary-muted th,
 .table-primary-muted td,
-.table-primary-muted thead th,
+.table-primary-muted  th,
 .table-primary-muted tbody+tbody {
   border-color: #d6e6f5;
 }
@@ -11283,7 +11283,7 @@ pre code {
 
 .table-info-muted th,
 .table-info-muted td,
-.table-info-muted thead th,
+.table-info-muted  th,
 .table-info-muted tbody+tbody {
   border-color: #bcf1f1;
 }
@@ -11305,7 +11305,7 @@ pre code {
 
 .table-danger-muted th,
 .table-danger-muted td,
-.table-danger-muted thead th,
+.table-danger-muted  th,
 .table-danger-muted tbody+tbody {
   border-color: #fbbcdb;
 }
@@ -11334,13 +11334,13 @@ pre code {
   background-color: rgba(0, 0, 0, 0.075);
 }
 
-.table .thead-dark th {
+.table .-dark th {
   color: #fff;
   background-color: #343a40;
   border-color: #454d55;
 }
 
-.table .thead-light th {
+.table .-light th {
   color: #495057;
   background-color: #e9ecef;
   border-color: #e8ebf1;
@@ -11353,7 +11353,7 @@ pre code {
 
 .table-dark th,
 .table-dark td,
-.table-dark thead th {
+.table-dark  th {
   border-color: #454d55;
 }
 
@@ -21722,9 +21722,9 @@ a.text-danger-muted:focus {
     page-break-inside: avoid;
   }
 
-  thead {
+   /* {
     display: table-header-group;
-  }
+  } */
 
   tr,
   img {
@@ -21783,12 +21783,12 @@ a.text-danger-muted:focus {
 
   .table-dark th,
   .table-dark td,
-  .table-dark thead th,
+  .table-dark  th,
   .table-dark tbody+tbody {
     border-color: #e8ebf1;
   }
 
-  .table .thead-dark th {
+  .table .-dark th {
     color: inherit;
     border-color: #e8ebf1;
   }
@@ -37186,7 +37186,7 @@ select.border-danger-muted:focus,
   margin-bottom: 30px;
 }
 
-.table thead th {
+.table  th {
   border-top: 0;
   border-bottom-width: 1px;
   font-weight: bold;
@@ -37195,7 +37195,7 @@ select.border-danger-muted:focus,
   color: #686868;
 }
 
-.table thead th i {
+.table  th i {
   margin-left: 0.325rem;
 }
 
@@ -37233,7 +37233,7 @@ select.border-danger-muted:focus,
   border-top: 1px solid #e8ebf1;
 }
 
-.table.table-dark thead tr th {
+.table.table-dark  tr th {
   color: #b5b5b5;
 }
 
@@ -38416,19 +38416,19 @@ select.border-danger-muted:focus,
   width: 100%;
 }
 
-.datepicker.datepicker-dropdown .datepicker-days table.table-condensed thead tr th {
+.datepicker.datepicker-dropdown .datepicker-days table.table-condensed  tr th {
   text-align: center;
   padding: 0.5rem 0;
 }
 
-.datepicker.datepicker-dropdown .datepicker-days table.table-condensed thead tr th.prev {
+.datepicker.datepicker-dropdown .datepicker-days table.table-condensed  tr th.prev {
   color: #000;
   padding-bottom: 1rem;
   padding-top: 1rem;
   background: #ffffff;
 }
 
-.datepicker.datepicker-dropdown .datepicker-days table.table-condensed thead tr th.datepicker-switch {
+.datepicker.datepicker-dropdown .datepicker-days table.table-condensed  tr th.datepicker-switch {
   color: #000;
   background: #ffffff;
   padding-bottom: 1rem;
@@ -38437,14 +38437,14 @@ select.border-danger-muted:focus,
   font-weight: 600;
 }
 
-.datepicker.datepicker-dropdown .datepicker-days table.table-condensed thead tr th.next {
+.datepicker.datepicker-dropdown .datepicker-days table.table-condensed  tr th.next {
   color: #000;
   padding-bottom: 1rem;
   padding-top: 1rem;
   background: #ffffff;
 }
 
-.datepicker.datepicker-dropdown .datepicker-days table.table-condensed thead tr th.dow {
+.datepicker.datepicker-dropdown .datepicker-days table.table-condensed  tr th.dow {
   font-family: "Overpass", sans-serif;
   color: #000;
   font-size: 0.875rem;
@@ -39371,4 +39371,34 @@ div.tagsinput span.tag a {
 
 .react-datepicker-wrapper, .react-datepicker__input-container {
   display: block !important;
+}
+
+table.dataTable .sorting, table.dataTable .sorting_asc, table.dataTable .sorting_asc_disabled, table.dataTable .sorting_desc, table.dataTable .sorting_desc_disabled {
+  cursor: pointer;
+  position: relative;
+}
+
+table.dataTable .sorting:before, table.dataTable .sorting_asc:before, table.dataTable  .sorting_asc_disabled:before, table.dataTable  .sorting_desc:before, table.dataTable  .sorting_desc_disabled:before {
+  right: 1em;
+  content: "\2191";
+}
+
+table.dataTable .sorting:after, table.dataTable .sorting_asc:after, table.dataTable .sorting_asc_disabled:after, table.dataTable .sorting_desc:after, table.dataTable .sorting_desc_disabled:after {
+    right: .5em;
+    content: "\2193";
+}
+
+table.dataTable .sorting:after, table.dataTable .sorting:before, table.dataTable .sorting_asc:after, table.dataTable .sorting_asc:before, table.dataTable .sorting_asc_disabled:after, table.dataTable .sorting_asc_disabled:before, table.dataTable .sorting_desc:after, table.dataTable .sorting_desc:before, table.dataTable .sorting_desc_disabled:after, table.dataTable .sorting_desc_disabled:before {
+  position: absolute;
+  bottom: .9em;
+  display: block;
+  opacity: .3;
+}
+
+table.dataTable .sorting_asc:before, table.dataTable .sorting_desc:after {
+    opacity: 1;
+}
+
+table th{
+  cursor: pointer;
 }
