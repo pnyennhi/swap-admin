@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { add } from "../../components/svg/icon";
+
 import BookTable from "./components/BookTable";
+import BookToolbar from "./components/BookToolbar";
 import { books as fakeBooks } from "../../FakeData";
 import DeleteBookModal from "./components/DeleteBookModal";
 import AddBookModal from "./components/AddBookModal";
 import Pagination from "../../components/Pagination";
+
 import axios from "axios";
 
 const Book = () => {
   const [books, setBooks] = useState(fakeBooks);
   const [selectedBooks, setSelectedBooks] = useState([]);
   const [deletedBook, setDeletedBook] = useState(null);
-  const [showDeleteModal, setShowDeletedModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [sortConfig, setSortConfig] = useState(null);
   const [totalRows, setTotalRows] = useState(21);
@@ -35,7 +37,7 @@ const Book = () => {
 
   const handleCloseDeleteModal = () => {
     setDeletedBook(null);
-    setShowDeletedModal(false);
+    setShowDeleteModal(false);
   };
 
   const handleCloseAddModal = () => {
@@ -46,7 +48,7 @@ const Book = () => {
     //delete book API
     //id is an array
     setDeletedBook(null);
-    setShowDeletedModal(false);
+    setShowDeleteModal(false);
     // handleDeleteBooks(ids);
   };
 
@@ -128,65 +130,17 @@ const Book = () => {
         <div class="col-md-12 grid-margin stretch-card">
           <div class="card">
             <div class="card-body">
-              <div class="row align-items-md-center justify-content-between mb-4">
-                <div class="col-sm-12 col-md-8">
-                  <div className="row align-items-md-center">
-                    <div class="col-sm-9 col-md-8  dataTables_filter">
-                      <input
-                        class="form-control"
-                        placeholder="Search"
-                        onChange={(e) => {
-                          setFilters({ ...filters, search: e.target.value });
-                        }}
-                        onKeyUp={(e) => {
-                          if (e.keyCode === 13) handleSearchBooks();
-                        }}
-                      />
-                    </div>
-                    <div class="col-sm-3 col-md-4">
-                      <a
-                        className="btn btn-primary mr-2 mb-2 mb-md-0 text-white"
-                        onClick={() => handleSearchBooks()}
-                      >
-                        Tìm
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                {selectedBooks.length > 0 && (
-                  <div class="col-sm-12 col-md-2 text-right">
-                    <a
-                      className="btn btn-primary mr-2 mb-2 mb-md-0 text-white"
-                      onClick={() => {
-                        setShowDeletedModal(true);
-                      }}
-                    >
-                      <i className="mr-2">{add}</i>
-                      Delete
-                    </a>
-                  </div>
-                )}
-                <div class="col-sm-12 col-md-2 text-right">
-                  <a
-                    className="btn btn-primary mr-2 mb-2 mb-md-0 text-white"
-                    onClick={() => {
-                      setShowAddModal(true);
-                    }}
-                  >
-                    <i className="mr-2">{add}</i>
-                    Thêm
-                  </a>
-                </div>
-              </div>
+              <BookToolbar
+                selectedLength={selectedBooks.length}
+                onSearch={handleSearchBooks}
+                onChangeFilters={(key, value) => {
+                  setFilters({ ...filters, [key]: value });
+                }}
+                onShowDeleteModal={setShowDeleteModal}
+                onShowAddModal={setShowAddModal}
+              />
 
               <BookTable
-                // books={
-                //   searchedBooks.length > 0 || isSearching
-                //     ? searchedBooks
-                //     : books
-                // }
-
                 books={books}
                 selectedBooks={selectedBooks}
                 onDelete={handleSetDeletedBook}
