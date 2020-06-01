@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import Modal from "../../../components/Modal";
@@ -11,64 +11,68 @@ import DateInput from "../../../components/DateInput";
 const AddBookModal = (props) => {
   const { show, onClose, onAdd } = props;
 
+  useEffect(() => {
+    //call API to get list of types, PublisherIDs when mounted
+  }, []);
+
   const initialValues = {
-    name: "",
-    author: "",
-    type: "0",
-    publisher: "",
-    originalPrice: "",
-    price: "",
-    coverImage: "",
-    dimension: "",
-    weight: "",
-    numberOfPages: "",
-    info: "",
-    inputQuantity: "",
-    inputDate: new Date(),
-    coverType: "soft",
+    Name: "",
+    Author: "",
+    CategoryID: "0",
+    PublisherID: "",
+    OriginalPrice: "",
+    Price: "",
+    ImageLink: "",
+    Dimensions: "",
+    Weight: "",
+    NumberOfPage: "",
+    Information: "",
+    QuantityIn: "",
+    Date: new Date(),
+    Format: "soft",
   };
 
   const SignupSchema = Yup.object().shape({
-    name: Yup.string()
+    Name: Yup.string()
       .min(2, "Too Short!")
       .max(50, "Too Long!")
       .required("Please fill out this field"),
-    author: Yup.string()
+    Author: Yup.string()
       .min(2, "Too Short!")
       .max(50, "Too Long!")
       .required("Please fill out this field"),
-    publisher: Yup.string()
+    PublisherID: Yup.string()
       .min(2, "Too Short!")
       .max(50, "Too Long!")
       .required("Please fill out this field"),
-    info: Yup.string()
+    Information: Yup.string()
       .min(2, "Too Short!")
       .max(50, "Too Long!")
       .required("Please fill out this field"),
-    price: Yup.number()
+    Price: Yup.number()
       .min(0, "Too Short!")
       .max(10000000000, "Too Long!")
       .required("Please fill out this field"),
-    originalPrice: Yup.number()
+    OriginalPrice: Yup.number()
       .min(0, "Too Short!")
       .max(10000000000, "Too Long!")
       .required("Please fill out this field"),
-    dimension: Yup.number().required("Please fill out this field"),
-    weight: Yup.number()
+    Dimensions: Yup.number().required("Please fill out this field"),
+    Weight: Yup.number()
       .min(0, "Too Short!")
       .max(10000000000, "Too Long!")
       .required("Please fill out this field"),
-    numberOfPages: Yup.number()
+    NumberOfPage: Yup.number()
       .positive("This field must not be negative")
       .integer("This field must be non-decimal")
       .min(0, "Too Short!")
       .max(10000000000, "Too Long!")
       .required("Please fill out this field"),
-    inputQuantity: Yup.number()
+    QuantityIn: Yup.number()
       .min(0, "Too Short!")
       .max(10000000000, "Too Long!")
       .required("Please fill out this field"),
-    coverImage: Yup.mixed().required("Please fill out this field"),
+    ImageLink: Yup.mixed().required("Please fill out this field"),
   });
 
   const handleSubmit = (values, actions) => {
@@ -110,10 +114,10 @@ const AddBookModal = (props) => {
               <div className="modal-body">
                 <Field
                   type="text"
-                  name="name"
+                  name="Name"
                   component={TextInput}
                   className={
-                    errors.name && touched.name
+                    errors.Name && touched.Name
                       ? "form-control error"
                       : "form-control"
                   }
@@ -122,10 +126,10 @@ const AddBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="author"
+                  name="Author"
                   component={TextInput}
                   className={
-                    errors.author && touched.author
+                    errors.Author && touched.Author
                       ? "form-control error"
                       : "form-control"
                   }
@@ -153,10 +157,10 @@ const AddBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="publisher"
+                  name="PublisherID"
                   component={TextInput}
                   className={
-                    errors.publisher && touched.publisher
+                    errors.PublisherID && touched.PublisherID
                       ? "form-control error"
                       : "form-control"
                   }
@@ -165,10 +169,10 @@ const AddBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="originalPrice"
+                  name="OriginalPrice"
                   component={NumberInput}
                   className={
-                    errors.originalPrice && touched.originalPrice
+                    errors.OriginalPrice && touched.OriginalPrice
                       ? "form-control error"
                       : "form-control"
                   }
@@ -177,10 +181,10 @@ const AddBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="price"
+                  name="Price"
                   component={NumberInput}
                   className={
-                    errors.price && touched.price
+                    errors.Price && touched.Price
                       ? "form-control error"
                       : "form-control"
                   }
@@ -191,25 +195,25 @@ const AddBookModal = (props) => {
                   <label>Ảnh bìa</label>
                   <input
                     type="file"
-                    name="coverImage"
+                    name="ImageLink"
                     accept="image/*"
                     onChange={(event) => {
-                      setFieldValue("coverImage", event.currentTarget.files[0]);
+                      setFieldValue("ImageLink", event.currentTarget.files[0]);
                     }}
                     className={
-                      errors.coverImage && touched.coverImage
+                      errors.ImageLink && touched.ImageLink
                         ? "form-control error"
                         : "form-control"
                     }
                   />
-                  {errors.coverImage && touched.coverImage ? (
-                    <div className="input-feedback">{errors.coverImage}</div>
+                  {errors.ImageLink && touched.ImageLink ? (
+                    <div className="input-feedback">{errors.ImageLink}</div>
                   ) : null}
                 </div>
 
-                {values.coverImage ? (
+                {values.ImageLink ? (
                   <img
-                    src={URL.createObjectURL(values.coverImage)}
+                    src={URL.createObjectURL(values.ImageLink)}
                     width="100%"
                   />
                 ) : null}
@@ -220,11 +224,11 @@ const AddBookModal = (props) => {
                   <input
                     type="Radio"
                     id="soft"
-                    name="coverType"
+                    name="Format"
                     value="soft"
-                    checked={values.coverType === "soft"}
+                    checked={values.Format === "soft"}
                     onChange={() => {
-                      setFieldValue("coverType", "soft");
+                      setFieldValue("Format", "soft");
                     }}
                   />
                   <label htmlFor="soft">Bìa mềm</label>
@@ -232,11 +236,11 @@ const AddBookModal = (props) => {
                   <input
                     type="Radio"
                     id="hard"
-                    name="coverType"
+                    name="Format"
                     value="hard"
-                    checked={values.coverType === "hard"}
+                    checked={values.Format === "hard"}
                     onChange={() => {
-                      setFieldValue("coverType", "hard");
+                      setFieldValue("Format", "hard");
                     }}
                   />
                   <label htmlFor="hard">Bìa cứng</label>
@@ -245,10 +249,10 @@ const AddBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="dimension"
+                  name="Dimensions"
                   component={TextInput}
                   className={
-                    errors.dimension && touched.dimension
+                    errors.Dimensions && touched.Dimensions
                       ? "form-control error"
                       : "form-control"
                   }
@@ -257,10 +261,10 @@ const AddBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="weight"
+                  name="Weight"
                   component={NumberInput}
                   className={
-                    errors.weight && touched.weight
+                    errors.Weight && touched.Weight
                       ? "form-control error"
                       : "form-control"
                   }
@@ -269,10 +273,10 @@ const AddBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="numberOfPages"
+                  name="NumberOfPage"
                   component={NumberInput}
                   className={
-                    errors.numberOfPages && touched.numberOfPages
+                    errors.NumberOfPage && touched.NumberOfPage
                       ? "form-control error"
                       : "form-control"
                   }
@@ -281,10 +285,10 @@ const AddBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="info"
+                  name="Information"
                   component={TextAreaInput}
                   className={
-                    errors.info && touched.info
+                    errors.Information && touched.Information
                       ? "form-control error"
                       : "form-control"
                   }
@@ -293,10 +297,10 @@ const AddBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="inputQuantity"
+                  name="QuantityIn"
                   component={NumberInput}
                   className={
-                    errors.inputQuantity && touched.inputQuantity
+                    errors.QuantityIn && touched.QuantityIn
                       ? "form-control error"
                       : "form-control"
                   }
@@ -305,7 +309,7 @@ const AddBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="inputDate"
+                  name="Date"
                   component={DateInput}
                   label="Ngày nhập"
                 />
