@@ -1,9 +1,10 @@
 import React from "react";
 
 const Pagination = (props) => {
-  const { pageTotal, currentPage, onChange } = props;
+  const { currentPage, limit, totalRows, onChange } = props;
 
   let pages = [];
+  const pageTotal = Math.ceil(totalRows / limit);
 
   for (let i = 1; i <= pageTotal; i++) pages.push(i);
 
