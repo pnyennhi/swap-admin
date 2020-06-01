@@ -8,72 +8,105 @@ import TextAreaInput from "../../../components/TextAreaInput";
 import NumberInput from "../../../components/NumberInput";
 import DateInput from "../../../components/DateInput";
 
+import { storage } from "../../../firebase";
+
 const EditBookModal = (props) => {
   const { show, book, onClose } = props;
 
   const initialValues = {
-    name: book.name,
-    author: book.author,
-    type: book.type,
-    publisher: book.publisher,
-    originalPrice: book.originalPrice,
-    price: book.price,
-    coverImage: "",
-    dimension: book.dimension,
-    weight: book.weight,
-    numberOfPages: book.numberOfPages,
-    info: book.info,
-    inputQuantity: book.inputQuantity,
-    sold: book.sold,
-    inputDate: new Date(book.inputDate),
-    coverType: book.coverType,
+    BookID: book.BookID,
+    Name: book.Name,
+    Author: book.Author,
+    CategoryID: book.CategoryID,
+    PublisherID: book.PublisherID,
+    OriginalPrice: book.OriginalPrice,
+    Price: book.Price,
+    ImageLink: "",
+    Dimensions: book.Dimensions,
+    Weight: book.Weight,
+    NumberOfPage: book.NumberOfPage,
+    Information: book.Information,
+    QuantityIn: book.QuantityIn,
+    QuantityOut: book.QuantityOut,
+    Date: new Date(book.Date),
+    Format: book.Format,
   };
 
   const SignupSchema = Yup.object().shape({
-    name: Yup.string()
+    Name: Yup.string()
       .min(2, "Too Short!")
       .max(50, "Too Long!")
       .required("Please fill out this field"),
-    author: Yup.string()
+    Author: Yup.string()
       .min(2, "Too Short!")
       .max(50, "Too Long!")
       .required("Please fill out this field"),
-    publisher: Yup.string()
+    PublisherID: Yup.string()
       .min(2, "Too Short!")
       .max(50, "Too Long!")
       .required("Please fill out this field"),
-    info: Yup.string()
+    Information: Yup.string()
       .min(2, "Too Short!")
       .max(50, "Too Long!")
       .required("Please fill out this field"),
-    price: Yup.number()
+    Price: Yup.number()
       .min(0, "Too Short!")
       .max(10000000000, "Too Long!")
       .required("Please fill out this field"),
-    originalPrice: Yup.number()
+    OriginalPrice: Yup.number()
       .min(0, "Too Short!")
       .max(10000000000, "Too Long!")
       .required("Please fill out this field"),
-    dimension: Yup.string().required("Please fill out this field"),
-    weight: Yup.number()
+    Dimensions: Yup.string().required("Please fill out this field"),
+    Weight: Yup.number()
       .min(0, "Too Short!")
       .max(10000000000, "Too Long!")
       .required("Please fill out this field"),
-    numberOfPages: Yup.number()
+    NumberOfPage: Yup.number()
       .positive("This field must not be negative")
       .integer("This field must be non-decimal")
       .min(0, "Too Short!")
       .max(10000000000, "Too Long!")
       .required("Please fill out this field"),
-    inputQuantity: Yup.number()
+    QuantityIn: Yup.number()
       .min(0, "Too Short!")
       .max(10000000000, "Too Long!")
       .required("Please fill out this field"),
-    coverImage: Yup.mixed().required("Please fill out this field"),
+    ImageLink: Yup.mixed().required("Please fill out this field"),
   });
 
   const handleSubmit = (values, actions) => {
-    alert(JSON.stringify(values, null, 2));
+    // alert(JSON.stringify(values, null, 2));
+
+    const uploadTask = storage
+      .ref(`images/${values.ImageLink.name}`)
+      .put(values.ImageLink);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // progrss function ....
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+      },
+      (error) => {
+        // error function ....
+        console.log(error);
+      },
+      () => {
+        // complete function ....
+        storage
+          .ref("images")
+          .child(values.ImageLink.name)
+          .getDownloadURL()
+          .then((url) => {
+            values.ImageLink = url;
+            // console.log(url);
+            console.log(values);
+          });
+      }
+    );
+
     actions.setSubmitting(false);
   };
 
@@ -111,10 +144,19 @@ const EditBookModal = (props) => {
               <div className="modal-body">
                 <Field
                   type="text"
-                  name="name"
+                  name="BookID"
+                  component={TextInput}
+                  className="form-control"
+                  label="ID"
+                  disabled
+                />
+
+                <Field
+                  type="text"
+                  name="Name"
                   component={TextInput}
                   className={
-                    errors.name && touched.name
+                    errors.Name && touched.Name
                       ? "form-control error"
                       : "form-control"
                   }
@@ -123,10 +165,10 @@ const EditBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="author"
+                  name="Author"
                   component={TextInput}
                   className={
-                    errors.author && touched.author
+                    errors.Author && touched.Author
                       ? "form-control error"
                       : "form-control"
                   }
@@ -138,8 +180,8 @@ const EditBookModal = (props) => {
                   <select
                     style={{ color: "black" }}
                     class="form-control mb-3"
-                    name="type"
-                    value={values.type}
+                    name="CategoryID"
+                    value={values.CategoryID}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   >
@@ -153,10 +195,10 @@ const EditBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="publisher"
+                  name="PublisherID"
                   component={TextInput}
                   className={
-                    errors.publisher && touched.publisher
+                    errors.PublisherID && touched.PublisherID
                       ? "form-control error"
                       : "form-control"
                   }
@@ -165,27 +207,27 @@ const EditBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="originalPrice"
+                  name="OriginalPrice"
                   component={NumberInput}
                   className={
-                    errors.originalPrice && touched.originalPrice
+                    errors.OriginalPrice && touched.OriginalPrice
                       ? "form-control error"
                       : "form-control"
                   }
-                  value={values.originalPrice}
+                  value={values.OriginalPrice}
                   label="Giá gốc (VND)"
                 />
 
                 <Field
                   type="text"
-                  name="price"
+                  name="Price"
                   component={NumberInput}
                   className={
-                    errors.price && touched.price
+                    errors.Price && touched.Price
                       ? "form-control error"
                       : "form-control"
                   }
-                  value={values.price}
+                  value={values.Price}
                   label="Giá bán (VND)"
                 />
 
@@ -193,25 +235,25 @@ const EditBookModal = (props) => {
                   <label>Ảnh bìa</label>
                   <input
                     type="file"
-                    name="coverImage"
+                    name="ImageLink"
                     accept="image/*"
                     onChange={(event) => {
-                      setFieldValue("coverImage", event.currentTarget.files[0]);
+                      setFieldValue("ImageLink", event.currentTarget.files[0]);
                     }}
                     className={
-                      errors.coverImage && touched.coverImage
+                      errors.ImageLink && touched.ImageLink
                         ? "form-control error"
                         : "form-control"
                     }
                   />
-                  {errors.coverImage && touched.coverImage ? (
-                    <div className="input-feedback">{errors.coverImage}</div>
+                  {errors.ImageLink && touched.ImageLink ? (
+                    <div className="input-feedback">{errors.ImageLink}</div>
                   ) : null}
                 </div>
 
-                {values.coverImage ? (
+                {values.ImageLink ? (
                   <img
-                    src={URL.createObjectURL(values.coverImage)}
+                    src={URL.createObjectURL(values.ImageLink)}
                     width="100%"
                   />
                 ) : null}
@@ -222,11 +264,11 @@ const EditBookModal = (props) => {
                   <input
                     type="Radio"
                     id="soft"
-                    name="coverType"
+                    name="Format"
                     value="soft"
-                    checked={values.coverType === "soft"}
+                    checked={values.Format === "soft"}
                     onChange={() => {
-                      setFieldValue("coverType", "soft");
+                      setFieldValue("Format", "soft");
                     }}
                   />
                   <label htmlFor="soft">Bìa mềm</label>
@@ -234,11 +276,11 @@ const EditBookModal = (props) => {
                   <input
                     type="Radio"
                     id="hard"
-                    name="coverType"
+                    name="Format"
                     value="hard"
-                    checked={values.coverType === "hard"}
+                    checked={values.Format === "hard"}
                     onChange={() => {
-                      setFieldValue("coverType", "hard");
+                      setFieldValue("Format", "hard");
                     }}
                   />
                   <label htmlFor="hard">Bìa cứng</label>
@@ -247,10 +289,10 @@ const EditBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="dimension"
+                  name="Dimensions"
                   component={TextInput}
                   className={
-                    errors.dimension && touched.dimension
+                    errors.Dimensions && touched.Dimensions
                       ? "form-control error"
                       : "form-control"
                   }
@@ -259,36 +301,36 @@ const EditBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="weight"
+                  name="Weight"
                   component={NumberInput}
                   className={
-                    errors.weight && touched.weight
+                    errors.Weight && touched.Weight
                       ? "form-control error"
                       : "form-control"
                   }
-                  value={values.weight}
+                  value={values.Weight}
                   label="Khối lượng (kg)"
                 />
 
                 <Field
                   type="text"
-                  name="numberOfPages"
+                  name="NumberOfPage"
                   component={NumberInput}
                   className={
-                    errors.numberOfPages && touched.numberOfPages
+                    errors.NumberOfPage && touched.NumberOfPage
                       ? "form-control error"
                       : "form-control"
                   }
-                  value={values.numberOfPages}
+                  value={values.NumberOfPage}
                   label="Số trang"
                 />
 
                 <Field
                   type="text"
-                  name="info"
+                  name="Information"
                   component={TextAreaInput}
                   className={
-                    errors.info && touched.info
+                    errors.Information && touched.Information
                       ? "form-control error"
                       : "form-control"
                   }
@@ -297,36 +339,36 @@ const EditBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="inputQuantity"
+                  name="QuantityIn"
                   component={NumberInput}
                   className={
-                    errors.inputQuantity && touched.inputQuantity
+                    errors.QuantityIn && touched.QuantityIn
                       ? "form-control error"
                       : "form-control"
                   }
-                  value={values.inputQuantity}
+                  value={values.QuantityIn}
                   label="Số lượng nhập"
                 />
 
                 <Field
                   type="text"
-                  name="sold"
+                  name="QuantityOut"
                   component={NumberInput}
                   className={
-                    errors.sold && touched.sold
+                    errors.QuantityOut && touched.QuantityOut
                       ? "form-control error"
                       : "form-control"
                   }
-                  value={values.sold}
+                  value={values.QuantityOut}
                   disabled
                   label="Số lượng bán"
                 />
 
                 <Field
                   type="text"
-                  name="inputDate"
+                  name="Date"
                   component={DateInput}
-                  value={new Date(book.inputDate)}
+                  value={new Date(book.Date)}
                   label="Ngày nhập"
                 />
 
