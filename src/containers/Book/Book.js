@@ -7,6 +7,8 @@ import DeleteBookModal from "./components/DeleteBookModal";
 import AddBookModal from "./components/AddBookModal";
 import Pagination from "../../components/Pagination";
 
+import { add } from "../../components/svg/icon";
+
 import axios from "axios";
 
 const Book = () => {
@@ -122,8 +124,19 @@ const Book = () => {
 
   return (
     <>
-      <nav class="page-breadcrumb">
+      <nav class="page-breadcrumb flex align-items-center justify-content-between">
         <h5>QUẢN LÝ SÁCH</h5>
+        <div class="col-sm-12 col-md-2 text-right">
+          <a
+            className="btn btn-primary mb-md-0 text-white"
+            onClick={() => {
+              setShowAddModal(true);
+            }}
+          >
+            <i className="mr-2">{add}</i>
+            Thêm
+          </a>
+        </div>
       </nav>
 
       <div class="row">
@@ -137,7 +150,6 @@ const Book = () => {
                   setFilters({ ...filters, [key]: value });
                 }}
                 onShowDeleteModal={setShowDeleteModal}
-                onShowAddModal={setShowAddModal}
               />
 
               <BookTable

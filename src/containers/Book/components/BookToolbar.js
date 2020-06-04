@@ -1,5 +1,5 @@
 import React from "react";
-import { add } from "../../../components/svg/icon";
+import { del } from "../../../components/svg/icon";
 
 const BookToolbar = (props) => {
   const {
@@ -11,59 +11,8 @@ const BookToolbar = (props) => {
   } = props;
   return (
     <>
-      <div class="row align-items-md-center justify-content-between mb-4">
-        <div class="col-sm-12 col-md-8">
-          <div className="row align-items-md-center">
-            <div class="col-sm-9 col-md-8  dataTables_filter">
-              <input
-                class="form-control"
-                placeholder="Search"
-                onChange={(e) => {
-                  onChangeFilters("search", e.target.value);
-                }}
-                onKeyUp={(e) => {
-                  if (e.keyCode === 13) onSearch();
-                }}
-              />
-            </div>
-            <div class="col-sm-3 col-md-4">
-              <a
-                className="btn btn-primary mr-2 mb-2 mb-md-0 text-white"
-                onClick={() => onSearch()}
-              >
-                Tìm
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {selectedLength > 0 && (
-          <div class="col-sm-12 col-md-2 text-right">
-            <a
-              className="btn btn-primary mr-2 mb-2 mb-md-0 text-white"
-              onClick={() => {
-                onShowDeleteModal(true);
-              }}
-            >
-              <i className="mr-2">{add}</i>
-              Delete
-            </a>
-          </div>
-        )}
-        <div class="col-sm-12 col-md-2 text-right">
-          <a
-            className="btn btn-primary mr-2 mb-2 mb-md-0 text-white"
-            onClick={() => {
-              onShowAddModal(true);
-            }}
-          >
-            <i className="mr-2">{add}</i>
-            Thêm
-          </a>
-        </div>
-      </div>
-      <div className="row mb-3">
-        <div class="col-sm-12 col-md-6">
+      <div className="row mb-4 justify-content-between">
+        <div class="col-sm-12 col-md-5">
           <div class="dataTables_length flex align-items-center">
             <span className="mr-2">Show </span>
             <select
@@ -75,6 +24,34 @@ const BookToolbar = (props) => {
               <option value="50">50</option>
             </select>{" "}
             <span>entries</span>
+          </div>
+        </div>
+
+        <div className="col-sm-12 col-md-6">
+          <div className="row justify-content-end align-items-center">
+            {selectedLength > 0 && (
+              <div class="col-sm-12 col-md-2 text-right">
+                <a
+                  onClick={() => {
+                    onShowDeleteModal(true);
+                  }}
+                >
+                  <i className="mr-2">{del}</i>
+                </a>
+              </div>
+            )}
+            <div class="col-sm-9 col-md-8 dataTables_filter">
+              <input
+                class="form-control"
+                placeholder="Search"
+                onChange={(e) => {
+                  onChangeFilters("search", e.target.value);
+                }}
+                onKeyUp={(e) => {
+                  if (e.keyCode === 13) onSearch();
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>
