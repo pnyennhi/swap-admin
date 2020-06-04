@@ -9,6 +9,7 @@ import NumberInput from "../../../components/NumberInput";
 import DateInput from "../../../components/DateInput";
 
 import { storage } from "../../../firebase";
+import { uploadImage } from "../../../firebase/uploadImage";
 
 const EditBookModal = (props) => {
   const { show, book, onClose } = props;
@@ -78,34 +79,37 @@ const EditBookModal = (props) => {
   const handleSubmit = (values, actions) => {
     // alert(JSON.stringify(values, null, 2));
 
-    const uploadTask = storage
-      .ref(`images/${values.ImageLink.name}`)
-      .put(values.ImageLink);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        // progrss function ....
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-      },
-      (error) => {
-        // error function ....
-        console.log(error);
-      },
-      () => {
-        // complete function ....
-        storage
-          .ref("images")
-          .child(values.ImageLink.name)
-          .getDownloadURL()
-          .then((url) => {
-            values.ImageLink = url;
-            // console.log(url);
-            console.log(values);
-          });
-      }
-    );
+    // const uploadTask = storage
+    //   .ref(`images/${values.ImageLink.name}`)
+    //   .put(values.ImageLink);
+    // uploadTask.on(
+    //   "state_changed",
+    //   (snapshot) => {
+    //     // progrss function ....
+    //     const progress = Math.round(
+    //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+    //     );
+    //   },
+    //   (error) => {
+    //     // error function ....
+    //     console.log(error);
+    //   },
+    //   () => {
+    //     // complete function ....
+    //     storage
+    //       .ref("images")
+    //       .child(values.ImageLink.name)
+    //       .getDownloadURL()
+    //       .then((url) => {
+    //         values.ImageLink = url;
+    //         // console.log(url);
+    //         console.log(values);
+    //       });
+    //   }
+    // );
+    uploadImage(values.ImageLink).then((res) => {
+      console.log(res);
+    });
 
     actions.setSubmitting(false);
   };
