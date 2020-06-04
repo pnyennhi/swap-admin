@@ -14,6 +14,7 @@ import Login from "./containers/Login/Login";
 import Layout from "./containers/Layout/Layout";
 import Book from "./containers/Book/Book";
 import User from "./containers/User/User";
+import Profile from "./containers/Personal/Profile";
 
 function App() {
   const storedUser = localStorage.getItem("user");
@@ -30,6 +31,7 @@ function App() {
           <Switch>
             <Route path="/book" component={Book} />
             <Route path="/user" component={User} />
+            <Route path="/profile" component={Profile} />
             <Redirect exact from="/" to="/book" />
             <Redirect exact from="/login" to="/book" />
           </Switch>
