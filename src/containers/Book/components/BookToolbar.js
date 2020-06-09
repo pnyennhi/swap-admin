@@ -4,7 +4,8 @@ import { del } from "../../../components/svg/icon";
 const BookToolbar = (props) => {
   const {
     selectedLength,
-    onChangeFilters,
+    onChangeSearch,
+    onChangePageSize,
     onSearch,
     onShowDeleteModal,
     onShowAddModal,
@@ -18,6 +19,9 @@ const BookToolbar = (props) => {
             <select
               class="custom-select custom-select-sm form-control mr-2"
               style={{ width: "30%" }}
+              onChange={(e) => {
+                onChangePageSize(e.target.value);
+              }}
             >
               <option value="10">10</option>
               <option value="30">30</option>
@@ -45,7 +49,7 @@ const BookToolbar = (props) => {
                 class="form-control"
                 placeholder="Search"
                 onChange={(e) => {
-                  onChangeFilters("search", e.target.value);
+                  onChangeSearch(e.target.value);
                 }}
                 onKeyUp={(e) => {
                   if (e.keyCode === 13) onSearch();

@@ -10,16 +10,17 @@ const BookTable = (props) => {
     onSelect,
     onSelectAll,
     onSort,
+    onEdit,
   } = props;
 
-  const [editedBook, setEditedBook] = useState(null);
+  const [editedBookId, setEditedBookId] = useState(null);
 
-  const handleSetEditedBook = (id) => {
-    setEditedBook(id);
+  const handlesetEditedBookId = (id) => {
+    setEditedBookId(id);
   };
 
   const handleCloseEditModal = () => {
-    setEditedBook(null);
+    setEditedBookId(null);
   };
 
   return (
@@ -37,42 +38,60 @@ const BookTable = (props) => {
           </th>
           <th
             onClick={() => {
-              onSort("BookID");
+              onSort("bookID");
             }}
           >
             ID
           </th>
           <th
             onClick={() => {
-              onSort("Name");
+              onSort("nameBook");
             }}
           >
             Tên
           </th>
           <th
             onClick={() => {
-              onSort("Author");
+              onSort("author");
             }}
           >
             Tác giả
           </th>
           <th
             onClick={() => {
-              onSort("CategoryID");
+              onSort("category");
             }}
           >
             Thể loại
           </th>
           <th
             onClick={() => {
-              onSort("PublisherID");
+              onSort("publisher");
             }}
           >
-            Nhà xuất bản
+            NXB
           </th>
-          <th>Nhập</th>
-          <th>Bán</th>
-          <th>Giá bán</th>
+          <th
+            onClick={() => {
+              onSort("quantityIn");
+            }}
+          >
+            Nhập
+          </th>
+          <th
+            onClick={() => {
+              onSort("quantityOut");
+            }}
+          >
+            Bán
+          </th>
+          <th
+            onClick={() => {
+              onSort("price");
+            }}
+          >
+            Giá bán
+          </th>
           <th>Action</th>
         </tr>
 
@@ -83,23 +102,23 @@ const BookTable = (props) => {
                 <input
                   type="checkbox"
                   onChange={(e) => {
-                    onSelect(e, book.BookID);
+                    onSelect(e, book.bookID);
                   }}
-                  checked={selectedBooks.indexOf(book.BookID) > -1}
+                  checked={selectedBooks.indexOf(book.bookID) > -1}
                 />
               </td>
-              <td>{book.BookID}</td>
-              <td>{book.Name}</td>
-              <td>{book.Author}</td>
-              <td>{book.CategoryID}</td>
-              <td>{book.PublisherID}</td>
-              <td>{book.QuantityIn}</td>
-              <td>{book.QuantityOut}</td>
-              <td>{book.Price}</td>
+              <td>{book.bookID}</td>
+              <td>{book.nameBook}</td>
+              <td>{book.author}</td>
+              <td>{book.category}</td>
+              <td>{book.publisher}</td>
+              <td>{book.quantityIn}</td>
+              <td>{book.quantityOut ? book.quantityOut : 0}</td>
+              <td>{book.price}</td>
               <td>
                 <button
                   className="icon-button"
-                  onClick={() => handleSetEditedBook(book)}
+                  onClick={() => handlesetEditedBookId(book.bookID)}
                 >
                   {edit}
                 </button>
@@ -107,7 +126,7 @@ const BookTable = (props) => {
                 <button
                   className="icon-button"
                   onClick={() => {
-                    onDelete(book.BookID);
+                    onDelete(book.bookID);
                   }}
                 >
                   {del}
@@ -117,11 +136,13 @@ const BookTable = (props) => {
           ))}
         </tbody>
       </table>
-      {Boolean(editedBook) && (
+
+      {Boolean(editedBookId) && (
         <EditBookModal
-          show={Boolean(editedBook)}
-          book={editedBook}
+          show={Boolean(editedBookId)}
+          bookId={editedBookId}
           onClose={handleCloseEditModal}
+          onEdit={onEdit}
         />
       )}
     </div>
