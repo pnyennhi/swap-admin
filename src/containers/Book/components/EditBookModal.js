@@ -92,6 +92,8 @@ const EditBookModal = (props) => {
         })
         .catch((err) => {
           toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
+          setIsLoading(false);
+          actions.setSubmitting(false);
         });
     } else {
       handleEditBook(values, actions);
@@ -113,6 +115,8 @@ const EditBookModal = (props) => {
       })
       .catch((err) => {
         toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
+        setIsLoading(false);
+        actions.setSubmitting(false);
       });
   };
 
