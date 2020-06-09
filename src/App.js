@@ -9,13 +9,16 @@ import {
 } from "react-router-dom";
 
 import "./assets/css/style.css";
+import "react-toastify/dist/ReactToastify.css";
 
 import Login from "./containers/Login/Login";
 import Layout from "./containers/Layout/Layout";
 import Book from "./containers/Book/Book";
 import User from "./containers/User/User";
 import Profile from "./containers/Personal/Profile";
+import { toast } from "react-toastify";
 
+toast.configure();
 function App() {
   const storedUser = localStorage.getItem("user");
   const [user, setUser] = useState(storedUser);
