@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import Modal from "../../../components/Modal";
@@ -8,77 +8,136 @@ import TextAreaInput from "../../../components/TextAreaInput";
 import NumberInput from "../../../components/NumberInput";
 import DateInput from "../../../components/DateInput";
 
+import { uploadImage } from "../../../firebase/uploadImage";
+
+import loading from "../../../assets/images/loading.gif";
+
+import axios from "axios";
+import { toast } from "react-toastify";
+
 const AddBookModal = (props) => {
   const { show, onClose, onAdd } = props;
 
+  const [categories, setCategories] = useState([]);
+  const [publishers, setPublishers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   useEffect(() => {
     //call API to get list of types, PublisherIDs when mounted
+    axios
+      .get(`https://bookstoreprojectdut.azurewebsites.net/api/categories/all`)
+      .then((res) => {
+        setCategories(res.data);
+      });
+    axios
+      .get(`https://bookstoreprojectdut.azurewebsites.net/api/publishers/all`)
+      .then((res) => {
+        setPublishers(res.data);
+      });
   }, []);
 
+  const handleSubmit = (values, actions) => {
+    setIsLoading(true);
+    if (values.imageLink.name) {
+      uploadImage(values.imageLink)
+        .then((res) => {
+          values.imageLink = res;
+          console.log(values);
+          handleAddBook(values, actions);
+        })
+        .catch((err) => {
+          toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
+          setIsLoading(false);
+          actions.setSubmitting(false);
+        });
+    } else {
+      handleAddBook(values, actions);
+    }
+  };
+
+  const handleAddBook = (data, actions) => {
+    axios
+      .post(`https://bookstoreprojectdut.azurewebsites.net/api/books`, data)
+      .then((res) => {
+        console.log(res.status);
+        actions.setSubmitting(false);
+        setIsLoading(false);
+        setIsSubmitted(true);
+        toast.success("Edit sách thành công!");
+      })
+      .catch((err) => {
+        toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
+        setIsLoading(false);
+        actions.setSubmitting(false);
+      });
+  };
+
+  const handleClose = () => {
+    onClose();
+    if (isSubmitted) onAdd();
+  };
+
   const initialValues = {
-    Name: "",
-    Author: "",
-    CategoryID: "0",
-    PublisherID: "",
-    OriginalPrice: "",
-    Price: "",
-    ImageLink: "",
-    Dimensions: "",
-    Weight: "",
-    NumberOfPage: "",
-    Information: "",
-    QuantityIn: "",
-    Date: new Date(),
-    Format: "soft",
+    nameBook: "",
+    author: "",
+    categoryID: 1,
+    publisherID: 1,
+    originalPrice: "",
+    price: "",
+    imageLink: "",
+    dimensions: "",
+    weight: "",
+    numberOfPage: "",
+    information: "",
+    quantityIn: "",
+    date: new Date(),
+    format: "Bìa mềm",
+    status: true,
   };
 
   const SignupSchema = Yup.object().shape({
-    Name: Yup.string()
+    nameBook: Yup.string()
       .min(2, "Too Short!")
       .max(50, "Too Long!")
       .required("Please fill out this field"),
-    Author: Yup.string()
+    author: Yup.string()
       .min(2, "Too Short!")
       .max(50, "Too Long!")
       .required("Please fill out this field"),
-    PublisherID: Yup.string()
+    information: Yup.string()
       .min(2, "Too Short!")
-      .max(50, "Too Long!")
       .required("Please fill out this field"),
-    Information: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Please fill out this field"),
-    Price: Yup.number()
+    price: Yup.number()
       .min(0, "Too Short!")
       .max(10000000000, "Too Long!")
       .required("Please fill out this field"),
-    OriginalPrice: Yup.number()
+    originalPrice: Yup.number()
       .min(0, "Too Short!")
       .max(10000000000, "Too Long!")
       .required("Please fill out this field"),
-    Dimensions: Yup.number().required("Please fill out this field"),
-    Weight: Yup.number()
+    dimensions: Yup.string().required("Please fill out this field"),
+    weight: Yup.number()
       .min(0, "Too Short!")
       .max(10000000000, "Too Long!")
       .required("Please fill out this field"),
-    NumberOfPage: Yup.number()
+    numberOfPage: Yup.number()
       .positive("This field must not be negative")
       .integer("This field must be non-decimal")
       .min(0, "Too Short!")
       .max(10000000000, "Too Long!")
       .required("Please fill out this field"),
-    QuantityIn: Yup.number()
+    quantityIn: Yup.number()
       .min(0, "Too Short!")
       .max(10000000000, "Too Long!")
       .required("Please fill out this field"),
-    ImageLink: Yup.mixed().required("Please fill out this field"),
+    imageLink: Yup.mixed().required("Please fill out this field"),
   });
 
-  const handleSubmit = (values, actions) => {
-    alert(JSON.stringify(values, null, 2));
-    actions.setSubmitting(false);
-  };
+  // const handleSubmit = (values, actions) => {
+  //   alert(JSON.stringify(values, null, 2));
+  //   actions.setSubmitting(false);
+  // };
 
   return (
     <Modal show={show}>
@@ -86,7 +145,7 @@ const AddBookModal = (props) => {
         <h5 className="modal-title" id="exampleModalLabel">
           Thêm sách
         </h5>
-        <button className="close" onClick={() => onClose()}>
+        <button className="close" onClick={handleClose}>
           <span>×</span>
         </button>
       </div>
@@ -114,10 +173,10 @@ const AddBookModal = (props) => {
               <div className="modal-body">
                 <Field
                   type="text"
-                  name="Name"
+                  name="nameBook"
                   component={TextInput}
                   className={
-                    errors.Name && touched.Name
+                    errors.nameBook && touched.nameBook
                       ? "form-control error"
                       : "form-control"
                   }
@@ -126,10 +185,10 @@ const AddBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="Author"
+                  name="author"
                   component={TextInput}
                   className={
-                    errors.Author && touched.Author
+                    errors.author && touched.author
                       ? "form-control error"
                       : "form-control"
                   }
@@ -141,38 +200,53 @@ const AddBookModal = (props) => {
                   <select
                     style={{ color: "black" }}
                     class="form-control mb-3"
-                    name="type"
-                    value={values.type}
+                    name="categoryID"
+                    value={values.categoryID}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   >
-                    <option selected="" value="0">
-                      Truyện tranh
-                    </option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    {categories.map((category) => {
+                      return (
+                        <option
+                          key={category.categoryID}
+                          value={category.categoryID}
+                        >
+                          {category.category}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Nhà xuất bản</label>
+                  <select
+                    style={{ color: "black" }}
+                    class="form-control mb-3"
+                    name="publisherID"
+                    value={values.publisherID}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  >
+                    {publishers.map((publisher) => {
+                      return (
+                        <option
+                          key={publisher.publisherID}
+                          value={publisher.publisherID}
+                        >
+                          {publisher.publisher}
+                        </option>
+                      );
+                    })}
                   </select>
                 </div>
 
                 <Field
                   type="text"
-                  name="PublisherID"
-                  component={TextInput}
-                  className={
-                    errors.PublisherID && touched.PublisherID
-                      ? "form-control error"
-                      : "form-control"
-                  }
-                  label="Nhà xuất bản"
-                />
-
-                <Field
-                  type="text"
-                  name="OriginalPrice"
+                  name="originalPrice"
                   component={NumberInput}
                   className={
-                    errors.OriginalPrice && touched.OriginalPrice
+                    errors.originalPrice && touched.originalPrice
                       ? "form-control error"
                       : "form-control"
                   }
@@ -181,10 +255,10 @@ const AddBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="Price"
+                  name="price"
                   component={NumberInput}
                   className={
-                    errors.Price && touched.Price
+                    errors.price && touched.price
                       ? "form-control error"
                       : "form-control"
                   }
@@ -195,64 +269,71 @@ const AddBookModal = (props) => {
                   <label>Ảnh bìa</label>
                   <input
                     type="file"
-                    name="ImageLink"
+                    name="imageLink"
                     accept="image/*"
                     onChange={(event) => {
-                      setFieldValue("ImageLink", event.currentTarget.files[0]);
+                      setFieldValue("imageLink", event.currentTarget.files[0]);
                     }}
                     className={
-                      errors.ImageLink && touched.ImageLink
+                      errors.imageLink && touched.imageLink
                         ? "form-control error"
                         : "form-control"
                     }
                   />
-                  {errors.ImageLink && touched.ImageLink ? (
-                    <div className="input-feedback">{errors.ImageLink}</div>
+                  {errors.imageLink && touched.imageLink ? (
+                    <div className="input-feedback">{errors.imageLink}</div>
                   ) : null}
                 </div>
 
-                {values.ImageLink ? (
+                {!values.imageLink ? null : values.imageLink.name ? (
                   <img
-                    src={URL.createObjectURL(values.ImageLink)}
+                    src={URL.createObjectURL(values.imageLink)}
                     width="100%"
+                    style={{ marginBottom: "1rem" }}
                   />
-                ) : null}
+                ) : (
+                  <img
+                    src={values.imageLink}
+                    width="100%"
+                    style={{ marginBottom: "1rem" }}
+                  />
+                )}
 
                 <div>
                   <label>Loại</label>
                   <br />
                   <input
                     type="Radio"
-                    id="soft"
-                    name="Format"
-                    value="soft"
-                    checked={values.Format === "soft"}
+                    id="Bìa mềm"
+                    name="format"
+                    value="Bìa mềm"
+                    checked={values.format === "Bìa mềm"}
                     onChange={() => {
-                      setFieldValue("Format", "soft");
+                      setFieldValue("format", "Bìa mềm");
                     }}
                   />
-                  <label htmlFor="soft">Bìa mềm</label>
+                  <label htmlFor="Bìa mềm">Bìa mềm</label>
                   <br />
                   <input
                     type="Radio"
-                    id="hard"
-                    name="Format"
-                    value="hard"
-                    checked={values.Format === "hard"}
+                    id="Bìa cứng"
+                    name="format"
+                    value="Bìa cứng"
+                    checked={values.format === "Bìa cứng"}
                     onChange={() => {
-                      setFieldValue("Format", "hard");
+                      setFieldValue("format", "Bìa cứng");
                     }}
                   />
-                  <label htmlFor="hard">Bìa cứng</label>
+                  <label htmlFor="Bìa cứng">Bìa cứng</label>
                   <br />
                 </div>
 
                 <Field
                   type="text"
-                  name="Dimensions"
+                  name="dimensions"
                   component={TextInput}
                   className={
-                    errors.Dimensions && touched.Dimensions
+                    errors.dimensions && touched.dimensions
                       ? "form-control error"
                       : "form-control"
                   }
@@ -261,10 +342,10 @@ const AddBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="Weight"
+                  name="weight"
                   component={NumberInput}
                   className={
-                    errors.Weight && touched.Weight
+                    errors.weight && touched.weight
                       ? "form-control error"
                       : "form-control"
                   }
@@ -273,10 +354,10 @@ const AddBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="NumberOfPage"
+                  name="numberOfPage"
                   component={NumberInput}
                   className={
-                    errors.NumberOfPage && touched.NumberOfPage
+                    errors.numberOfPage && touched.numberOfPage
                       ? "form-control error"
                       : "form-control"
                   }
@@ -285,10 +366,10 @@ const AddBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="Information"
+                  name="information"
                   component={TextAreaInput}
                   className={
-                    errors.Information && touched.Information
+                    errors.information && touched.information
                       ? "form-control error"
                       : "form-control"
                   }
@@ -297,10 +378,10 @@ const AddBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="QuantityIn"
+                  name="quantityIn"
                   component={NumberInput}
                   className={
-                    errors.QuantityIn && touched.QuantityIn
+                    errors.quantityIn && touched.quantityIn
                       ? "form-control error"
                       : "form-control"
                   }
@@ -309,14 +390,37 @@ const AddBookModal = (props) => {
 
                 <Field
                   type="text"
-                  name="Date"
+                  name="date"
                   component={DateInput}
                   label="Ngày nhập"
                 />
 
+                <div class="form-group">
+                  <label>Tình trạng</label>
+                  <select
+                    style={{ color: "black" }}
+                    class="form-control mb-3"
+                    name="status"
+                    value={values.status}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  >
+                    <option value="true">Đang hoạt động</option>
+                    <option value="false">Bị khóa</option>
+                  </select>
+                </div>
+
                 <ErrorFocus />
               </div>
               <div className="modal-footer">
+                <img
+                  style={{
+                    display: isLoading ? "inline" : "none",
+                    marginRight: "1rem",
+                  }}
+                  src={loading}
+                  width="6%"
+                />
                 <button
                   type="submit"
                   className="btn btn-secondary"
@@ -331,7 +435,11 @@ const AddBookModal = (props) => {
                 >
                   Reset
                 </button>
-                <button className="btn btn-primary" onClick={() => onClose()}>
+                <button
+                  className="btn btn-primary"
+                  onClick={handleClose}
+                  disabled={isSubmitting}
+                >
                   Hủy
                 </button>
               </div>
