@@ -12,6 +12,7 @@ import loading from "../../assets/images/loading.gif";
 
 import axios from "axios";
 import queryString from "query-string";
+import { toast } from "react-toastify";
 
 const Book = () => {
   const [books, setBooks] = useState(fakeBooks);
@@ -88,8 +89,26 @@ const Book = () => {
   const handleDeleteBook = (ids) => {
     //delete book API
     //id is an array
-    setDeletedBook(null);
-    setShowDeleteModal(false);
+    const deletedAPIs = ids.map((id) => {
+      return axios.delete(
+        `https://bookstoreprojectdut.azurewebsites.net/api/books/${id}`
+      );
+    });
+    Promise.all(deletedAPIs)
+      .then((res) => {
+        toast.success("Delete thanh cong");
+        setDeletedBook(null);
+        setShowDeleteModal(false);
+        handleGetBook();
+      })
+      .catch((err) => {
+        toast.error("Fail");
+        setDeletedBook(null);
+        setShowDeleteModal(false);
+      });
+
+    // setDeletedBook(null);
+    // setShowDeleteModal(false);
     // handleDeleteBooks(ids);
   };
 
@@ -202,7 +221,7 @@ const Book = () => {
                 <AddBookModal
                   show={showAddModal}
                   onClose={handleCloseAddModal}
-                  // onAdd={handleAddBook}
+                  onAdd={handleGetBook}
                 />
               )}
             </div>
