@@ -1,10 +1,10 @@
 import React from "react";
 
 const Pagination = (props) => {
-  const { currentPage, limit, totalRows, onChange } = props;
+  const { page, pageSize, totalRows, onChange } = props;
 
   let pages = [];
-  const pageTotal = Math.ceil(totalRows / limit);
+  const pageTotal = Math.ceil(totalRows / pageSize);
 
   for (let i = 1; i <= pageTotal; i++) pages.push(i);
 
@@ -18,7 +18,7 @@ const Pagination = (props) => {
           <ul class="pagination">
             <li
               class={
-                currentPage === 1
+                page === 1
                   ? "paginate_button page-item previous disabled"
                   : "paginate_button page-item previous"
               }
@@ -27,16 +27,16 @@ const Pagination = (props) => {
               <a
                 class="page-link"
                 onClick={() => {
-                  onChange(currentPage - 1);
+                  onChange(page - 1);
                 }}
               >
                 Previous
               </a>
             </li>
-            {pages.map((page) => (
+            {pages.map((pageItem) => (
               <li
                 class={
-                  page === currentPage
+                  pageItem === page
                     ? "paginate_button page-item active"
                     : "paginate_button page-item"
                 }
@@ -45,16 +45,16 @@ const Pagination = (props) => {
                 <a
                   class="page-link"
                   onClick={() => {
-                    onChange(page);
+                    onChange(pageItem);
                   }}
                 >
-                  {page}
+                  {pageItem}
                 </a>
               </li>
             ))}
             <li
               class={
-                currentPage === pageTotal
+                page === pageTotal || pageTotal === 0
                   ? "paginate_button page-item next disabled"
                   : "paginate_button page-item next"
               }
@@ -63,7 +63,7 @@ const Pagination = (props) => {
               <a
                 class="page-link"
                 onClick={() => {
-                  onChange(currentPage + 1);
+                  onChange(page + 1);
                 }}
               >
                 Next
