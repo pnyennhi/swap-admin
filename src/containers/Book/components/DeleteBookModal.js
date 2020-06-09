@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "../../../components/Modal";
 
 const DeleteModal = (props) => {
   const { show, bookIds, onClose, onDelete } = props;
+  const [isSubmitting, setIsSubmitting] = useState(false);
   return (
     <Modal show={show}>
       <div className="modal-header">
@@ -19,10 +20,20 @@ const DeleteModal = (props) => {
         </p>
       </div>
       <div className="modal-footer">
-        <button className="btn btn-secondary" onClick={() => onDelete(bookIds)}>
+        <button
+          className="btn btn-secondary"
+          onClick={() => {
+            setIsSubmitting(true);
+            onDelete(bookIds);
+          }}
+        >
           Xóa
         </button>
-        <button className="btn btn-primary" onClick={() => onClose()}>
+        <button
+          className="btn btn-primary"
+          onClick={() => onClose()}
+          disabled={isSubmitting}
+        >
           Hủy
         </button>
       </div>
