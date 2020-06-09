@@ -8,8 +8,10 @@ import AddBookModal from "./components/AddBookModal";
 import Pagination from "../../components/Pagination";
 
 import { add } from "../../components/svg/icon";
+import loading from "../../assets/images/loading.gif";
 
 import axios from "axios";
+import queryString from "query-string";
 
 const Book = () => {
   const [books, setBooks] = useState(fakeBooks);
@@ -17,21 +19,58 @@ const Book = () => {
   const [deletedBook, setDeletedBook] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
-  const [sortConfig, setSortConfig] = useState(null);
+  const [search, setSearch] = useState(null);
   const [totalRows, setTotalRows] = useState(21);
   const [filters, setFilters] = useState({
-    currentPage: 1,
-    limit: 10,
-    search: null,
+    page: 1,
+    pageSize: 10,
+    keyword: null,
+    criteria: null,
+    sort: null,
   });
-
-  useEffect(() => {
-    //call API get when mounted (category list, publisher list)
-  }, []);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     //call API get when filters change (get book list)
+    handleGetBook();
   }, [filters]);
+
+  const handleGetBook = () => {
+    let query;
+    if (filters.keyword && filters.criteria)
+      query = queryString.stringify(filters);
+    else if (!filters.keyword && !filters.criteria)
+      query = queryString.stringify({
+        page: filters.page,
+        pageSize: filters.pageSize,
+      });
+    else if (filters.keyword && !filters.criteria)
+      query = queryString.stringify({
+        page: filters.page,
+        pageSize: filters.pageSize,
+        keyword: filters.keyword,
+      });
+    else if (!filters.keyword && filters.criteria)
+      query = queryString.stringify({
+        page: filters.page,
+        pageSize: filters.pageSize,
+        criteria: filters.criteria,
+        sort: filters.sort,
+      });
+    setIsLoading(true);
+    axios
+      .get(`https://bookstoreprojectdut.azurewebsites.net/api/books?${query}`)
+      .then((res) => {
+        setBooks(res.data.items);
+        setTotalRows(res.data.total);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setHasError(true);
+      });
+  };
 
   const handleSetDeletedBook = (id) => {
     setDeletedBook(id);
@@ -54,17 +93,6 @@ const Book = () => {
     // handleDeleteBooks(ids);
   };
 
-  // const handleDeleteBooks = (delIds) => {
-  //   const newBooks = books.filter((book) => delIds.indexOf(book.id) === -1);
-  //   setBooks(newBooks);
-  //   const newSelectedBooks = selectedBooks.filter(
-  //     (bookId) => delIds.indexOf(bookId) === -1
-  //   );
-  //   console.log(newSelectedBooks);
-
-  //   setSelectedBooks(newSelectedBooks);
-  // };
-
   const handleSelectOneBook = (e, id) => {
     const selectedIndex = selectedBooks.indexOf(id);
     let newSelectedBooks = [...selectedBooks];
@@ -79,48 +107,27 @@ const Book = () => {
   };
 
   const handleSelectAll = (e) => {
-    if (e.target.checked) setSelectedBooks(books.map((book) => book.BookID));
+    if (e.target.checked) setSelectedBooks(books.map((book) => book.bookID));
     else setSelectedBooks([]);
   };
 
   const handleSearchBooks = () => {
-    // var key = e.target.value;
-    // var results = books.filter(
-    //   (book) =>
-    //     JSON.stringify(book).toLowerCase().search(key.toLowerCase()) > -1
-    // );
-    // console.log(results);
-    // if (key) setIsSearching(true);
-    // else setIsSearching(false);
-    // setSearchedBooks(results);
-
-    //call API search
-    alert(filters.search);
+    setFilters({ ...filters, keyword: search, page: 1 });
   };
 
   const handleChangePage = (page) => {
-    setFilters({ ...filters, currentPage: page });
+    setFilters({ ...filters, page: page });
   };
 
-  const handleSort = (field) => {
-    if (!sortConfig) setSortConfig({ field: field, order: "asc" });
-    else if (sortConfig.field !== field)
-      setSortConfig({ field: field, order: "asc" });
-    else if (sortConfig.order === "asc")
-      setSortConfig({
-        field: field,
-        order: "desc",
-      });
-    else
-      setSortConfig({
-        field: field,
-        order: "asc",
-      });
+  const handleSort = (criteria) => {
+    if (!filters.criteria)
+      setFilters({ ...filters, criteria: criteria, sort: 1 });
+    else if (filters.criteria !== criteria)
+      setFilters({ ...filters, criteria: criteria, sort: 1 });
+    else if (filters.sort === 1)
+      setFilters({ ...filters, criteria: criteria, sort: 0 });
+    else setFilters({ ...filters, criteria: criteria, sort: 1 });
   };
-
-  useEffect(() => {
-    if (sortConfig) alert(JSON.stringify(sortConfig));
-  }, [sortConfig]);
 
   return (
     <>
@@ -146,27 +153,41 @@ const Book = () => {
               <BookToolbar
                 selectedLength={selectedBooks.length}
                 onSearch={handleSearchBooks}
-                onChangeFilters={(key, value) => {
-                  setFilters({ ...filters, [key]: value });
+                onChangeSearch={setSearch}
+                onChangePageSize={(val) => {
+                  setFilters({ ...filters, pageSize: val });
                 }}
                 onShowDeleteModal={setShowDeleteModal}
               />
 
-              <BookTable
-                books={books}
-                selectedBooks={selectedBooks}
-                onDelete={handleSetDeletedBook}
-                onSelect={handleSelectOneBook}
-                onSelectAll={handleSelectAll}
-                onSort={handleSort}
-              />
+              {isLoading ? (
+                <img
+                  src={loading}
+                  width="50px"
+                  style={{ display: "block", margin: "auto" }}
+                />
+              ) : hasError ? (
+                <p style={{ color: "red" }}>Đã có lỗi xảy ra</p>
+              ) : (
+                <>
+                  <BookTable
+                    books={books}
+                    selectedBooks={selectedBooks}
+                    onDelete={handleSetDeletedBook}
+                    onSelect={handleSelectOneBook}
+                    onSelectAll={handleSelectAll}
+                    onSort={handleSort}
+                    onEdit={handleGetBook}
+                  />
 
-              <Pagination
-                totalRows={totalRows}
-                currentPage={filters.currentPage}
-                limit={filters.limit}
-                onChange={handleChangePage}
-              />
+                  <Pagination
+                    totalRows={totalRows}
+                    page={filters.page}
+                    pageSize={filters.pageSize}
+                    onChange={handleChangePage}
+                  />
+                </>
+              )}
 
               {(Boolean(deletedBook) || showDeleteModal) && (
                 <DeleteBookModal
