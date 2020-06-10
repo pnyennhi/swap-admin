@@ -97,12 +97,14 @@ const Book = () => {
     Promise.all(deletedAPIs)
       .then((res) => {
         toast.success("Delete thanh cong");
+        setSelectedBooks([]);
         setDeletedBook(null);
         setShowDeleteModal(false);
         handleGetBook();
       })
       .catch((err) => {
         toast.error("Fail");
+        setSelectedBooks([]);
         setDeletedBook(null);
         setShowDeleteModal(false);
       });
