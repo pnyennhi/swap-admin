@@ -39402,3 +39402,12 @@ table.dataTable .sorting_asc:before, table.dataTable .sorting_desc:after {
 table th{
   cursor: pointer;
 }
+
+.form-detail .form-group p {
+  padding: 0 10px;
+  text-align: justify;
+}
+
+td a:hover {
+  text-decoration: underline !important;
+}

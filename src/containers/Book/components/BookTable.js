@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { edit, del, book } from "../../../components/svg/icon";
 import EditBookModal from "./EditBookModal";
+import BookDetailModal from "./BookDetailModal";
 
 const BookTable = (props) => {
   const {
@@ -14,6 +15,7 @@ const BookTable = (props) => {
   } = props;
 
   const [editedBookId, setEditedBookId] = useState(null);
+  const [detailedBookId, setDetailedBookId] = useState(null);
 
   const handlesetEditedBookId = (id) => {
     setEditedBookId(id);
@@ -21,6 +23,10 @@ const BookTable = (props) => {
 
   const handleCloseEditModal = () => {
     setEditedBookId(null);
+  };
+
+  const handleCloseDetailModal = () => {
+    setDetailedBookId(null);
   };
 
   return (
@@ -108,7 +114,15 @@ const BookTable = (props) => {
                 />
               </td>
               <td>{book.bookID}</td>
-              <td>{book.nameBook}</td>
+              <td>
+                <a
+                  onClick={() => {
+                    setDetailedBookId(book.bookID);
+                  }}
+                >
+                  {book.nameBook}
+                </a>
+              </td>
               <td>{book.author}</td>
               <td>{book.category}</td>
               <td>{book.publisher}</td>
@@ -143,6 +157,14 @@ const BookTable = (props) => {
           bookId={editedBookId}
           onClose={handleCloseEditModal}
           onEdit={onEdit}
+        />
+      )}
+
+      {Boolean(detailedBookId) && (
+        <BookDetailModal
+          show={Boolean(detailedBookId)}
+          bookId={detailedBookId}
+          onClose={handleCloseDetailModal}
         />
       )}
     </div>
