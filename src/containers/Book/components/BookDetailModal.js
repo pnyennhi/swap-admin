@@ -9,7 +9,7 @@ import axios from "axios";
 const BookDetailModal = (props) => {
   const { show, bookId, onClose, onEdit } = props;
 
-  const [editedBook, setEditedBook] = useState(null);
+  const [book, setBook] = useState(null);
   const [categories, setCategories] = useState([]);
   const [publishers, setPublishers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +18,7 @@ const BookDetailModal = (props) => {
     axios
       .get(`https://bookstoreprojectdut.azurewebsites.net/api/books/${bookId}`)
       .then((res) => {
-        setEditedBook(res.data);
+        setBook(res.data);
       });
     axios
       .get(`https://bookstoreprojectdut.azurewebsites.net/api/categories/all`)
@@ -36,7 +36,7 @@ const BookDetailModal = (props) => {
     <Modal show={show}>
       <div className="modal-header">
         <h5 className="modal-title" id="exampleModalLabel">
-          Chỉnh sửa sách
+          Chi tiết sách
         </h5>
         <button
           className="close"
@@ -48,7 +48,7 @@ const BookDetailModal = (props) => {
         </button>
       </div>
 
-      {editedBook ? (
+      {book ? (
         <>
           <div className="modal-body">
             <div className="form-detail">
@@ -56,21 +56,21 @@ const BookDetailModal = (props) => {
                 <label>
                   <b>Id</b>
                 </label>
-                <p>{editedBook.bookID}</p>
+                <p>{book.bookID}</p>
               </div>
 
               <div className="form-group">
                 <label>
                   <b>Tên sách</b>
                 </label>
-                <p>{editedBook.nameBook}</p>
+                <p>{book.nameBook}</p>
               </div>
 
               <div className="form-group">
                 <label>
                   <b>Tác giả</b>
                 </label>
-                <p>{editedBook.author}</p>
+                <p>{book.author}</p>
               </div>
 
               {/* <div className="form-group">
@@ -80,7 +80,7 @@ const BookDetailModal = (props) => {
               <p>
                 {
                   categories.find(
-                    (category) => category.categoryID === editedBook.categoryID
+                    (category) => category.categoryID === book.categoryID
                   ).category
                 }
               </p>
@@ -90,14 +90,14 @@ const BookDetailModal = (props) => {
                 <label>
                   <b>Giá gốc</b>
                 </label>
-                <p>{editedBook.originalPrice}</p>
+                <p>{book.originalPrice}</p>
               </div>
 
               <div className="form-group">
                 <label>
                   <b>Giá bán</b>
                 </label>
-                <p>{editedBook.price}</p>
+                <p>{book.price}</p>
               </div>
 
               <div className="form-group">
@@ -105,65 +105,65 @@ const BookDetailModal = (props) => {
                   <b>Ảnh bìa</b>
                 </label>
                 <br />
-                <img src={editedBook.imageLink} alt={editedBook.nameBook} />
+                <img src={book.imageLink} alt={book.nameBook} />
               </div>
 
               <div className="form-group">
                 <label>
                   <b>Loại</b>
                 </label>
-                <p>{editedBook.format}</p>
+                <p>{book.format}</p>
               </div>
 
               <div className="form-group">
                 <label>
                   <b>Kích thước</b>
                 </label>
-                <p>{editedBook.dimensions}</p>
+                <p>{book.dimensions}</p>
               </div>
 
               <div className="form-group">
                 <label>
                   <b>Khối lượng</b>
                 </label>
-                <p>{editedBook.weight}</p>
+                <p>{book.weight}</p>
               </div>
 
               <div className="form-group">
                 <label>
                   <b>Số trang</b>
                 </label>
-                <p>{editedBook.numberOfPage}</p>
+                <p>{book.numberOfPage}</p>
               </div>
 
               <div className="form-group">
                 <label>
                   <b>Thông tin</b>
                 </label>
-                <p>{editedBook.information}</p>
+                <p>{book.information}</p>
               </div>
 
               <div className="form-group">
                 <label>
                   <b>Số lượng nhập</b>
                 </label>
-                <p>{editedBook.quantityIn}</p>
+                <p>{book.quantityIn}</p>
               </div>
 
               <div className="form-group">
                 <label>
                   <b>Số lượng bán</b>
                 </label>
-                <p>{editedBook.quantityOut}</p>
+                <p>{book.quantityOut}</p>
               </div>
 
               <div className="form-group">
                 <label>
                   <b>Ngày nhập</b>
                 </label>
-                <p>{`${new Date(editedBook.date).getDate()}/${new Date(
-                  editedBook.date
-                ).getMonth()}/${new Date(editedBook.date).getFullYear()}`}</p>
+                <p>{`${new Date(book.date).getDate()}/${new Date(
+                  book.date
+                ).getMonth()}/${new Date(book.date).getFullYear()}`}</p>
               </div>
             </div>
           </div>
