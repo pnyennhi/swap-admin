@@ -10,6 +10,7 @@ const Pagination = (props) => {
 
   return (
     <div className="row">
+      <div class="col-sm-12 col-md-5">Showing 1 to 10 of 200 entries</div>
       <div class="col-sm-12 col-md-7">
         <div
           class="dataTables_paginate paging_simple_numbers"
@@ -27,10 +28,27 @@ const Pagination = (props) => {
               <a
                 class="page-link"
                 onClick={() => {
+                  onChange(1);
+                }}
+              >
+                First
+              </a>
+            </li>
+            <li
+              class={
+                page === 1
+                  ? "paginate_button page-item previous disabled"
+                  : "paginate_button page-item previous"
+              }
+              id="dataTableExample_previous"
+            >
+              <a
+                class="page-link"
+                onClick={() => {
                   onChange(page - 1);
                 }}
               >
-                Previous
+                Prev
               </a>
             </li>
             {pages.map((pageItem) => (
@@ -67,6 +85,23 @@ const Pagination = (props) => {
                 }}
               >
                 Next
+              </a>
+            </li>
+            <li
+              class={
+                page === pageTotal || pageTotal === 0
+                  ? "paginate_button page-item next disabled"
+                  : "paginate_button page-item next"
+              }
+              id="dataTableExample_next"
+            >
+              <a
+                class="page-link"
+                onClick={() => {
+                  onChange(pageTotal);
+                }}
+              >
+                Last
               </a>
             </li>
           </ul>
