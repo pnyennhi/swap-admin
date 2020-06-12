@@ -128,7 +128,7 @@ const BookTable = (props) => {
               <td>{book.publisher}</td>
               <td>{book.quantityIn}</td>
               <td>{book.quantityOut ? book.quantityOut : 0}</td>
-              <td>{book.price}</td>
+              <td>{new Number(book.price).toLocaleString("vi-VI")}</td>
               <td>
                 <button
                   className="icon-button"
