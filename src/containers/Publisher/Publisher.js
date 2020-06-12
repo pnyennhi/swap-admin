@@ -157,7 +157,7 @@ const Publisher = () => {
   return (
     <>
       <nav class="page-breadcrumb flex align-items-center justify-content-between">
-        <h5>QUẢN LÝ THỂ LOẠI</h5>
+        <h5>QUẢN LÝ NHÀ XUẤT BẢN</h5>
         <div class="col-sm-12 col-md-2 text-right">
           <a
             className="btn btn-primary mb-md-0 text-white"

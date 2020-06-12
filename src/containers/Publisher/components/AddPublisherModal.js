@@ -57,7 +57,7 @@ const AddPublisherModal = (props) => {
     <Modal show={show}>
       <div className="modal-header">
         <h5 className="modal-title" id="exampleModalLabel">
-          Thêm thể loại
+          Thêm nhà xuất bản
         </h5>
         <button className="close" onClick={handleClose}>
           <span>×</span>

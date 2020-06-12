@@ -26,7 +26,7 @@ const BookDetailModal = (props) => {
   return (
     <Modal show={show}>
       <div className="modal-header">
-        <h5 className="modal-title">Chi tiết thể loại</h5>
+        <h5 className="modal-title">Chi tiết nhà xuất bản</h5>
         <button
           className="close"
           onClick={() => {

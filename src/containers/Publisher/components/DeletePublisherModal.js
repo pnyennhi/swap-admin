@@ -8,7 +8,7 @@ const DeleteModal = (props) => {
     <Modal show={show}>
       <div className="modal-header">
         <h5 className="modal-title" id="exampleModalLabel">
-          Xóa thể loại
+          Xóa nhà xuất bản
         </h5>
         <button className="close" onClick={() => onClose()}>
           <span aria-hidden="true">×</span>
@@ -16,8 +16,8 @@ const DeleteModal = (props) => {
       </div>
       <div className="modal-body">
         <p>
-          Bạn có chắc chắn muốn xóa thể loại (Id: {publisherIds.join(", ")}) này
-          không?
+          Bạn có chắc chắn muốn xóa nhà xuất bản (Id: {publisherIds.join(", ")})
+          này không?
         </p>
       </div>
       <div className="modal-footer">
