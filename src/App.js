@@ -15,6 +15,7 @@ import Login from "./containers/Login/Login";
 import Layout from "./containers/Layout/Layout";
 import Book from "./containers/Book/Book";
 import User from "./containers/User/User";
+import Category from "./containers/Category/Category";
 import Profile from "./containers/Personal/Profile";
 import { toast } from "react-toastify";
 
@@ -34,6 +35,8 @@ function App() {
           <Switch>
             <Route path="/book" component={Book} />
             <Route path="/user" component={User} />
+            <Route path="/category" component={Category} />
+
             <Route path="/profile" component={Profile} />
             <Redirect exact from="/" to="/book" />
             <Redirect exact from="/login" to="/book" />
