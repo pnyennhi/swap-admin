@@ -10,6 +10,7 @@ import {
   reply,
   shipping,
   subscribe,
+  publisher,
 } from "../../../components/svg/icon";
 
 import { NavLink } from "react-router-dom";
@@ -64,7 +65,7 @@ const SideBar = (props) => {
           </NavLink>
           <NavLink to="/publisher" className="nav-item">
             <a className="nav-link">
-              <i className="link-icon flex">{type}</i>
+              <i className="link-icon flex">{publisher}</i>
               <span className="link-title">Quản lí nhà xuất bản</span>
             </a>
           </NavLink>
