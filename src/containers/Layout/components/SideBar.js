@@ -62,6 +62,12 @@ const SideBar = (props) => {
               <span className="link-title">Quản lí thể loại sách</span>
             </a>
           </NavLink>
+          <NavLink to="/publisher" className="nav-item">
+            <a className="nav-link">
+              <i className="link-icon flex">{type}</i>
+              <span className="link-title">Quản lí nhà xuất bản</span>
+            </a>
+          </NavLink>
           <li className="nav-item">
             <a href="dashboard-one.html" className="nav-link">
               <i className="link-icon flex">{coupon}</i>
