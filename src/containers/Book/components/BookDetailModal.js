@@ -161,9 +161,7 @@ const BookDetailModal = (props) => {
                 <label>
                   <b>Ngày nhập</b>
                 </label>
-                <p>{`${new Date(book.date).getDate()}/${new Date(
-                  book.date
-                ).getMonth()}/${new Date(book.date).getFullYear()}`}</p>
+                <p>{new Date(book.date).toLocaleDateString("en-GB")}</p>
               </div>
             </div>
           </div>
