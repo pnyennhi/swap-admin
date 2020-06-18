@@ -18,6 +18,7 @@ import User from "./containers/User/User";
 import Category from "./containers/Category/Category";
 import Publisher from "./containers/Publisher/Publisher";
 import Profile from "./containers/Personal/Profile";
+import Review from "./containers/Review/Review";
 import { toast } from "react-toastify";
 
 toast.configure();
@@ -38,6 +39,7 @@ function App() {
             <Route path="/user" component={User} />
             <Route path="/category" component={Category} />
             <Route path="/publisher" component={Publisher} />
+            <Route path="/review" component={Review} />
 
             <Route path="/profile" component={Profile} />
             <Redirect exact from="/" to="/book" />

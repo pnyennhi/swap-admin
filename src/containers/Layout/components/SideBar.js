@@ -81,12 +81,12 @@ const SideBar = (props) => {
               <span className="link-title">Quản lí đơn hàng</span>
             </a>
           </li>
-          <li className="nav-item">
-            <a href="dashboard-one.html" className="nav-link">
-              <i className="link-icon flex">{review}</i>
+          <NavLink to="/review" className="nav-item">
+            <a className="nav-link">
+              <i className="link-icon flex">{publisher}</i>
               <span className="link-title">Quản lí đánh giá</span>
             </a>
-          </li>
+          </NavLink>
           <li className="nav-item">
             <a href="dashboard-one.html" className="nav-link">
               <i className="link-icon flex">{reply}</i>

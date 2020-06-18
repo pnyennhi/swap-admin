@@ -39411,3 +39411,29 @@ table th{
 td a:hover {
   text-decoration: underline !important;
 }
+
+.overflow {
+  max-height: 75px;
+  overflow: hidden;
+  /* position: relative;
+  margin-right: -1em;
+  padding-right: 1em;
+  text-align: justify; */
+}
+
+/* .overflow:before {
+  content: "...";
+  position: absolute;
+  right: 0;
+  bottom: 4px;
+}
+
+.overflow:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 1em;
+  height: 1em;
+  background: white;
+  margin-top: 0.2em;
+} */
