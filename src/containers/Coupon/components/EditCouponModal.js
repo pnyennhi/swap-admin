@@ -117,6 +117,7 @@ const EditCouponModal = (props) => {
                         : "form-control"
                     }
                     label="ID"
+                    disabled
                   />
                   <Field
                     type="text"
