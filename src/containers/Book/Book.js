@@ -14,6 +14,8 @@ import axios from "axios";
 import queryString from "query-string";
 import { toast } from "react-toastify";
 
+import Axios from "../../Instance";
+
 const Book = () => {
   const [books, setBooks] = useState(fakeBooks);
   const [selectedBooks, setSelectedBooks] = useState([]);
@@ -60,7 +62,7 @@ const Book = () => {
         sort: filters.sort,
       });
     setIsLoading(true);
-    axios
+    Axios()
       .get(`https://bookstoreprojectdut.azurewebsites.net/api/books?${query}`)
       .then((res) => {
         setBooks(res.data.items);
