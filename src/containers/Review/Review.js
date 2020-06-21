@@ -146,7 +146,7 @@ const Review = () => {
   return (
     <>
       <nav class="page-breadcrumb flex align-items-center justify-content-between">
-        <h5>QUẢN LÝ THỂ LOẠI</h5>
+        <h5>QUẢN LÝ ĐÁNH GIÁ</h5>
       </nav>
 
       <div class="row">
