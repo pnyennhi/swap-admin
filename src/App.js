@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   BrowserRouter as Router,
@@ -23,14 +23,26 @@ import Coupon from "./containers/Coupon/Coupon";
 import Shipping from "./containers/Shipping/Shipping";
 import { toast } from "react-toastify";
 
+import Axios from "./Instance";
+
 toast.configure();
 function App() {
-  const storedUser = localStorage.getItem("TOKEN_AUTH");
-  const [user, setUser] = useState(storedUser);
+  const token = localStorage.getItem("TOKEN_AUTH");
+  const [user, setUser] = useState(null);
 
   const handleLog = (user) => {
     setUser(user);
   };
+
+  useEffect(() => {
+    if (token) {
+      Axios()
+        .get(`https://bookstoreprojectdut.azurewebsites.net/api/admins`)
+        .then((res) => {
+          setUser(res.data);
+        });
+    }
+  }, []);
 
   // return (
   //   <Router>
@@ -42,7 +54,7 @@ function App() {
   //   </Router>
   // );
 
-  if (localStorage.getItem("TOKEN_AUTH")) {
+  if (token) {
     return (
       <Router>
         <Layout onLogout={handleLog} user={user}>
