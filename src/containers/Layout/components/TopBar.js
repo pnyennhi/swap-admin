@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import { profile, editProfile, logout } from "../../../components/svg/icon";
+import Dropdown from "../../../components/Dropdown";
 
 const TopBar = (props) => {
   const [show, setShow] = useState(false);
@@ -14,6 +16,13 @@ const TopBar = (props) => {
   const handleLogout = () => {
     localStorage.removeItem("user");
     props.onLogout(null);
+  };
+
+  let history = useHistory();
+
+  const handleClick = (link) => {
+    setShow(false);
+    history.push(link);
   };
 
   return (
@@ -54,45 +63,52 @@ const TopBar = (props) => {
                 alt="profile"
               />
             </a>
-            <div className={show ? "dropdown-menu show" : "dropdown-menu"}>
-              <div className="dropdown-header d-flex flex-column align-items-center">
-                <div className="figure mb-3">
-                  <img
-                    src="https://pickaface.net/gallery/avatar/20130319_083314_1174_admin.png"
-                    alt=""
-                  />
-                </div>
-                <div className="info text-center">
-                  <p className="name font-weight-bold mb-0">
-                    {user.firstName} {user.lastName}
-                  </p>
-                  <p className="email text-muted mb-3">{user.username}</p>
-                </div>
-              </div>
-              <div className="dropdown-body">
-                <ul className="profile-nav p-0 pt-3">
-                  <li className="nav-item">
-                    <a href="pages/general/profile.html" className="nav-link">
-                      <i data-feather="user">{profile}</i>
-                      <span>Trang cá nhân</span>
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a href="" className="nav-link">
-                      <i data-feather="edit">{editProfile}</i>
-                      <span>Đổi mật khẩu</span>
-                    </a>
-                  </li>
+            {show && (
+              <Dropdown onClick={handleToggleDropdown}>
+                <div className={show ? "dropdown-menu show" : "dropdown-menu"}>
+                  <div className="dropdown-header d-flex flex-column align-items-center">
+                    <div className="figure mb-3">
+                      <img
+                        src="https://pickaface.net/gallery/avatar/20130319_083314_1174_admin.png"
+                        alt=""
+                      />
+                    </div>
+                    <div className="info text-center">
+                      <p className="name font-weight-bold mb-0">
+                        {user.firstName} {user.lastName}
+                      </p>
+                      <p className="email text-muted mb-3">{user.username}</p>
+                    </div>
+                  </div>
+                  <div className="dropdown-body">
+                    <ul className="profile-nav p-0 pt-3">
+                      <li className="nav-item">
+                        <a
+                          className="nav-link"
+                          onClick={() => handleClick("/profile")}
+                        >
+                          <i data-feather="user">{profile}</i>
+                          <span>Trang cá nhân</span>
+                        </a>
+                      </li>
+                      <li className="nav-item">
+                        <a href="" className="nav-link">
+                          <i data-feather="edit">{editProfile}</i>
+                          <span>Đổi mật khẩu</span>
+                        </a>
+                      </li>
 
-                  <li className="nav-item">
-                    <a className="nav-link" onClick={() => handleLogout()}>
-                      <i data-feather="log-out">{logout}</i>
-                      <span>Log Out</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
+                      <li className="nav-item">
+                        <a className="nav-link" onClick={() => handleLogout()}>
+                          <i data-feather="log-out">{logout}</i>
+                          <span>Log Out</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </Dropdown>
+            )}
           </li>
         </ul>
       </div>
