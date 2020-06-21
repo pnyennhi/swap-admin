@@ -20,6 +20,7 @@ import Publisher from "./containers/Publisher/Publisher";
 import Profile from "./containers/Personal/Profile";
 import Review from "./containers/Review/Review";
 import Coupon from "./containers/Coupon/Coupon";
+import Shipping from "./containers/Shipping/Shipping";
 import { toast } from "react-toastify";
 
 import PrivateRoute from "./PrivateRoute";
@@ -55,6 +56,7 @@ function App() {
             <Route path="/publisher" component={Publisher} />
             <Route path="/review" component={Review} />
             <Route path="/coupon" component={Coupon} />
+            <Route path="/shipping" component={Shipping} />
 
             <Route path="/profile" component={Profile} />
             <Redirect exact from="/" to="/book" />
