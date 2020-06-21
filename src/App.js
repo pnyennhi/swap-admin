@@ -19,7 +19,11 @@ import Category from "./containers/Category/Category";
 import Publisher from "./containers/Publisher/Publisher";
 import Profile from "./containers/Personal/Profile";
 import Review from "./containers/Review/Review";
+import Coupon from "./containers/Coupon/Coupon";
 import { toast } from "react-toastify";
+
+import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublicRoute";
 
 toast.configure();
 function App() {
@@ -30,7 +34,17 @@ function App() {
     setUser(user);
   };
 
-  if (localStorage.getItem("user")) {
+  // return (
+  //   <Router>
+  //     <Switch>
+  //       <PublicRoute restricted={true} component={Login} path="/login" exact />
+  //       <PrivateRoute component={Review} path="/review" exact />
+  //       <Redirect exact from="/" to="/login" />
+  //     </Switch>
+  //   </Router>
+  // );
+
+  if (storedUser) {
     return (
       <Router>
         <Layout onLogout={handleLog}>
@@ -40,6 +54,7 @@ function App() {
             <Route path="/category" component={Category} />
             <Route path="/publisher" component={Publisher} />
             <Route path="/review" component={Review} />
+            <Route path="/coupon" component={Coupon} />
 
             <Route path="/profile" component={Profile} />
             <Redirect exact from="/" to="/book" />
@@ -58,6 +73,7 @@ function App() {
             render={() => <Login onLogin={handleLog} />}
           />
           <Redirect exact from="/" to="/login" />
+          <Redirect exact from="/book" to="/login" />
         </Switch>
       </Router>
     );

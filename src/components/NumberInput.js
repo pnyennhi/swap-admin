@@ -6,6 +6,7 @@ const NumberInput = ({ field, form, ...props }) => {
     <div className="form-group">
       <label>{props.label}</label>
       <NumberFormat
+        value={field.value}
         name={field.name}
         thousandSeparator="."
         decimalSeparator=","
