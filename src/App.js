@@ -23,9 +23,6 @@ import Coupon from "./containers/Coupon/Coupon";
 import Shipping from "./containers/Shipping/Shipping";
 import { toast } from "react-toastify";
 
-import PrivateRoute from "./PrivateRoute";
-import PublicRoute from "./PublicRoute";
-
 toast.configure();
 function App() {
   const storedUser = localStorage.getItem("TOKEN_AUTH");
