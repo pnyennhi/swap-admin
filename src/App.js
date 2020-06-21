@@ -28,7 +28,7 @@ import PublicRoute from "./PublicRoute";
 
 toast.configure();
 function App() {
-  const storedUser = localStorage.getItem("user");
+  const storedUser = localStorage.getItem("TOKEN_AUTH");
   const [user, setUser] = useState(storedUser);
 
   const handleLog = (user) => {
@@ -45,10 +45,10 @@ function App() {
   //   </Router>
   // );
 
-  if (storedUser) {
+  if (localStorage.getItem("TOKEN_AUTH")) {
     return (
       <Router>
-        <Layout onLogout={handleLog}>
+        <Layout onLogout={handleLog} user={user}>
           <Switch>
             <Route path="/book" component={Book} />
             <Route path="/user" component={User} />
@@ -75,7 +75,14 @@ function App() {
             render={() => <Login onLogin={handleLog} />}
           />
           <Redirect exact from="/" to="/login" />
+          <Redirect exact from="/user" to="/login" />
           <Redirect exact from="/book" to="/login" />
+          <Redirect exact from="/category" to="/login" />
+          <Redirect exact from="/publisher" to="/login" />
+          <Redirect exact from="/review" to="/login" />
+          <Redirect exact from="/coupon" to="/login" />
+          <Redirect exact from="/shipping" to="/login" />
+          <Redirect exact from="/profile" to="/login" />
         </Switch>
       </Router>
     );

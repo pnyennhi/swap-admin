@@ -36,6 +36,7 @@ const Layout = (props) => {
         />
         <div className="page-wrapper" style={{ minHeight: "0" }}>
           <TopBar
+            user={props.user}
             onToggleSidebar={handleToggleSidebarResponsive}
             onLogout={props.onLogout}
           />

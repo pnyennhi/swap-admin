@@ -1,14 +1,17 @@
 import React, { useState, useRef } from "react";
+import axios from "axios";
 
 import bgSrc from "../../assets/images/background.jpg";
+import loading from "../../assets/images/loading.gif";
 
 const Login = (props) => {
-  const [username, setUsername] = useState(null);
+  const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const user = {
-    username: "admin",
+    email: "admin",
     firstName: "Nguyen Van",
     lastName: "Admin",
   };
@@ -19,11 +22,47 @@ const Login = (props) => {
     e.preventDefault();
     form.current.reportValidity();
     if (form.current.checkValidity()) {
-      if (username === "admin" && password === "123") {
-        setError(null);
-        localStorage.setItem("user", JSON.stringify(user));
-        props.onLogin(user);
-      } else setError("Your email or password is incorrect");
+      // if (email === "admin" && password === "123") {
+      //   setError(null);
+      //   localStorage.setItem(
+      //     "TOKEN_AUTH",
+      //     `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiY3VvbmduZ3V5ZW4iLCJFbWFpbCI6ImN1b25nbmd1eWVuQGdtYWlsLmNvbSIsIlVzZXJJRCI6IjkzMDczZGU1LWJmMGItNDk3Mi05Yjk0LWI5MDExYTU0ZWEzZSIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTU5Mjc0OTk4MSwiZXhwIjoxNTkzMzQ5OTgxLCJpYXQiOjE1OTI3NDk5ODF9.2sNE6k_CLq-6QhaBBmAytXIZxw6Q2h6H08-n90XDwGk`
+      //   );
+      //   props.onLogin(user);
+      // } else setError("Your email or password is incorrect");
+      setIsLoading(true);
+      axios
+        .post(
+          `https://bookstoreprojectdut.azurewebsites.net/api/applicationuser/login`,
+          { email: email, password: password }
+        )
+        .then((response) => {
+          axios
+            .get(`https://bookstoreprojectdut.azurewebsites.net/api/admins`, {
+              headers: {
+                Authorization: "Bearer " + response.data.token,
+              },
+            })
+            .then((res) => {
+              if (res.data.role === "Admin") {
+                setError(null);
+                localStorage.setItem("TOKEN_AUTH", response.data.token);
+                setIsLoading(false);
+                props.onLogin(res.data);
+              } else {
+                setError("Incorrect email or password");
+                setIsLoading(false);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+              setIsLoading(false);
+            });
+        })
+        .catch((err) => {
+          setError(err.response.data.message);
+          setIsLoading(false);
+        });
     }
   };
 
@@ -54,15 +93,15 @@ const Login = (props) => {
                             htmlFor="exampleInputEmail1"
                             className="text-muted"
                           >
-                            Username
+                            Email
                           </label>
                           <input
-                            type="text"
+                            type="email"
                             className="form-control"
-                            id="exampleInputEmail1"
-                            placeholder="Username"
+                            value={email}
+                            placeholder="Email"
                             onChange={(e) => {
-                              setUsername(e.target.value.trim());
+                              setEmail(e.target.value.trim());
                             }}
                             required
                           />
@@ -77,8 +116,7 @@ const Login = (props) => {
                           <input
                             type="password"
                             className="form-control"
-                            id="exampleInputPassword1"
-                            autoComplete="current-password"
+                            value={password}
                             placeholder="Password"
                             onChange={(e) => {
                               setPassword(e.target.value);
@@ -98,11 +136,28 @@ const Login = (props) => {
                           <button
                             onClick={(e) => handleLogin(e)}
                             className="btn btn-primary mr-2 mb-2 mb-md-0 text-white"
+                            disabled={isLoading}
                           >
                             LOGIN
                           </button>
                         </div>
                       </form>
+                      <div className="mt-3 text-center">
+                        <button
+                          onClick={() => {
+                            setEmail(`cuongnguyen@gmail.com`);
+                            setPassword(`cuongnguyen123`);
+                          }}
+                          className="btn btn-secondary"
+                        >
+                          Auto Complete
+                        </button>
+                      </div>
+                      {isLoading ? (
+                        <div className="mt-3 text-center">
+                          <img src={loading} width="35px" />
+                        </div>
+                      ) : null}
                     </div>
                   </div>
                 </div>
