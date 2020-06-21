@@ -23,6 +23,7 @@ const EditBookModal = (props) => {
   const [publishers, setPublishers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [typeOfFile, setTypeOfFile] = useState("File");
 
   useEffect(() => {
     axios
@@ -261,28 +262,77 @@ const EditBookModal = (props) => {
                     value={values.price}
                     label="Giá bán (VND)"
                   />
-                  <div class="form-group">
-                    <label>Ảnh bìa</label>
-                    <input
-                      type="file"
-                      name="imageLink"
-                      accept="image/*"
-                      onChange={(event) => {
-                        setFieldValue(
-                          "imageLink",
-                          event.currentTarget.files[0]
-                        );
-                      }}
-                      className={
-                        errors.imageLink && touched.imageLink
-                          ? "form-control error"
-                          : "form-control"
-                      }
-                    />
-                    {errors.imageLink && touched.imageLink ? (
-                      <div className="input-feedback">{errors.imageLink}</div>
-                    ) : null}
+
+                  <div className="row">
+                    <label className="col-md-7">Ảnh bìa</label>
+                    <div className="col-md-5 flex justify-content-between">
+                      <div>
+                        <input
+                          type="Radio"
+                          id="Upload File"
+                          name="typeOfFile"
+                          value="Upload File"
+                          checked={typeOfFile === "File"}
+                          onChange={() => setTypeOfFile("File")}
+                        />
+                        <label htmlFor="Upload File">Upload File</label>
+                      </div>
+
+                      <div>
+                        <input
+                          type="Radio"
+                          id="Upload Link"
+                          name="typeOfFile"
+                          value="Upload Link"
+                          checked={typeOfFile === "Link"}
+                          onChange={() => setTypeOfFile("Link")}
+                        />
+                        <label htmlFor="Upload Link">Upload Link</label>
+                      </div>
+                    </div>
                   </div>
+                  {typeOfFile === "File" ? (
+                    <div className="form-group">
+                      <input
+                        type="file"
+                        name="imageLink"
+                        accept="image/*"
+                        onChange={(event) => {
+                          setFieldValue(
+                            "imageLink",
+                            event.currentTarget.files[0]
+                          );
+                        }}
+                        className={
+                          errors.imageLink && touched.imageLink
+                            ? "form-control error"
+                            : "form-control"
+                        }
+                      />
+                      {errors.imageLink && touched.imageLink ? (
+                        <div className="input-feedback">{errors.imageLink}</div>
+                      ) : null}
+                    </div>
+                  ) : (
+                    <div className="form-group">
+                      <input
+                        type="text"
+                        name="imageLink"
+                        onChange={(event) => {
+                          setFieldValue("imageLink", event.target.value);
+                        }}
+                        className={
+                          errors.imageLink && touched.imageLink
+                            ? "form-control error"
+                            : "form-control"
+                        }
+                      />
+                      {errors.imageLink && touched.imageLink ? (
+                        <div className="input-feedback">{errors.imageLink}</div>
+                      ) : null}
+                    </div>
+                  )}
+
                   {!values.imageLink ? null : values.imageLink.name ? (
                     <img
                       src={URL.createObjectURL(values.imageLink)}
