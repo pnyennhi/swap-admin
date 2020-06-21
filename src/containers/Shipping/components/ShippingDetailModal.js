@@ -6,17 +6,17 @@ import loading from "../../../assets/images/loading.gif";
 
 import axios from "axios";
 
-const BookDetailModal = (props) => {
-  const { show, categoryId, onClose } = props;
+const ShippingDetailModal = (props) => {
+  const { show, districtID, onClose } = props;
 
-  const [category, setCategory] = useState(null);
+  const [shipping, setCategory] = useState(null);
 
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     axios
       .get(
-        `https://bookstoreprojectdut.azurewebsites.net/api/categories/${categoryId}`
+        `https://bookstoreprojectdut.azurewebsites.net/api/shipping/${districtID}`
       )
       .then((res) => {
         setCategory(res.data);
@@ -26,7 +26,7 @@ const BookDetailModal = (props) => {
   return (
     <Modal show={show}>
       <div className="modal-header">
-        <h5 className="modal-title">Chi tiết thể loại</h5>
+        <h5 className="modal-title">Chi tiết phí vận chuyển</h5>
         <button
           className="close"
           onClick={() => {
@@ -37,7 +37,7 @@ const BookDetailModal = (props) => {
         </button>
       </div>
 
-      {category ? (
+      {shipping ? (
         <>
           <div className="modal-body">
             <div className="form-detail">
@@ -45,21 +45,28 @@ const BookDetailModal = (props) => {
                 <label>
                   <b>Id</b>
                 </label>
-                <p>{category.categoryID}</p>
+                <p>{shipping.districtID}</p>
               </div>
 
               <div className="form-group">
                 <label>
-                  <b>Thể loại</b>
+                  <b>Quận, Huyện</b>
                 </label>
-                <p>{category.category}</p>
+                <p>{shipping.district}</p>
               </div>
 
               <div className="form-group">
                 <label>
-                  <b>Số đầu sách</b>
+                  <b>Tỉnh, Thành phố</b>
                 </label>
-                <p>{category.bookTitleCount}</p>
+                <p>{shipping.city}</p>
+              </div>
+
+              <div className="form-group">
+                <label>
+                  <b>Phí ship</b>
+                </label>
+                <p>{new Number(shipping.fee).toLocaleString("vi-VI")}</p>
               </div>
             </div>
           </div>
@@ -76,4 +83,4 @@ const BookDetailModal = (props) => {
   );
 };
 
-export default BookDetailModal;
+export default ShippingDetailModal;

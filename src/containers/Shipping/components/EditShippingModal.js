@@ -120,6 +120,18 @@ const EditShippingModal = (props) => {
                     label="Quận, Huyện"
                     disabled
                   />
+                  <Field
+                    type="text"
+                    name="city"
+                    component={TextInput}
+                    className={
+                      errors.city && touched.city
+                        ? "form-control error"
+                        : "form-control"
+                    }
+                    label="Tỉnh, Thành phố"
+                    disabled
+                  />
 
                   <Field
                     type="text"

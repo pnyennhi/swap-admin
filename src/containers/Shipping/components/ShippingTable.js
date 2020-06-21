@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { edit, del, shipping } from "../../../components/svg/icon";
 import EditShippingModal from "./EditShippingModal";
-// import ShippingDetailModal from "./ShippingDetailModal";
+import ShippingDetailModal from "./ShippingDetailModal";
 
 const ShippingTable = (props) => {
   const { shippings, onSort, onEdit } = props;
@@ -34,14 +34,21 @@ const ShippingTable = (props) => {
           </th>
           <th
             onClick={() => {
-              onSort("shipping");
+              onSort("district");
             }}
           >
             Quận, Huyện
           </th>
           <th
             onClick={() => {
-              onSort("bookTitleCount");
+              onSort("city");
+            }}
+          >
+            Tỉnh, Thành phố
+          </th>
+          <th
+            onClick={() => {
+              onSort("fee");
             }}
           >
             Phí ship
@@ -63,6 +70,7 @@ const ShippingTable = (props) => {
                   {shipping.district}
                 </a>
               </td>
+              <td>{shipping.city}</td>
               <td>{new Number(shipping.fee).toLocaleString("vi-VI")}</td>
               <td>
                 <button
@@ -86,13 +94,13 @@ const ShippingTable = (props) => {
         />
       )}
 
-      {/*  {Boolean(detailedDistrictID) && (
+      {Boolean(detailedDistrictID) && (
         <ShippingDetailModal
           show={Boolean(detailedDistrictID)}
           districtID={detailedDistrictID}
           onClose={handleCloseDetailModal}
         />
-      )} */}
+      )}
     </div>
   );
 };
