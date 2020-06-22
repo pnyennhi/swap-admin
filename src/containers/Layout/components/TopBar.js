@@ -92,7 +92,10 @@ const TopBar = (props) => {
                         </a>
                       </li>
                       <li className="nav-item">
-                        <a href="" className="nav-link">
+                        <a
+                          onClick={() => handleClick("/changepassword")}
+                          className="nav-link"
+                        >
                           <i data-feather="edit">{editProfile}</i>
                           <span>Đổi mật khẩu</span>
                         </a>

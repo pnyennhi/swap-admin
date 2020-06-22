@@ -18,6 +18,7 @@ import User from "./containers/User/User";
 import Category from "./containers/Category/Category";
 import Publisher from "./containers/Publisher/Publisher";
 import Profile from "./containers/Personal/Profile";
+import ChangePassword from "./containers/Personal/ChangePassword";
 import Review from "./containers/Review/Review";
 import Coupon from "./containers/Coupon/Coupon";
 import Shipping from "./containers/Shipping/Shipping";
@@ -36,11 +37,11 @@ function App() {
 
   useEffect(() => {
     if (token) {
-      Axios()
-        .get(`https://bookstoreprojectdut.azurewebsites.net/api/admins`)
-        .then((res) => {
-          setUser(res.data);
-        });
+      Axios.get(
+        `https://bookstoreprojectdut.azurewebsites.net/api/admins`
+      ).then((res) => {
+        setUser(res.data);
+      });
     }
   }, []);
 
@@ -68,6 +69,7 @@ function App() {
             <Route path="/shipping" component={Shipping} />
 
             <Route path="/profile" component={Profile} />
+            <Route path="/changepassword" component={ChangePassword} />
             <Redirect exact from="/" to="/book" />
             <Redirect exact from="/login" to="/book" />
           </Switch>
