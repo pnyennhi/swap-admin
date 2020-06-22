@@ -12,7 +12,7 @@ import { uploadImage } from "../../../firebase/uploadImage";
 
 import loading from "../../../assets/images/loading.gif";
 
-// import Axios() from "Axios()";
+// import Axios from "Axios";
 import { toast } from "react-toastify";
 import Axios from "../../../Instance";
 
@@ -27,16 +27,16 @@ const AddBookModal = (props) => {
 
   useEffect(() => {
     //call API to get list of types, PublisherIDs when mounted
-    Axios()
-      .get(`https://bookstoreprojectdut.azurewebsites.net/api/categories/all`)
-      .then((res) => {
-        setCategories(res.data);
-      });
-    Axios()
-      .get(`https://bookstoreprojectdut.azurewebsites.net/api/publishers/all`)
-      .then((res) => {
-        setPublishers(res.data);
-      });
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/categories/all`
+    ).then((res) => {
+      setCategories(res.data);
+    });
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/publishers/all`
+    ).then((res) => {
+      setPublishers(res.data);
+    });
   }, []);
 
   const handleSubmit = (values, actions) => {
@@ -63,8 +63,7 @@ const AddBookModal = (props) => {
     data.publisherID = parseInt(data.publisherID);
     data.status = !!data.status;
 
-    Axios()
-      .post(`https://bookstoreprojectdut.azurewebsites.net/api/books`, data)
+    Axios.post(`https://bookstoreprojectdut.azurewebsites.net/api/books`, data)
       .then((res) => {
         console.log(res.status);
         actions.setSubmitting(false);

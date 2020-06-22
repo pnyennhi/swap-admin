@@ -1,149 +1,221 @@
 import React, { useState, useEffect } from "react";
-import { add } from "../../components/svg/icon";
+
 import UserTable from "./components/UserTable";
-import { users as fakeUsers } from "../../FakeData";
-import DeleteUserModal from "./components/DeleteUserModal";
-import AddUserModal from "./components/AddUserModal";
+import UserToolbar from "./components/UserToolbar";
+// import DeleteUserModal from "./components/DeleteUserModal";
+// import AddUserModal from "./components/AddUserModal";
+import Pagination from "../../components/Pagination";
 
-const Book = () => {
-  const [books, setBooks] = useState(fakeUsers);
-  const [selectedBooks, setSelectedBooks] = useState([]);
-  const [deletedBook, setDeletedBook] = useState(null);
-  const [searchedBooks, setSearchedBooks] = useState([]);
-  const [showDeleteModal, setShowDeletedModal] = useState(false);
+import { add } from "../../components/svg/icon";
+import loading from "../../assets/images/loading.gif";
+
+import Axios from "../../Instance";
+import queryString from "query-string";
+import { toast } from "react-toastify";
+
+const User = () => {
+  const [users, setUsers] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [deletedUser, setDeletedUser] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
-  const [isSearching, setIsSearching] = useState(false);
+  const [search, setSearch] = useState(null);
+  const [totalRows, setTotalRows] = useState(21);
+  const [filters, setFilters] = useState({
+    page: 1,
+    pageSize: 10,
+    keyword: null,
+    criteria: null,
+    sort: null,
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
-  const handleSetDeletedBook = (id) => {
-    setDeletedBook(id);
+  useEffect(() => {
+    //call API get when filters change (get user list)
+    handleGetUser();
+  }, [filters]);
+
+  const handleGetUser = () => {
+    let query;
+    if (filters.keyword && filters.criteria)
+      query = queryString.stringify(filters);
+    else if (!filters.keyword && !filters.criteria)
+      query = queryString.stringify({
+        page: filters.page,
+        pageSize: filters.pageSize,
+      });
+    else if (filters.keyword && !filters.criteria)
+      query = queryString.stringify({
+        page: filters.page,
+        pageSize: filters.pageSize,
+        keyword: filters.keyword,
+      });
+    else if (!filters.keyword && filters.criteria)
+      query = queryString.stringify({
+        page: filters.page,
+        pageSize: filters.pageSize,
+        criteria: filters.criteria,
+        sort: filters.sort,
+      });
+    setIsLoading(true);
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/admins/listuser?${query}`
+    )
+      .then((res) => {
+        setUsers(res.data.items);
+        setTotalRows(res.data.total);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setHasError(true);
+      });
+  };
+
+  const handleSetDeletedUser = (id) => {
+    setDeletedUser(id);
   };
 
   const handleCloseDeleteModal = () => {
-    setDeletedBook(null);
-    setShowDeletedModal(false);
+    setDeletedUser(null);
+    setShowDeleteModal(false);
   };
 
   const handleCloseAddModal = () => {
     setShowAddModal(false);
   };
 
-  const handleDeleteBook = (ids) => {
-    //delete book API
+  const handleDeleteUser = (ids) => {
+    //delete user API
     //id is an array
-    setDeletedBook(null);
-    setShowDeletedModal(false);
-    handleDeleteBooks(ids);
+    const deletedAPIs = ids.map((id) => {
+      return Axios.delete(
+        `https://bookstoreprojectdut.azurewebsites.net/api/listuser/${id}`
+      );
+    });
+    Promise.all(deletedAPIs)
+      .then((res) => {
+        toast.success("Delete thanh cong");
+        setSelectedUsers([]);
+        setDeletedUser(null);
+        setShowDeleteModal(false);
+        handleGetUser();
+      })
+      .catch((err) => {
+        toast.error("Fail");
+        setSelectedUsers([]);
+        setDeletedUser(null);
+        setShowDeleteModal(false);
+      });
+
+    // setDeletedUser(null);
+    // setShowDeleteModal(false);
+    // handleDeleteUsers(ids);
   };
 
-  const handleDeleteBooks = (delIds) => {
-    const newBooks = books.filter((book) => delIds.indexOf(book.id) === -1);
-    setBooks(newBooks);
-    const newSelectedBooks = selectedBooks.filter(
-      (bookId) => delIds.indexOf(bookId) === -1
-    );
-    console.log(newSelectedBooks);
-
-    setSelectedBooks(newSelectedBooks);
-  };
-
-  const handleSelectOneBook = (e, id) => {
-    const selectedIndex = selectedBooks.indexOf(id);
-    let newSelectedBooks = [...selectedBooks];
-    console.log(newSelectedBooks);
+  const handleSelectOneUser = (e, id) => {
+    const selectedIndex = selectedUsers.indexOf(id);
+    let newSelectedUsers = [...selectedUsers];
+    console.log(newSelectedUsers);
 
     if (selectedIndex === -1) {
-      newSelectedBooks.push(id);
+      newSelectedUsers.push(id);
     } else {
-      newSelectedBooks.splice(selectedIndex, 1);
+      newSelectedUsers.splice(selectedIndex, 1);
     }
-
-    setSelectedBooks(newSelectedBooks);
+    setSelectedUsers(newSelectedUsers);
   };
 
   const handleSelectAll = (e) => {
-    if (e.target.checked) setSelectedBooks(books.map((book) => book.id));
-    else setSelectedBooks([]);
+    if (e.target.checked) setSelectedUsers(users.map((user) => user.userID));
+    else setSelectedUsers([]);
   };
 
-  const handleSearchBooks = (e) => {
-    var key = e.target.value;
-    var results = books.filter(
-      (book) =>
-        JSON.stringify(book).toLowerCase().search(key.toLowerCase()) > -1
-    );
-    console.log(results);
-    if (key) setIsSearching(true);
-    else setIsSearching(false);
+  const handleSearchUsers = () => {
+    setFilters({ ...filters, keyword: search, page: 1 });
+  };
 
-    setSearchedBooks(results);
+  const handleChangePage = (page) => {
+    setFilters({ ...filters, page: page });
+  };
+
+  const handleSort = (criteria) => {
+    if (!filters.criteria)
+      setFilters({ ...filters, criteria: criteria, sort: 1 });
+    else if (filters.criteria !== criteria)
+      setFilters({ ...filters, criteria: criteria, sort: 1 });
+    else if (filters.sort === 1)
+      setFilters({ ...filters, criteria: criteria, sort: 0 });
+    else setFilters({ ...filters, criteria: criteria, sort: 1 });
   };
 
   return (
     <>
-      <nav class="page-breadcrumb">
+      <nav class="page-breadcrumb flex align-items-center justify-content-between">
         <h5>QUẢN LÝ NGƯỜI DÙNG</h5>
+        <div class="col-sm-12 col-md-2 text-right">
+          <a
+            className="btn btn-primary mb-md-0 text-white"
+            onClick={() => {
+              setShowAddModal(true);
+            }}
+          >
+            <i className="mr-2">{add}</i>
+            Thêm
+          </a>
+        </div>
       </nav>
 
       <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
           <div class="card">
             <div class="card-body">
-              <div class="row align-items-md-center justify-content-between mb-4">
-                <div class="col-sm-12 col-md-8">
-                  <div id="dataTableExample_filter" class="dataTables_filter">
-                    <input
-                      class="form-control"
-                      placeholder="Search"
-                      onChange={(e) => {
-                        handleSearchBooks(e);
-                      }}
-                    />
-                  </div>
-                </div>
-                {selectedBooks.length > 0 && (
-                  <div class="col-sm-12 col-md-2 text-right">
-                    <a
-                      className="btn btn-primary mr-2 mb-2 mb-md-0 text-white"
-                      onClick={() => {
-                        setShowDeletedModal(true);
-                      }}
-                    >
-                      <i className="mr-2">{add}</i>
-                      Delete
-                    </a>
-                  </div>
-                )}
-                <div class="col-sm-12 col-md-2 text-right">
-                  <a
-                    className="btn btn-primary mr-2 mb-2 mb-md-0 text-white"
-                    onClick={() => {
-                      setShowAddModal(true);
-                    }}
-                  >
-                    <i className="mr-2">{add}</i>
-                    Thêm
-                  </a>
-                </div>
-              </div>
-
-              <UserTable
-                users={
-                  searchedBooks.length > 0 || isSearching
-                    ? searchedBooks
-                    : books
-                }
-                selectedUsers={selectedBooks}
-                onDelete={handleSetDeletedBook}
-                onSelect={handleSelectOneBook}
-                onSelectAll={handleSelectAll}
+              <UserToolbar
+                selectedLength={selectedUsers.length}
+                onSearch={handleSearchUsers}
+                onChangeSearch={setSearch}
+                onChangePageSize={(val) => {
+                  setFilters({ ...filters, pageSize: val });
+                }}
+                onShowDeleteModal={setShowDeleteModal}
               />
 
-              {(Boolean(deletedBook) || showDeleteModal) && (
+              {isLoading ? (
+                <img
+                  src={loading}
+                  width="50px"
+                  style={{ display: "block", margin: "auto" }}
+                />
+              ) : hasError ? (
+                <p style={{ color: "red" }}>Đã có lỗi xảy ra</p>
+              ) : (
+                <>
+                  <UserTable
+                    users={users}
+                    selectedUsers={selectedUsers}
+                    onDelete={handleSetDeletedUser}
+                    onSelect={handleSelectOneUser}
+                    onSelectAll={handleSelectAll}
+                    onSort={handleSort}
+                    onEdit={handleGetUser}
+                  />
+
+                  <Pagination
+                    totalRows={totalRows}
+                    page={filters.page}
+                    pageSize={filters.pageSize}
+                    onChange={handleChangePage}
+                  />
+                </>
+              )}
+
+              {/* {(Boolean(deletedUser) || showDeleteModal) && (
                 <DeleteUserModal
-                  show={Boolean(deletedBook) || showDeleteModal}
-                  userIds={showDeleteModal ? selectedBooks : [deletedBook]}
+                  show={Boolean(deletedUser) || showDeleteModal}
+                  userIds={showDeleteModal ? selectedUsers : [deletedUser]}
                   onClose={handleCloseDeleteModal}
-                  onDelete={handleDeleteBook}
+                  onDelete={handleDeleteUser}
                 />
               )}
 
@@ -151,9 +223,9 @@ const Book = () => {
                 <AddUserModal
                   show={showAddModal}
                   onClose={handleCloseAddModal}
-                  // onAdd={handleAddBook}
+                  onAdd={handleGetUser}
                 />
-              )}
+              )} */}
             </div>
           </div>
         </div>
@@ -162,4 +234,4 @@ const Book = () => {
   );
 };
 
-export default Book;
+export default User;

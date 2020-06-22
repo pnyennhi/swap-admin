@@ -62,8 +62,9 @@ const Book = () => {
         sort: filters.sort,
       });
     setIsLoading(true);
-    Axios()
-      .get(`https://bookstoreprojectdut.azurewebsites.net/api/books?${query}`)
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/books?${query}`
+    )
       .then((res) => {
         setBooks(res.data.items);
         setTotalRows(res.data.total);
@@ -92,7 +93,7 @@ const Book = () => {
     //delete book API
     //id is an array
     const deletedAPIs = ids.map((id) => {
-      return Axios().delete(
+      return Axios.delete(
         `https://bookstoreprojectdut.azurewebsites.net/api/books/${id}`
       );
     });

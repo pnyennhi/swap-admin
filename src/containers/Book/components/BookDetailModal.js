@@ -4,7 +4,7 @@ import Modal from "../../../components/Modal";
 
 import loading from "../../../assets/images/loading.gif";
 
-// import Axios() from "Axios()";
+// import Axios from "Axios";
 import Axios from "../../../Instance";
 
 const BookDetailModal = (props) => {
@@ -16,21 +16,21 @@ const BookDetailModal = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    Axios()
-      .get(`https://bookstoreprojectdut.azurewebsites.net/api/books/${bookId}`)
-      .then((res) => {
-        setBook(res.data);
-      });
-    Axios()
-      .get(`https://bookstoreprojectdut.azurewebsites.net/api/categories/all`)
-      .then((res) => {
-        setCategories(res.data);
-      });
-    Axios()
-      .get(`https://bookstoreprojectdut.azurewebsites.net/api/publishers/all`)
-      .then((res) => {
-        setPublishers(res.data);
-      });
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/books/${bookId}`
+    ).then((res) => {
+      setBook(res.data);
+    });
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/categories/all`
+    ).then((res) => {
+      setCategories(res.data);
+    });
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/publishers/all`
+    ).then((res) => {
+      setPublishers(res.data);
+    });
   }, []);
 
   return (

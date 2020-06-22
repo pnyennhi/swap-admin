@@ -37,10 +37,11 @@ const Login = (props) => {
           { email: email, password: password }
         )
         .then((response) => {
+          let token = response.data.token;
           axios
             .get(`https://bookstoreprojectdut.azurewebsites.net/api/admins`, {
               headers: {
-                Authorization: "Bearer " + response.data.token,
+                Authorization: "Bearer " + token,
               },
             })
             .then((res) => {

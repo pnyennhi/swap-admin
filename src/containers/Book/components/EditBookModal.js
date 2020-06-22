@@ -27,21 +27,21 @@ const EditBookModal = (props) => {
   const [typeOfFile, setTypeOfFile] = useState("File");
 
   useEffect(() => {
-    Axios()
-      .get(`https://bookstoreprojectdut.azurewebsites.net/api/books/${bookId}`)
-      .then((res) => {
-        setEditedBook(res.data);
-      });
-    Axios()
-      .get(`https://bookstoreprojectdut.azurewebsites.net/api/categories/all`)
-      .then((res) => {
-        setCategories(res.data);
-      });
-    Axios()
-      .get(`https://bookstoreprojectdut.azurewebsites.net/api/publishers/all`)
-      .then((res) => {
-        setPublishers(res.data);
-      });
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/books/${bookId}`
+    ).then((res) => {
+      setEditedBook(res.data);
+    });
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/categories/all`
+    ).then((res) => {
+      setCategories(res.data);
+    });
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/publishers/all`
+    ).then((res) => {
+      setPublishers(res.data);
+    });
   }, []);
 
   const SignupSchema = Yup.object().shape({
@@ -99,11 +99,10 @@ const EditBookModal = (props) => {
     data.categoryID = parseInt(data.categoryID);
     data.publisherID = parseInt(data.publisherID);
     data.status = !!data.status;
-    Axios()
-      .put(
-        `https://bookstoreprojectdut.azurewebsites.net/api/books/${bookId}`,
-        data
-      )
+    Axios.put(
+      `https://bookstoreprojectdut.azurewebsites.net/api/books/${bookId}`,
+      data
+    )
       .then((res) => {
         console.log(res.status);
         actions.setSubmitting(false);

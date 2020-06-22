@@ -18,8 +18,7 @@ const Profile = () => {
     //call API get personal information
     //then setInfo
     setIsLoading(true);
-    Axios()
-      .get(`https://bookstoreprojectdut.azurewebsites.net/api/admins`)
+    Axios.get(`https://bookstoreprojectdut.azurewebsites.net/api/admins`)
       .then((res) => {
         setInfo(res.data);
         setIsLoading(false);
@@ -58,8 +57,7 @@ const Profile = () => {
   };
 
   const handleEditProfile = (data, actions) => {
-    Axios()
-      .put(`https://bookstoreprojectdut.azurewebsites.net/api/admins`, data)
+    Axios.put(`https://bookstoreprojectdut.azurewebsites.net/api/admins`, data)
       .then((res) => {
         console.log(res.status);
         actions.setSubmitting(false);
