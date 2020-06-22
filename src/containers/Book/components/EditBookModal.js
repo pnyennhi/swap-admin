@@ -12,6 +12,7 @@ import loading from "../../../assets/images/loading.gif";
 
 import { uploadImage } from "../../../firebase/uploadImage";
 import axios from "axios";
+import Axios from "../../../Instance";
 
 import { toast } from "react-toastify";
 
@@ -26,17 +27,17 @@ const EditBookModal = (props) => {
   const [typeOfFile, setTypeOfFile] = useState("File");
 
   useEffect(() => {
-    axios
+    Axios()
       .get(`https://bookstoreprojectdut.azurewebsites.net/api/books/${bookId}`)
       .then((res) => {
         setEditedBook(res.data);
       });
-    axios
+    Axios()
       .get(`https://bookstoreprojectdut.azurewebsites.net/api/categories/all`)
       .then((res) => {
         setCategories(res.data);
       });
-    axios
+    Axios()
       .get(`https://bookstoreprojectdut.azurewebsites.net/api/publishers/all`)
       .then((res) => {
         setPublishers(res.data);
@@ -102,7 +103,7 @@ const EditBookModal = (props) => {
   };
 
   const handleEditBook = (data, actions) => {
-    axios
+    Axios()
       .put(
         `https://bookstoreprojectdut.azurewebsites.net/api/books/${bookId}`,
         data

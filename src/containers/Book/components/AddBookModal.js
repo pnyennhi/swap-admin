@@ -12,8 +12,9 @@ import { uploadImage } from "../../../firebase/uploadImage";
 
 import loading from "../../../assets/images/loading.gif";
 
-import axios from "axios";
+// import Axios() from "Axios()";
 import { toast } from "react-toastify";
+import Axios from "../../../Instance";
 
 const AddBookModal = (props) => {
   const { show, onClose, onAdd } = props;
@@ -26,12 +27,12 @@ const AddBookModal = (props) => {
 
   useEffect(() => {
     //call API to get list of types, PublisherIDs when mounted
-    axios
+    Axios()
       .get(`https://bookstoreprojectdut.azurewebsites.net/api/categories/all`)
       .then((res) => {
         setCategories(res.data);
       });
-    axios
+    Axios()
       .get(`https://bookstoreprojectdut.azurewebsites.net/api/publishers/all`)
       .then((res) => {
         setPublishers(res.data);
@@ -58,7 +59,7 @@ const AddBookModal = (props) => {
   };
 
   const handleAddBook = (data, actions) => {
-    axios
+    Axios()
       .post(`https://bookstoreprojectdut.azurewebsites.net/api/books`, data)
       .then((res) => {
         console.log(res.status);

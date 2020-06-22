@@ -92,7 +92,7 @@ const Book = () => {
     //delete book API
     //id is an array
     const deletedAPIs = ids.map((id) => {
-      return axios.delete(
+      return Axios().delete(
         `https://bookstoreprojectdut.azurewebsites.net/api/books/${id}`
       );
     });

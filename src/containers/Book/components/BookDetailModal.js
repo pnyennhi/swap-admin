@@ -4,7 +4,8 @@ import Modal from "../../../components/Modal";
 
 import loading from "../../../assets/images/loading.gif";
 
-import axios from "axios";
+// import Axios() from "Axios()";
+import Axios from "../../../Instance";
 
 const BookDetailModal = (props) => {
   const { show, bookId, onClose, onEdit } = props;
@@ -15,17 +16,17 @@ const BookDetailModal = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    axios
+    Axios()
       .get(`https://bookstoreprojectdut.azurewebsites.net/api/books/${bookId}`)
       .then((res) => {
         setBook(res.data);
       });
-    axios
+    Axios()
       .get(`https://bookstoreprojectdut.azurewebsites.net/api/categories/all`)
       .then((res) => {
         setCategories(res.data);
       });
-    axios
+    Axios()
       .get(`https://bookstoreprojectdut.azurewebsites.net/api/publishers/all`)
       .then((res) => {
         setPublishers(res.data);
@@ -105,7 +106,7 @@ const BookDetailModal = (props) => {
                   <b>Ảnh bìa</b>
                 </label>
                 <br />
-                <img src={book.imageLink} alt={book.nameBook} />
+                <img src={book.imageLink} alt={book.nameBook} width="100%" />
               </div>
 
               <div className="form-group">
