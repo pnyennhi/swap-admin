@@ -34,14 +34,14 @@ const CategoryTable = (props) => {
       <table BookID="dataTableExample" class="table dataTable">
         <tr>
           <th>
-            <input
+            {/* <input
               type="checkbox"
               checked={
                 selectedCategories.length === categories.length &&
                 categories.length > 0
               }
               onChange={(e) => onSelectAll(e)}
-            />
+            /> */}
           </th>
           <th
             onClick={() => {

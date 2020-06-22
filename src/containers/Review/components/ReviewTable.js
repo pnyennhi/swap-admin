@@ -92,13 +92,13 @@ const ReviewTable = (props) => {
           {reviews.map((review) => (
             <tr>
               <td>
-                <input
+                {/* <input
                   type="checkbox"
                   onChange={(e) => {
                     onSelect(e, review.reviewId);
                   }}
                   checked={selectedReviews.indexOf(review.reviewId) > -1}
-                />
+                /> */}
               </td>
               <td>{review.reviewId}</td>
               <td>{review.nameBook}</td>
