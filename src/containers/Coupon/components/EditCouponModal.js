@@ -31,17 +31,16 @@ const EditCouponModal = (props) => {
   }, []);
 
   const SignupSchema = Yup.object().shape({
-    couponID: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Please fill out this field"),
+    couponID: Yup.string().required("Please fill out this field"),
     discount: Yup.number()
       .min(0, "Too Short!")
       .max(100, "Too Long!")
       .required("Please fill out this field"),
     quantity: Yup.number()
-      .min(0, "Too Short!")
-      .max(100000000000, "Too Long!")
+      .min(
+        editedCoupon?.quantityUsed,
+        "Total must be more than used coupon quantity"
+      )
       .required("Please fill out this field"),
   });
 
@@ -150,6 +149,7 @@ const EditCouponModal = (props) => {
                       value={values.status}
                       onChange={handleChange}
                       onBlur={handleBlur}
+                      disabled={values.quantity <= values.quantityUsed}
                     >
                       <option value="Available">Available</option>
                       <option value="Unavailable">Unavailable</option>
