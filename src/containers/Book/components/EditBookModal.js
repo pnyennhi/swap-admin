@@ -56,8 +56,12 @@ const EditBookModal = (props) => {
     originalPrice: Yup.number()
       .positive("This field must not be negative")
       .required("Please fill out this field"),
-    dimensions: Yup.string().required("Please fill out this field"),
-    // .matches("^ *?d*.?d+ *?x *?d*.?d+ *?cm *?$"),
+    dimensions: Yup.string()
+      .required("Please fill out this field")
+      .matches(
+        /^\d+(\.\d+)? x \d+(\.\d+)? cm$/,
+        "Dimensions must be 'ab x cd cm'"
+      ),
     weight: Yup.number()
       .positive("This field must not be negative")
       .required("Please fill out this field"),
