@@ -15905,6 +15905,7 @@ input[type="button"].btn-block {
   border-radius: 3px;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  box-shadow: 2px 3px 4px #ccc;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -39437,3 +39438,7 @@ td a:hover {
   background: white;
   margin-top: 0.2em;
 } */
+
+option:focus {
+  outline: none;
+}

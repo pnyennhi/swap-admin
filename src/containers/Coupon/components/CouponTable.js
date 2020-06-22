@@ -57,6 +57,7 @@ const CouponTable = (props) => {
             onClick={() => {
               onSort("status");
             }}
+            className="text-center"
           >
             Tình trạng
           </th>
@@ -79,7 +80,18 @@ const CouponTable = (props) => {
               <td>{coupon.discount}</td>
               <td>{coupon.quantity}</td>
               <td>{coupon.quantityUsed}</td>
-              <td>{coupon.status}</td>
+              <td className="text-center">
+                <span
+                  className={`badge badge-pill ${
+                    coupon.status === "Available"
+                      ? "badge-success"
+                      : "badge-secondary"
+                  }`}
+                  style={{ padding: "6px", borderRadius: "5px" }}
+                >
+                  {coupon.status}
+                </span>
+              </td>
               <td style={{ textAlign: "center" }}>
                 <button
                   className="icon-button"
