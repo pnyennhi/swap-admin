@@ -51,35 +51,35 @@ const ReviewTable = (props) => {
           </th>
           <th
             onClick={() => {
-              onSort("review");
+              onSort("nameBook");
             }}
           >
             Sách
           </th>
           <th
             onClick={() => {
-              onSort("bookTitleCount");
+              onSort("email");
             }}
           >
             Email
           </th>
           <th
             onClick={() => {
-              onSort("bookTitleCount");
+              onSort("rating");
             }}
           >
             Rating
           </th>
           <th
             onClick={() => {
-              onSort("bookTitleCount");
+              onSort("comment");
             }}
           >
             Nội dung đánh giá
           </th>
           <th
             onClick={() => {
-              onSort("bookTitleCount");
+              onSort("date");
             }}
           >
             Ngày
@@ -102,7 +102,7 @@ const ReviewTable = (props) => {
               </td>
               <td>{review.reviewId}</td>
               <td>{review.nameBook}</td>
-              <td>{review.userName}</td>
+              <td>{review.email}</td>
               <td style={{ textAlign: "center" }}>{review.rating}</td>
               <td>
                 <div className="overflow">{review.comment}</div>
