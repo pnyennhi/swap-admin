@@ -3,34 +3,74 @@ import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import TextInput from "../../components/TextInput";
 
+import Axios from "../../Instance";
+import { uploadImage } from "../../firebase/uploadImage";
+
+import { toast } from "react-toastify";
+
 const Profile = () => {
   const [info, setInfo] = useState(null);
+  const [hasError, setHasError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [typeOfFile, setTypeOfFile] = useState("File");
 
   useEffect(() => {
     //call API get personal information
     //then setInfo
+    setIsLoading(true);
+    Axios()
+      .get(`https://bookstoreprojectdut.azurewebsites.net/api/admins`)
+      .then((res) => {
+        setInfo(res.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setHasError(true);
+        setIsLoading(false);
+      });
   }, []);
 
-  const initialValues = {
-    UserID: 4,
-    Email: "mno",
-    Name: "Nguyen Van A",
-    registerDate: "10/05/2019",
-    Role: 0,
-    Status: "active",
-    AvatarLink: "",
-  };
-
   const SignupSchema = Yup.object().shape({
-    Name: Yup.string()
+    name: Yup.string()
       .min(2, "Too Short!")
       .max(50, "Too Long!")
       .required("Please fill out this field"),
-    AvatarLink: Yup.mixed().required("Please fill out this field"),
+    avatarLink: Yup.mixed().required("Please fill out this field"),
   });
 
   const handleSubmit = (values, actions) => {
-    alert(JSON.stringify(values, null, 2));
+    setIsLoading(true);
+    if (values.avatarLink.name) {
+      uploadImage(values.avatarLink)
+        .then((res) => {
+          values.avatarLink = res;
+          console.log(values);
+          handleEditProfile(values, actions);
+        })
+        .catch((err) => {
+          toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
+          setIsLoading(false);
+          actions.setSubmitting(false);
+        });
+    } else {
+      handleEditProfile(values, actions);
+    }
+  };
+
+  const handleEditProfile = (data, actions) => {
+    Axios()
+      .put(`https://bookstoreprojectdut.azurewebsites.net/api/admins`, data)
+      .then((res) => {
+        console.log(res.status);
+        actions.setSubmitting(false);
+        setIsLoading(false);
+        toast.success("Edit trang cá nhân thành công!");
+      })
+      .catch((err) => {
+        toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
+        setIsLoading(false);
+        actions.setSubmitting(false);
+      });
   };
 
   return (
@@ -45,7 +85,8 @@ const Profile = () => {
               <div class="row align-items-md-center justify-content-between mb-4">
                 <div class="col-sm-12 col-md-10" style={{ margin: "auto" }}>
                   <Formik
-                    initialValues={initialValues}
+                    enableReinitialize={true}
+                    initialValues={info}
                     onSubmit={(values, actions) =>
                       handleSubmit(values, actions)
                     }
@@ -71,58 +112,102 @@ const Profile = () => {
                               <div class="form-group">
                                 <br />
                                 <div style={{ textAlign: "center" }}>
-                                  {values.AvatarLink ? (
+                                  {!values?.avatarLink ? null : values
+                                      .avatarLink.name ? (
                                     <img
                                       src={URL.createObjectURL(
-                                        values.AvatarLink
+                                        values.avatarLink
                                       )}
                                       width="100%"
                                     />
                                   ) : (
-                                    <img
-                                      src="https://pickaface.net/gallery/avatar/20130319_083314_1174_admin.png"
-                                      alt="profile"
-                                    />
+                                    <img src={values.avatarLink} width="100%" />
                                   )}
                                 </div>
                                 <br />
-                                <input
-                                  type="file"
-                                  class="form-control"
-                                  name="AvatarLink"
-                                  accept="image/*"
-                                  onChange={(event) => {
-                                    setFieldValue(
-                                      "AvatarLink",
-                                      event.currentTarget.files[0]
-                                    );
-                                  }}
-                                  className={
-                                    errors.AvatarLink && touched.AvatarLink
-                                      ? "form-control error"
-                                      : "form-control"
-                                  }
-                                />
-                                {errors.AvatarLink && touched.AvatarLink ? (
-                                  <div className="input-feedback">
-                                    {errors.AvatarLink}
+                                <div className="flex">
+                                  <div style={{ marginRight: "1rem" }}>
+                                    <input
+                                      type="Radio"
+                                      id="Upload File"
+                                      name="typeOfFile"
+                                      value="Upload File"
+                                      checked={typeOfFile === "File"}
+                                      onChange={() => setTypeOfFile("File")}
+                                    />
+                                    <label htmlFor="Upload File">
+                                      Upload File
+                                    </label>
                                   </div>
-                                ) : null}
+
+                                  <div>
+                                    <input
+                                      type="Radio"
+                                      id="Upload Link"
+                                      name="typeOfFile"
+                                      value="Upload Link"
+                                      checked={typeOfFile === "Link"}
+                                      onChange={() => setTypeOfFile("Link")}
+                                    />
+                                    <label htmlFor="Upload Link">
+                                      Upload Link
+                                    </label>
+                                  </div>
+                                </div>
+                                {typeOfFile === "File" ? (
+                                  <div className="form-group">
+                                    <input
+                                      type="file"
+                                      name="avatarLink"
+                                      accept="image/*"
+                                      onChange={(event) => {
+                                        setFieldValue(
+                                          "avatarLink",
+                                          event.currentTarget.files[0]
+                                        );
+                                      }}
+                                      className={
+                                        errors.avatarLink && touched.avatarLink
+                                          ? "form-control error"
+                                          : "form-control"
+                                      }
+                                    />
+                                    {errors.avatarLink && touched.avatarLink ? (
+                                      <div className="input-feedback">
+                                        {errors.avatarLink}
+                                      </div>
+                                    ) : null}
+                                  </div>
+                                ) : (
+                                  <div className="form-group">
+                                    <input
+                                      type="text"
+                                      name="avatarLink"
+                                      onChange={(event) => {
+                                        setFieldValue(
+                                          "avatarLink",
+                                          event.target.value
+                                        );
+                                      }}
+                                      className={
+                                        errors.avatarLink && touched.avatarLink
+                                          ? "form-control error"
+                                          : "form-control"
+                                      }
+                                    />
+                                    {errors.avatarLink && touched.avatarLink ? (
+                                      <div className="input-feedback">
+                                        {errors.avatarLink}
+                                      </div>
+                                    ) : null}
+                                  </div>
+                                )}
                               </div>
                             </div>
                             <div class="col-sm-12 col-md-8">
                               <Field
                                 type="text"
-                                name="UserID"
-                                component={TextInput}
-                                className="form-control"
-                                label="ID"
-                                disabled
-                              />
-
-                              <Field
-                                type="text"
-                                name="Email"
+                                name="email"
                                 component={TextInput}
                                 className="form-control"
                                 label="Email"
@@ -131,14 +216,23 @@ const Profile = () => {
 
                               <Field
                                 type="text"
-                                name="Name"
+                                name="name"
                                 component={TextInput}
                                 className={
-                                  errors.Name && touched.Name
+                                  errors.name && touched.name
                                     ? "form-control error"
                                     : "form-control"
                                 }
                                 label="Tên"
+                              />
+
+                              <Field
+                                type="text"
+                                name="role"
+                                component={TextInput}
+                                className="form-control"
+                                label="Role"
+                                disabled
                               />
 
                               <div style={{ textAlign: "right" }}>
