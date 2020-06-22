@@ -31,9 +31,7 @@ const EditCategoryModal = (props) => {
 
   const SignupSchema = Yup.object().shape({
     category: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Please fill out this field"),
+    .required("Please fill out this field"),
   });
 
   const handleSubmit = (data, actions) => {
@@ -118,17 +116,6 @@ const EditCategoryModal = (props) => {
                     }
                     label="Tên"
                   />
-
-                  <Field
-                    type="text"
-                    name="bookTitleCount"
-                    component={TextInput}
-                    className="form-control"
-                    value={values.bookTitleCount}
-                    label="Số đầu sách"
-                    disabled
-                  />
-
                   <ErrorFocus />
                 </div>
                 <div className="modal-footer">
