@@ -45,40 +45,29 @@ const EditBookModal = (props) => {
   }, []);
 
   const SignupSchema = Yup.object().shape({
-    nameBook: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Please fill out this field"),
-    author: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Please fill out this field"),
-
+    nameBook: Yup.string().required("Please fill out this field"),
+    author: Yup.string().required("Please fill out this field"),
     information: Yup.string()
-      .min(2, "Too Short!")
+      .min(200, "Information must be more than 200 characters")
       .required("Please fill out this field"),
     price: Yup.number()
-      .min(0, "Too Short!")
-      .max(10000000000, "Too Long!")
+      .positive("This field must not be negative")
       .required("Please fill out this field"),
     originalPrice: Yup.number()
-      .min(0, "Too Short!")
-      .max(10000000000, "Too Long!")
+      .positive("This field must not be negative")
       .required("Please fill out this field"),
     dimensions: Yup.string().required("Please fill out this field"),
+    // .matches("^ *?d*.?d+ *?x *?d*.?d+ *?cm *?$"),
     weight: Yup.number()
-      .min(0, "Too Short!")
-      .max(10000000000, "Too Long!")
+      .positive("This field must not be negative")
       .required("Please fill out this field"),
     numberOfPage: Yup.number()
       .positive("This field must not be negative")
       .integer("This field must be non-decimal")
-      .min(0, "Too Short!")
-      .max(10000000000, "Too Long!")
+
       .required("Please fill out this field"),
     quantityIn: Yup.number()
-      .min(0, "Too Short!")
-      .max(10000000000, "Too Long!")
+      .positive("This field must not be negative")
       .required("Please fill out this field"),
     imageLink: Yup.mixed().required("Please fill out this field"),
   });
@@ -103,6 +92,9 @@ const EditBookModal = (props) => {
   };
 
   const handleEditBook = (data, actions) => {
+    data.categoryID = parseInt(data.categoryID);
+    data.publisherID = parseInt(data.publisherID);
+    data.status = !!data.status;
     Axios()
       .put(
         `https://bookstoreprojectdut.azurewebsites.net/api/books/${bookId}`,
