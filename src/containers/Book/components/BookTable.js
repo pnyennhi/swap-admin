@@ -31,7 +31,7 @@ const BookTable = (props) => {
 
   return (
     <div class="table-responsive">
-      <table BookID="dataTableExample" class="table dataTable">
+      <table class="table table-striped table-hover dataTable">
         <colgroup>
           <col span="1" style={{ width: "2%" }} />
           <col span="1" style={{ width: "6%" }} />
@@ -43,7 +43,7 @@ const BookTable = (props) => {
           <col span="1" style={{ width: "10%" }} />
           <col span="1" style={{ width: "5%" }} />
         </colgroup>
-        <tr>
+        <tr className="tr-header">
           <th>
             {/* <input
               type="checkbox"
@@ -108,7 +108,13 @@ const BookTable = (props) => {
 
         <tbody>
           {books.map((book) => (
-            <tr>
+            <tr
+              className={
+                selectedBooks.indexOf(book.bookID) > -1
+                  ? "selected tr-body"
+                  : "tr-body"
+              }
+            >
               <td>
                 <input
                   type="checkbox"

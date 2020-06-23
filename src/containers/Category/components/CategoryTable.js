@@ -31,8 +31,8 @@ const CategoryTable = (props) => {
 
   return (
     <div class="table-responsive">
-      <table BookID="dataTableExample" class="table dataTable">
-        <tr>
+      <table class="table table-striped table-hover dataTable">
+        <tr className="tr-header">
           <th>
             {/* <input
               type="checkbox"
@@ -70,7 +70,13 @@ const CategoryTable = (props) => {
 
         <tbody>
           {categories.map((category) => (
-            <tr>
+            <tr
+              className={
+                selectedCategories.indexOf(category.categoryID) > -1
+                  ? "selected tr-body"
+                  : "tr-body"
+              }
+            >
               <td>
                 <input
                   type="checkbox"

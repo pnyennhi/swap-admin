@@ -21,7 +21,7 @@ const ReviewTable = (props) => {
 
   return (
     <div class="table-responsive">
-      <table class="table dataTable">
+      <table class="table table-striped table-hover dataTable">
         <colgroup>
           <col span="1" style={{ width: "3%" }} />
           <col span="1" style={{ width: "5%" }} />
@@ -32,7 +32,7 @@ const ReviewTable = (props) => {
           <col span="1" style={{ width: "10%" }} />
           <col span="1" style={{ width: "5%" }} />
         </colgroup>
-        <tr>
+        <tr className="tr-header">
           <th>
             <input
               type="checkbox"
@@ -90,7 +90,13 @@ const ReviewTable = (props) => {
 
         <tbody>
           {reviews.map((review) => (
-            <tr>
+            <tr
+              className={
+                selectedReviews.indexOf(review.reviewId) > -1
+                  ? "selected tr-body"
+                  : "tr-body"
+              }
+            >
               <td>
                 {/* <input
                   type="checkbox"

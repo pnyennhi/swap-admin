@@ -11068,13 +11068,13 @@ pre code {
   border: 0;
 }
 
-.table-striped tbody tr:nth-of-type(odd) {
-  background-color: #eee;
+.table-striped tr:nth-of-type(odd) {
+  background-color: #eeeeee52;
 }
 
-.table-hover tbody tr:hover {
+.table-hover tr:hover {
   color: #212529;
-  background-color: #f9fafb;
+  background-color: #eee;
 }
 
 .table-primary,
@@ -39503,4 +39503,20 @@ input[type="radio"] {
 
 .icon-button {
   cursor: pointer;
+}
+
+tr.selected {
+  background-color: #ddd !important;
+}
+
+tr.tr-header {
+  background-color: #fff !important;
+}
+
+tr.tr-header:hover {
+  background-color: #fff !important;
+}
+
+.tr-header th:hover {
+  background-color: #eeeeee63;
 }

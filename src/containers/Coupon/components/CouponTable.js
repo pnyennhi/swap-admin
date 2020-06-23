@@ -23,8 +23,8 @@ const CouponTable = (props) => {
 
   return (
     <div class="table-responsive">
-      <table BookID="dataTableExample" class="table dataTable">
-        <tr>
+      <table class="table table-striped table-hover dataTable">
+        <tr className="tr-header">
           <th
             onClick={() => {
               onSort("couponID");
@@ -66,9 +66,8 @@ const CouponTable = (props) => {
 
         <tbody>
           {coupons.map((coupon) => (
-            <tr>
+            <tr className="tr-body">
               <td>
-                {" "}
                 <a
                   onClick={() => {
                     setDetailedCouponId(coupon.couponID);

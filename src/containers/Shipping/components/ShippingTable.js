@@ -23,8 +23,8 @@ const ShippingTable = (props) => {
 
   return (
     <div class="table-responsive">
-      <table BookID="dataTableExample" class="table dataTable">
-        <tr>
+      <table class="table table-striped table-hover dataTable">
+        <tr className="tr-header">
           <th
             onClick={() => {
               onSort("districtID");
@@ -59,7 +59,7 @@ const ShippingTable = (props) => {
 
         <tbody>
           {shippings.map((shipping) => (
-            <tr>
+            <tr className="tr-body">
               <td>{shipping.districtID}</td>
               <td>
                 <a

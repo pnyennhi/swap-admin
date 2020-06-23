@@ -31,8 +31,8 @@ const PublisherTable = (props) => {
 
   return (
     <div class="table-responsive">
-      <table BookID="dataTableExample" class="table dataTable">
-        <tr>
+      <table class="table table-striped table-hover dataTable">
+        <tr className="tr-header">
           <th>
             {/* <input
               type="checkbox"
@@ -70,7 +70,13 @@ const PublisherTable = (props) => {
 
         <tbody>
           {publishers.map((publisher) => (
-            <tr>
+            <tr
+              className={
+                selectedPublishers.indexOf(publisher.publisherID) > -1
+                  ? "selected tr-body"
+                  : "tr-body"
+              }
+            >
               <td>
                 <input
                   type="checkbox"
