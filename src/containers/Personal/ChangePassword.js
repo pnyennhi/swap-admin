@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import TextInput from "../../components/TextInput";
 import Axios from "../../Instance";
+import { toast } from "react-toastify";
+import loading from "../../assets/images/loading.gif";
 
 const ChangePass = () => {
   const initialValues = {
@@ -26,9 +28,15 @@ const ChangePass = () => {
     Axios.put(
       `https://bookstoreprojectdut.azurewebsites.net/api/applicationuser/changepassword`,
       values
-    ).then((res) => {
-      alert(2);
-    });
+    )
+      .then((res) => {
+        toast.success("Đổi mật khẩu thành công");
+        actions.setSubmitting(false);
+      })
+      .catch((err) => {
+        actions.setSubmitting(false);
+        toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
+      });
   };
 
   return (
@@ -153,7 +161,18 @@ const ChangePass = () => {
                             </div>
                           </div>
                           <div className="flex justify-content-end">
-                            <button type="submit" className="btn btn-success">
+                            {isSubmitting ? (
+                              <img
+                                src={loading}
+                                width="5%"
+                                style={{ marginRight: "1rem" }}
+                              />
+                            ) : null}
+                            <button
+                              type="submit"
+                              className="btn btn-success"
+                              disabled={isSubmitting}
+                            >
                               Lưu
                             </button>
                           </div>
