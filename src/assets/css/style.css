@@ -39442,3 +39442,24 @@ td a:hover {
 option:focus {
   outline: none;
 }
+
+.notfound {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.notfound h1, .notfound h3 {
+  font-weight: normal;
+}
+
+.notfound h1 {
+  font-size: 8rem;
+  margin-bottom: 2rem
+}
+
+.notfound h3 {
+  margin-bottom: 1rem;
+}
