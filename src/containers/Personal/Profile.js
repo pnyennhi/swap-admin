@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
-import TextInput from "../../components/TextInput";
 
 import Axios from "../../Instance";
 import { uploadImage } from "../../firebase/uploadImage";
@@ -9,27 +8,17 @@ import { uploadImage } from "../../firebase/uploadImage";
 import { toast } from "react-toastify";
 
 import loading from "../../assets/images/loading.gif";
+import { email, role, edit, check, close } from "../../components/svg/icon";
+
+import { useSelector } from "react-redux";
+import { updateUser } from "../../redux/actions/user";
 
 const Profile = () => {
-  const [info, setInfo] = useState(null);
+  const info = useSelector((store) => store.user);
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [typeOfFile, setTypeOfFile] = useState("File");
-
-  useEffect(() => {
-    //call API get personal information
-    //then setInfo
-    setIsLoading(true);
-    Axios.get(`https://bookstoreprojectdut.azurewebsites.net/api/admins`)
-      .then((res) => {
-        setInfo(res.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setHasError(true);
-        setIsLoading(false);
-      });
-  }, []);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const SignupSchema = Yup.object().shape({
     name: Yup.string()
@@ -49,7 +38,6 @@ const Profile = () => {
         })
         .catch((err) => {
           toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
-
           actions.setSubmitting(false);
         });
     } else {
@@ -60,13 +48,13 @@ const Profile = () => {
   const handleEditProfile = (data, actions) => {
     Axios.put(`https://bookstoreprojectdut.azurewebsites.net/api/admins`, data)
       .then((res) => {
-        console.log(res.status);
         actions.setSubmitting(false);
         toast.success("Edit trang cá nhân thành công!");
+        setIsEditMode(false);
+        updateUser(res.data);
       })
       .catch((err) => {
         toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
-
         actions.setSubmitting(false);
       });
   };
@@ -82,12 +70,16 @@ const Profile = () => {
           <div class="card">
             <div class="card-body">
               {isLoading ? (
-                <img src={loading} width="8%" />
+                <img
+                  src={loading}
+                  width="50px"
+                  style={{ display: "block", margin: "auto" }}
+                />
               ) : hasError ? (
                 <p style={{ color: "red" }}>Đã có lỗi xảy ra</p>
               ) : (
                 <div class="row align-items-md-center justify-content-between mb-4">
-                  <div class="col-sm-12 col-md-10" style={{ margin: "auto" }}>
+                  <div class="col-sm-12 col-md-9" style={{ margin: "auto" }}>
                     <Formik
                       enableReinitialize={true}
                       initialValues={info}
@@ -111,10 +103,9 @@ const Profile = () => {
                         } = props;
                         return (
                           <Form>
-                            <div class="row align-items-md-center justify-content-between mb-4">
+                            <div class="row justify-content-between mb-4 profile">
                               <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
-                                  <br />
                                   <div style={{ textAlign: "center" }}>
                                     {!values?.avatarLink ? null : values
                                         .avatarLink.name ? (
@@ -123,16 +114,18 @@ const Profile = () => {
                                           values.avatarLink
                                         )}
                                         width="100%"
+                                        className="avatar"
                                       />
                                     ) : (
                                       <img
                                         src={values.avatarLink}
                                         width="100%"
+                                        className="avatar"
                                       />
                                     )}
                                   </div>
                                   <br />
-                                  <div className="flex">
+                                  <div className="flex justify-content-center">
                                     <div style={{ marginRight: "1rem" }}>
                                       <input
                                         type="Radio"
@@ -215,38 +208,69 @@ const Profile = () => {
                                   )}
                                 </div>
                               </div>
-                              <div class="col-sm-12 col-md-8">
-                                <Field
-                                  type="text"
-                                  name="email"
-                                  component={TextInput}
-                                  className="form-control"
-                                  label="Email"
-                                  disabled
-                                />
+                              <div class="col-sm-12 col-md-8 info">
+                                <div className="mb-5">
+                                  {isEditMode ? (
+                                    <>
+                                      <div className="flex align-items-md-center">
+                                        <input
+                                          className="form-control"
+                                          type="text"
+                                          name="name"
+                                          defaultValue={values.name}
+                                          onChange={(e) => {
+                                            setFieldValue(
+                                              "name",
+                                              e.target.value
+                                            );
+                                          }}
+                                        />
 
-                                <Field
-                                  type="text"
-                                  name="name"
-                                  component={TextInput}
-                                  className={
-                                    errors.name && touched.name
-                                      ? "form-control error"
-                                      : "form-control"
-                                  }
-                                  label="Tên"
-                                />
+                                        <button
+                                          className="icon-button"
+                                          type="submit"
+                                        >
+                                          {check}
+                                          {"     "}
+                                        </button>
+                                        <span
+                                          className="icon-button"
+                                          onClick={() => {
+                                            setIsEditMode(false);
+                                            handleReset();
+                                          }}
+                                        >
+                                          {close}
+                                        </span>
+                                      </div>
+                                      {errors.name && touched.name ? (
+                                        <div className="input-feedback">
+                                          {errors.name}
+                                        </div>
+                                      ) : null}
+                                    </>
+                                  ) : (
+                                    <>
+                                      <h3 className="mr-3">
+                                        {info?.name}{" "}
+                                        <span
+                                          className="icon-button"
+                                          onClick={() => setIsEditMode(true)}
+                                        >
+                                          {edit}
+                                        </span>
+                                      </h3>
+                                    </>
+                                  )}
+                                </div>
+                                <p>
+                                  {email} {info?.email}
+                                </p>
+                                <p>
+                                  {role} {info?.role}
+                                </p>
 
-                                <Field
-                                  type="text"
-                                  name="role"
-                                  component={TextInput}
-                                  className="form-control"
-                                  label="Role"
-                                  disabled
-                                />
-
-                                <div style={{ textAlign: "right" }}>
+                                {/* <div style={{ textAlign: "right" }}>
                                   {isSubmitting ? (
                                     <img
                                       src={loading}
@@ -261,7 +285,7 @@ const Profile = () => {
                                   >
                                     Lưu
                                   </button>
-                                </div>
+                                </div> */}
                               </div>
                             </div>
                           </Form>

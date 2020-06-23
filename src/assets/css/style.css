@@ -39471,3 +39471,35 @@ input[type="radio"] {
 .table.fixed td {
   white-space: nowrap;
 }
+
+.profile .avatar {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+}
+
+.profile .info {
+  padding-top: 3rem;
+  padding-left: 2rem;
+}
+
+.profile .info p {
+  margin-bottom: 0.75rem;
+}
+
+.profile .info input {
+  font-size: 1.875rem;
+  margin-right: 1rem;
+}
+
+.check:hover {
+  color: #0d9448;
+}
+
+.close:hover {
+  color: #64738f;
+}
+
+.icon-button {
+  cursor: pointer;
+}
