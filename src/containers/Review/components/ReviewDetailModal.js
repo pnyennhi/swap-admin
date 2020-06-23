@@ -52,7 +52,7 @@ const BookDetailModal = (props) => {
                 <label>
                   <b>User</b>
                 </label>
-                <p>{review.userName}</p>
+                <p>{review.email}</p>
               </div>
 
               <div className="form-group">
