@@ -65,20 +65,6 @@ const BookTable = (props) => {
           </th>
           <th
             onClick={() => {
-              onSort("category");
-            }}
-          >
-            Thể loại
-          </th>
-          <th
-            onClick={() => {
-              onSort("publisher");
-            }}
-          >
-            NXB
-          </th>
-          <th
-            onClick={() => {
               onSort("quantityIn");
             }}
           >
@@ -97,6 +83,14 @@ const BookTable = (props) => {
             }}
           >
             Giá bán
+          </th>
+          <th
+            onClick={() => {
+              onSort("status");
+            }}
+            className="text-center"
+          >
+            Tình trạng
           </th>
           <th>Action</th>
         </tr>
@@ -124,11 +118,18 @@ const BookTable = (props) => {
                 </a>
               </td>
               <td>{book.author}</td>
-              <td>{book.category}</td>
-              <td>{book.publisher}</td>
               <td>{book.quantityIn}</td>
               <td>{book.quantityOut ? book.quantityOut : 0}</td>
               <td>{new Number(book.price).toLocaleString("vi-VI")}</td>
+              <td className="text-center">
+                <span
+                  className={`badge ${
+                    book.status ? "badge-success" : "badge-secondary"
+                  }`}
+                >
+                  {book.status ? "Available" : "Unavailable"}
+                </span>
+              </td>
               <td>
                 <button
                   className="icon-button"
