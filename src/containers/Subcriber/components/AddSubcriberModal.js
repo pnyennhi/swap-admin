@@ -9,6 +9,7 @@ import loading from "../../../assets/images/loading.gif";
 
 import axios from "axios";
 import { toast } from "react-toastify";
+import { bindActionCreators } from "redux";
 
 const AddSubcriberModal = (props) => {
   const { show, onClose, onAdd } = props;
@@ -30,10 +31,13 @@ const AddSubcriberModal = (props) => {
         formikBag.resetForm({ values: "" });
       })
       .catch((err) => {
-        toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
+        if (err.response.data.message.includes("Email")) {
+          formikBag.setFieldError("email", err.response.data.message);
+        } else {
+          toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
+        }
         setIsLoading(false);
         setIsSubmitted(true);
-        formikBag.resetForm({ values: "" });
       });
   };
 
