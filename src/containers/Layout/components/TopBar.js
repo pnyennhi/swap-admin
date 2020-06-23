@@ -3,11 +3,11 @@ import { useHistory } from "react-router-dom";
 
 import { profile, editProfile, logout } from "../../../components/svg/icon";
 import Dropdown from "../../../components/Dropdown";
+import { useSelector } from "react-redux";
 
 const TopBar = (props) => {
   const [show, setShow] = useState(false);
-
-  // const user = JSON.parse(localStorage.getItem("TOKEN_AUTH"));
+  const user = useSelector((store) => store.user);
 
   const handleToggleDropdown = () => {
     setShow(!show);
@@ -51,7 +51,7 @@ const TopBar = (props) => {
       </a>
       <div className="navbar-content">
         <ul className="navbar-nav">
-          {/* <li className="nav-item">Hi, {user.lastName}</li> */}
+          <li className="nav-item">Hi, {user?.name}</li>
           <li className="nav-item dropdown nav-profile">
             <a
               className="nav-link dropdown-toggle"
@@ -74,10 +74,8 @@ const TopBar = (props) => {
                       />
                     </div>
                     <div className="info text-center">
-                      <p className="name font-weight-bold mb-0">
-                        {props.user.email}
-                      </p>
-                      <p className="email text-muted mb-3">{props.user.role}</p>
+                      <p className="name font-weight-bold mb-0">{user?.name}</p>
+                      <p className="email text-muted mb-3">{user?.role}</p>
                     </div>
                   </div>
                   <div className="dropdown-body">

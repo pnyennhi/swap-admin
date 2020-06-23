@@ -26,6 +26,8 @@ import { toast } from "react-toastify";
 
 import Axios from "./Instance";
 
+import { updateUser, deleteUser } from "./redux/actions/user";
+
 toast.configure();
 function App() {
   const token = localStorage.getItem("TOKEN_AUTH");
@@ -33,6 +35,8 @@ function App() {
 
   const handleLog = (user) => {
     setUser(user);
+    if (user) updateUser(user);
+    else deleteUser();
   };
 
   useEffect(() => {
@@ -41,6 +45,7 @@ function App() {
         `https://bookstoreprojectdut.azurewebsites.net/api/admins`
       ).then((res) => {
         setUser(res.data);
+        updateUser(res.data);
       });
     }
   }, []);
