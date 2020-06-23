@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
 
+import { updateUser } from "../../redux/actions/user";
+
 import bgSrc from "../../assets/images/background.jpg";
 import loading from "../../assets/images/loading.gif";
 
@@ -49,7 +51,8 @@ const Login = (props) => {
                 setError(null);
                 localStorage.setItem("TOKEN_AUTH", response.data.token);
                 setIsLoading(false);
-                props.onLogin(res.data);
+                // props.onLogin(res.data);
+                updateUser(res.data);
               } else {
                 setError("Incorrect email or password");
                 setIsLoading(false);
