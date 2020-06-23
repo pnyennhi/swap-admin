@@ -39,26 +39,26 @@ const AddBookModal = (props) => {
     });
   }, []);
 
-  const handleSubmit = (values, actions) => {
+  const handleSubmit = (values, formikBag) => {
     setIsLoading(true);
     if (values.imageLink.name) {
       uploadImage(values.imageLink)
         .then((res) => {
           values.imageLink = res;
           console.log(values);
-          handleAddBook(values, actions);
+          handleAddBook(values, formikBag);
         })
         .catch((err) => {
           toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
           setIsLoading(false);
-          actions.setSubmitting(false);
+          formikBag.setSubmitting(false);
         });
     } else {
-      handleAddBook(values, actions);
+      handleAddBook(values, formikBag);
     }
   };
 
-  const handleAddBook = (data, actions) => {
+  const handleAddBook = (data, formikBag) => {
     data.categoryID = parseInt(data.categoryID);
     data.publisherID = parseInt(data.publisherID);
     data.status = !!data.status;
@@ -66,7 +66,8 @@ const AddBookModal = (props) => {
     Axios.post(`https://bookstoreprojectdut.azurewebsites.net/api/books`, data)
       .then((res) => {
         console.log(res.status);
-        actions.setSubmitting(false);
+        formikBag.setSubmitting(false);
+        formikBag.resetForm({ values: "" });
         setIsLoading(false);
         setIsSubmitted(true);
         toast.success("Thêm sách thành công!");
@@ -74,7 +75,7 @@ const AddBookModal = (props) => {
       .catch((err) => {
         toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
         setIsLoading(false);
-        actions.setSubmitting(false);
+        formikBag.setSubmitting(false);
       });
   };
 
@@ -133,9 +134,9 @@ const AddBookModal = (props) => {
     imageLink: Yup.mixed().required("Please fill out this field"),
   });
 
-  // const handleSubmit = (values, actions) => {
+  // const handleSubmit = (values, formikBag) => {
   //   alert(JSON.stringify(values, null, 2));
-  //   actions.setSubmitting(false);
+  //   formikBag.setSubmitting(false);
   // };
 
   return (
@@ -151,7 +152,7 @@ const AddBookModal = (props) => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={(values, actions) => handleSubmit(values, actions)}
+        onSubmit={(values, formikBag) => handleSubmit(values, formikBag)}
         validationSchema={SignupSchema}
       >
         {(props) => {
