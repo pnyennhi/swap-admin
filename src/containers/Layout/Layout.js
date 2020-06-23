@@ -38,7 +38,6 @@ const Layout = (props) => {
           <TopBar
             user={props.user}
             onToggleSidebar={handleToggleSidebarResponsive}
-            onLogout={props.onLogout}
           />
           <div className="page-content">{props.children}</div>
         </div>

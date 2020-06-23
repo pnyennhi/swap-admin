@@ -5,6 +5,8 @@ import { profile, editProfile, logout } from "../../../components/svg/icon";
 import Dropdown from "../../../components/Dropdown";
 import { useSelector } from "react-redux";
 
+import { deleteUser } from "../../../redux/actions/user";
+
 const TopBar = (props) => {
   const [show, setShow] = useState(false);
   const user = useSelector((store) => store.user);
@@ -15,7 +17,8 @@ const TopBar = (props) => {
 
   const handleLogout = () => {
     localStorage.removeItem("TOKEN_AUTH");
-    props.onLogout(null);
+    // props.onLogout(null);
+    deleteUser();
   };
 
   let history = useHistory();
