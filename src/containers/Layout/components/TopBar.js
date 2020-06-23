@@ -17,7 +17,6 @@ const TopBar = (props) => {
 
   const handleLogout = () => {
     localStorage.removeItem("TOKEN_AUTH");
-    // props.onLogout(null);
     deleteUser();
   };
 
@@ -58,23 +57,16 @@ const TopBar = (props) => {
           <li className="nav-item dropdown nav-profile">
             <a
               className="nav-link dropdown-toggle"
-              id="profileDropdown"
               onClick={() => handleToggleDropdown()}
             >
-              <img
-                src="https://pickaface.net/gallery/avatar/20130319_083314_1174_admin.png"
-                alt="profile"
-              />
+              <img src={user?.avatarLink} />
             </a>
             {show && (
               <Dropdown onClick={handleToggleDropdown}>
                 <div className={show ? "dropdown-menu show" : "dropdown-menu"}>
                   <div className="dropdown-header d-flex flex-column align-items-center">
                     <div className="figure mb-3">
-                      <img
-                        src="https://pickaface.net/gallery/avatar/20130319_083314_1174_admin.png"
-                        alt=""
-                      />
+                      <img src={user?.avatarLink} alt="Avatar" />
                     </div>
                     <div className="info text-center">
                       <p className="name font-weight-bold mb-0">{user?.name}</p>
