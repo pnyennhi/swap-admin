@@ -1,4 +1,8 @@
 import axios from "axios";
+import { useHistory } from "react-router-dom";
+import { deleteUser } from "./redux/actions/user";
+
+const history = useHistory();
 
 const Instance = axios.create();
 
@@ -19,7 +23,9 @@ Instance.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 401) {
-      alert(1);
+      localStorage.clear();
+      deleteUser();
+      history.push("/login");
       return Promise.reject(error);
     }
 
