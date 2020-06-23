@@ -35733,10 +35733,10 @@ address p {
 
 /* Cards */
 .card {
-  box-shadow: 0 0 10px 0 rgba(183, 192, 206, 0.2);
-  -webkit-box-shadow: 0 0 10px 0 rgba(183, 192, 206, 0.2);
-  -moz-box-shadow: 0 0 10px 0 rgba(183, 192, 206, 0.2);
-  -ms-box-shadow: 0 0 10px 0 rgba(183, 192, 206, 0.2);
+  box-shadow: 0 0 10px 2px rgba(183, 192, 206, 0.2);
+  -webkit-box-shadow: 0 0 10px 2px rgba(183, 192, 206, 0.2);
+  -moz-box-shadow: 0 0 10px 2px rgba(183, 192, 206, 0.2);
+  -ms-box-shadow: 0 0 10px 2px rgba(183, 192, 206, 0.2);
 }
 
 .card .card-body {
