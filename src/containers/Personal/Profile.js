@@ -165,6 +165,7 @@ const Profile = () => {
                                             "avatarLink",
                                             event.currentTarget.files[0]
                                           );
+                                          handleSubmit();
                                         }}
                                         className={
                                           errors.avatarLink &&

@@ -156,7 +156,7 @@ export const publisher = (
 export const email = (
   <svg style={{ width: "30px", height: "30px" }} viewBox="0 0 30 30">
     <path
-      fill="currentColor"
+      fill="#d83939"
       d="M22,6V4L14,9L6,4V6L14,11L22,6M22,2A2,2 0 0,1 24,4V16A2,2 0 0,1 22,18H6C4.89,18 4,17.1 4,16V4C4,2.89 4.89,2 6,2H22M2,6V20H20V22H2A2,2 0 0,1 0,20V6H2Z"
     />
   </svg>
@@ -165,7 +165,7 @@ export const email = (
 export const role = (
   <svg style={{ width: "30px", height: "30px" }} viewBox="0 0 30 30">
     <path
-      fill="currentColor"
+      fill="#1a5cb1"
       d="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12M5,13.28L7.45,14.77L6.8,11.96L9,10.08L6.11,9.83L5,7.19L3.87,9.83L1,10.08L3.18,11.96L2.5,14.77L5,13.28Z"
     />
   </svg>
