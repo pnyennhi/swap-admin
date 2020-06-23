@@ -49,7 +49,7 @@ const EditSubcriberModal = (props) => {
       })
       .catch((err) => {
         if (err.response.data.message.includes("Email")) {
-          formikBag.setFieldError("email", err.response.data.message);
+          actions.setFieldError("email", err.response.data.message);
         } else {
           toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
         }
