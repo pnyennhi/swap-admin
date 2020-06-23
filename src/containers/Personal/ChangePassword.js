@@ -34,8 +34,12 @@ const ChangePass = () => {
         actions.setSubmitting(false);
       })
       .catch((err) => {
+        if (err.response.data.message === "Old password is incorrect!") {
+          actions.setFieldError("oldpassword", err.response.data.message);
+        } else {
+          toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
+        }
         actions.setSubmitting(false);
-        toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
       });
   };
 
