@@ -106,7 +106,11 @@ const BookDetailModal = (props) => {
                   <b>Ảnh bìa</b>
                 </label>
                 <br />
-                <img src={book.imageLink} alt={book.nameBook} width="100%" />
+                <img
+                  src={book.imageLink}
+                  alt={book.nameBook}
+                  className="preview-image"
+                />
               </div>
 
               <div className="form-group">

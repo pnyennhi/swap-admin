@@ -39520,3 +39520,10 @@ tr.tr-header:hover {
 .tr-header th:hover {
   background-color: #eeeeee63;
 }
+
+.preview-image {
+  max-width: 100%;
+  max-height: 400px;
+  display: block;
+  margin: auto;
+}

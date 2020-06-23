@@ -332,13 +332,13 @@ const EditBookModal = (props) => {
                   {!values.imageLink ? null : values.imageLink.name ? (
                     <img
                       src={URL.createObjectURL(values.imageLink)}
-                      width="100%"
+                      className="preview-image"
                       style={{ marginBottom: "1rem" }}
                     />
                   ) : (
                     <img
                       src={values.imageLink}
-                      width="100%"
+                      className="preview-image"
                       style={{ marginBottom: "1rem" }}
                     />
                   )}
