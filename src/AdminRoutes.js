@@ -17,6 +17,7 @@ import ChangePassword from "./containers/Personal/ChangePassword";
 import Review from "./containers/Review/Review";
 import Coupon from "./containers/Coupon/Coupon";
 import Shipping from "./containers/Shipping/Shipping";
+import Subcriber from "./containers/Subcriber/Subcriber";
 
 const AdminRoutes = () => {
   return (
@@ -30,6 +31,7 @@ const AdminRoutes = () => {
           <Route path="/review" component={Review} />
           <Route path="/coupon" component={Coupon} />
           <Route path="/shipping" component={Shipping} />
+          <Route path="/subcriber" component={Subcriber} />
           <Route path="/profile" component={Profile} />
           <Route path="/changepassword" component={ChangePassword} />
           <Redirect exact from="/" to="/book" />

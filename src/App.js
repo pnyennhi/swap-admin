@@ -61,6 +61,7 @@ function App() {
         <PrivateRoute component={AdminRoutes} path="/coupon" exact />
         <PrivateRoute component={AdminRoutes} path="/review" exact />
         <PrivateRoute component={AdminRoutes} path="/shipping" exact />
+        <PrivateRoute component={AdminRoutes} path="/subcriber" exact />
         <PrivateRoute component={AdminRoutes} path="/profile" exact />
         <PrivateRoute component={AdminRoutes} path="/changepassword" exact />
         <Route path="/" component={PageNotFound} />
