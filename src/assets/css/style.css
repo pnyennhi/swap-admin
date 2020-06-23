@@ -39463,3 +39463,7 @@ option:focus {
 .notfound h3 {
   margin-bottom: 1rem;
 }
+
+input[type="radio"] {
+  margin-right: 0.25rem;
+}

@@ -260,9 +260,9 @@ const EditBookModal = (props) => {
                   />
 
                   <div className="row">
-                    <label className="col-md-7">Ảnh bìa</label>
-                    <div className="col-md-5 flex justify-content-between">
-                      <div>
+                    <label className="col-md-6">Ảnh bìa</label>
+                    <div className="col-md-6 flex justify-content-end">
+                      <div style={{ marginRight: "1rem" }}>
                         <input
                           type="Radio"
                           id="Upload File"
