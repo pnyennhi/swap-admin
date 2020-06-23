@@ -34,13 +34,13 @@ const ReviewTable = (props) => {
         </colgroup>
         <tr className="tr-header">
           <th>
-            <input
+            {/* <input
               type="checkbox"
               checked={
                 selectedReviews.length === reviews.length && reviews.length > 0
               }
               onChange={(e) => onSelectAll(e)}
-            />
+            /> */}
           </th>
           <th
             onClick={() => {
@@ -98,13 +98,13 @@ const ReviewTable = (props) => {
               }
             >
               <td>
-                {/* <input
+                <input
                   type="checkbox"
                   onChange={(e) => {
                     onSelect(e, review.reviewId);
                   }}
                   checked={selectedReviews.indexOf(review.reviewId) > -1}
-                /> */}
+                />
               </td>
               <td>{review.reviewId}</td>
               <td>{review.nameBook}</td>
