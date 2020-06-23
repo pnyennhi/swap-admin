@@ -31441,6 +31441,7 @@ address p {
   -webkit-box-shadow: 0 8px 10px 0 rgba(183, 192, 206, 0.2);
   box-shadow: 0 8px 10px 0 rgba(183, 192, 206, 0.2);
   background: #ffffff;
+  overflow-y: auto;
 }
 
 .sidebar .sidebar-body .nav {
@@ -39526,4 +39527,20 @@ tr.tr-header:hover {
   max-height: 400px;
   display: block;
   margin: auto;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ddd; 
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
