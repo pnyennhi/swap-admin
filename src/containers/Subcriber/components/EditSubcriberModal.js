@@ -48,7 +48,11 @@ const EditSubcriberModal = (props) => {
         toast.success("Edit người theo dõi thành công!");
       })
       .catch((err) => {
-        toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
+        if (err.response.data.message.includes("Email")) {
+          formikBag.setFieldError("email", err.response.data.message);
+        } else {
+          toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
+        }
         setIsLoading(false);
         actions.setSubmitting(false);
       });
