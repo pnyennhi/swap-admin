@@ -39467,3 +39467,7 @@ option:focus {
 input[type="radio"] {
   margin-right: 0.25rem;
 }
+
+.table.fixed td {
+  white-space: nowrap;
+}

@@ -32,6 +32,17 @@ const BookTable = (props) => {
   return (
     <div class="table-responsive">
       <table BookID="dataTableExample" class="table dataTable">
+        <colgroup>
+          <col span="1" style={{ width: "2%" }} />
+          <col span="1" style={{ width: "6%" }} />
+          <col span="1" style={{ width: "25%" }} />
+          <col span="1" style={{ width: "20%" }} />
+          <col span="1" style={{ width: "7%" }} />
+          <col span="1" style={{ width: "7%" }} />
+          <col span="1" style={{ width: "10%" }} />
+          <col span="1" style={{ width: "10%" }} />
+          <col span="1" style={{ width: "5%" }} />
+        </colgroup>
         <tr>
           <th>
             {/* <input
