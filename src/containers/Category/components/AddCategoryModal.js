@@ -47,8 +47,7 @@ const AddCategoryModal = (props) => {
   };
 
   const SignupSchema = Yup.object().shape({
-    category: Yup.string()
-    .required("Please fill out this field"),
+    category: Yup.string().required("Please fill out this field"),
   });
 
   return (
@@ -108,7 +107,7 @@ const AddCategoryModal = (props) => {
                 />
                 <button
                   type="submit"
-                  className="btn btn-secondary"
+                  className="btn btn-success"
                   disabled={isSubmitting}
                 >
                   Thêm
@@ -121,7 +120,7 @@ const AddCategoryModal = (props) => {
                   Reset
                 </button>
                 <button
-                  className="btn btn-primary"
+                  className="btn btn-danger"
                   onClick={handleClose}
                   disabled={isSubmitting}
                 >

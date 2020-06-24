@@ -473,7 +473,7 @@ const AddBookModal = (props) => {
                 />
                 <button
                   type="submit"
-                  className="btn btn-secondary"
+                  className="btn btn-success"
                   disabled={isSubmitting}
                 >
                   Thêm
@@ -486,7 +486,7 @@ const AddBookModal = (props) => {
                   Reset
                 </button>
                 <button
-                  className="btn btn-primary"
+                  className="btn btn-danger"
                   onClick={handleClose}
                   disabled={isSubmitting}
                 >

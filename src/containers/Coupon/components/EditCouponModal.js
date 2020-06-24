@@ -170,7 +170,7 @@ const EditCouponModal = (props) => {
 
                   <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="btn btn-success"
                     disabled={isSubmitting}
                   >
                     Lưu
@@ -183,7 +183,7 @@ const EditCouponModal = (props) => {
                     Reset
                   </button>
                   <button
-                    className="btn btn-secondary"
+                    className="btn btn-danger"
                     onClick={() => {
                       onClose();
                       if (isSubmitted) onEdit();

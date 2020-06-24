@@ -30,8 +30,7 @@ const EditCategoryModal = (props) => {
   }, []);
 
   const SignupSchema = Yup.object().shape({
-    category: Yup.string()
-    .required("Please fill out this field"),
+    category: Yup.string().required("Please fill out this field"),
   });
 
   const handleSubmit = (data, actions) => {
@@ -130,7 +129,7 @@ const EditCategoryModal = (props) => {
 
                   <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="btn btn-success"
                     disabled={isSubmitting}
                   >
                     Lưu
@@ -143,7 +142,7 @@ const EditCategoryModal = (props) => {
                     Reset
                   </button>
                   <button
-                    className="btn btn-secondary"
+                    className="btn btn-danger"
                     onClick={() => {
                       onClose();
                       if (isSubmitted) onEdit();

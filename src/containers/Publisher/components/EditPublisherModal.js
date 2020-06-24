@@ -30,8 +30,7 @@ const EditPublisherModal = (props) => {
   }, []);
 
   const SignupSchema = Yup.object().shape({
-    publisher: Yup.string()
-    .required("Please fill out this field"),
+    publisher: Yup.string().required("Please fill out this field"),
   });
 
   const handleSubmit = (data, actions) => {
@@ -131,7 +130,7 @@ const EditPublisherModal = (props) => {
 
                   <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="btn btn-success"
                     disabled={isSubmitting}
                   >
                     Lưu
@@ -144,7 +143,7 @@ const EditPublisherModal = (props) => {
                     Reset
                   </button>
                   <button
-                    className="btn btn-secondary"
+                    className="btn btn-danger"
                     onClick={() => {
                       onClose();
                       if (isSubmitted) onEdit();

@@ -237,7 +237,7 @@ const EditUserModal = (props) => {
 
                   <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="btn btn-success"
                     disabled={isSubmitting}
                   >
                     Lưu
@@ -250,7 +250,7 @@ const EditUserModal = (props) => {
                     Reset
                   </button>
                   <button
-                    className="btn btn-secondary"
+                    className="btn btn-danger"
                     onClick={() => {
                       onClose();
                       if (isSubmitted) onEdit();

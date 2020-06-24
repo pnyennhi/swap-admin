@@ -22,7 +22,7 @@ const DeleteModal = (props) => {
       </div>
       <div className="modal-footer">
         <button
-          className="btn btn-secondary"
+          className="btn btn-success"
           onClick={() => {
             setIsSubmitting(true);
             onDelete(publisherIds);
@@ -31,7 +31,7 @@ const DeleteModal = (props) => {
           Xóa
         </button>
         <button
-          className="btn btn-primary"
+          className="btn btn-danger"
           onClick={() => onClose()}
           disabled={isSubmitting}
         >

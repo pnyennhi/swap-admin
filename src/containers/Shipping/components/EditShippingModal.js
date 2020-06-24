@@ -156,7 +156,7 @@ const EditShippingModal = (props) => {
 
                   <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="btn btn-success"
                     disabled={isSubmitting}
                   >
                     Lưu
@@ -169,7 +169,7 @@ const EditShippingModal = (props) => {
                     Reset
                   </button>
                   <button
-                    className="btn btn-secondary"
+                    className="btn btn-danger"
                     onClick={() => {
                       onClose();
                       if (isSubmitted) onEdit();
