@@ -78,7 +78,7 @@ const CouponTable = (props) => {
               </td>
               <td>{coupon.discount}</td>
               <td>{coupon.quantity}</td>
-              <td>{coupon.quantityUsed}</td>
+              <td>{coupon.quantityUsed ? coupon.quantityUsed : 0}</td>
               <td className="text-center">
                 <span
                   className={`badge badge-pill ${

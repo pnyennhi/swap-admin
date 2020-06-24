@@ -140,6 +140,15 @@ const EditCouponModal = (props) => {
                     }
                     label="Tổng số mã"
                   />
+                  <Field
+                    type="text"
+                    name="quantityUsed"
+                    component={NumberInput}
+                    className="form-control"
+                    value={values.quantityUsed ? values.quantityUsed : 0}
+                    label="Số mã đã dùng"
+                    disabled
+                  />
                   <div class="form-group">
                     <label>Tình trạng</label>
                     <select

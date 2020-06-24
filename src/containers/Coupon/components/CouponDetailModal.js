@@ -66,7 +66,7 @@ const CouponDetailModal = (props) => {
                 <label>
                   <b>Số mã đã dùng</b>
                 </label>
-                <p>{coupon.quantityUsed}</p>
+                <p>{coupon.quantityUsed ? coupon.quantityUsed : 0}</p>
               </div>
 
               <div className="form-group">
