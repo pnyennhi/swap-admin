@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import UserTable from "./components/UserTable";
 import UserToolbar from "./components/UserToolbar";
-// import DeleteUserModal from "./components/DeleteUserModal";
-// import AddUserModal from "./components/AddUserModal";
+import DeleteUserModal from "./components/DeleteUserModal";
+import AddUserModal from "./components/AddUserModal";
 import Pagination from "../../components/Pagination";
 
 import { add } from "../../components/svg/icon";
@@ -91,19 +91,19 @@ const User = () => {
     //id is an array
     const deletedAPIs = ids.map((id) => {
       return Axios.delete(
-        `https://bookstoreprojectdut.azurewebsites.net/api/listuser/${id}`
+        `https://bookstoreprojectdut.azurewebsites.net/api/admins/${id}`
       );
     });
     Promise.all(deletedAPIs)
       .then((res) => {
-        toast.success("Delete thanh cong");
+        toast.success("Xóa người dùng thành công");
         setSelectedUsers([]);
         setDeletedUser(null);
         setShowDeleteModal(false);
         handleGetUser();
       })
       .catch((err) => {
-        toast.error("Fail");
+        toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
         setSelectedUsers([]);
         setDeletedUser(null);
         setShowDeleteModal(false);
@@ -152,9 +152,9 @@ const User = () => {
 
   return (
     <>
-      <nav class="page-breadcrumb flex align-items-center justify-content-between">
+      <nav className="page-breadcrumb flex align-items-center justify-content-between">
         <h5>QUẢN LÝ NGƯỜI DÙNG</h5>
-        <div class="col-sm-12 col-md-2 text-right">
+        <div className="col-sm-12 col-md-2 text-right">
           <a
             className="btn btn-primary mb-md-0 text-white"
             onClick={() => {
@@ -167,10 +167,10 @@ const User = () => {
         </div>
       </nav>
 
-      <div class="row">
-        <div class="col-md-12 grid-margin stretch-card">
-          <div class="card">
-            <div class="card-body">
+      <div className="row">
+        <div className="col-md-12 grid-margin stretch-card">
+          <div className="card">
+            <div className="card-body">
               <UserToolbar
                 selectedLength={selectedUsers.length}
                 onSearch={handleSearchUsers}
@@ -210,7 +210,7 @@ const User = () => {
                 </>
               )}
 
-              {/* {(Boolean(deletedUser) || showDeleteModal) && (
+              {(Boolean(deletedUser) || showDeleteModal) && (
                 <DeleteUserModal
                   show={Boolean(deletedUser) || showDeleteModal}
                   userIds={showDeleteModal ? selectedUsers : [deletedUser]}
@@ -225,7 +225,7 @@ const User = () => {
                   onClose={handleCloseAddModal}
                   onAdd={handleGetUser}
                 />
-              )} */}
+              )}
             </div>
           </div>
         </div>

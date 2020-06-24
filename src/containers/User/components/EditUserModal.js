@@ -1,198 +1,272 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import Modal from "../../../components/Modal";
 import ErrorFocus from "../../../components/ErrorFocus";
 import TextInput from "../../../components/TextInput";
-import TextAreaInput from "../../../components/TextAreaInput";
-import NumberInput from "../../../components/NumberInput";
-import DateInput from "../../../components/DateInput";
+
+import loading from "../../../assets/images/loading.gif";
+
+import Axios from "../../../Instance";
+
+import { toast } from "react-toastify";
 
 const EditUserModal = (props) => {
-  const { show, user, onClose, onAdd } = props;
+  const { show, userId, onClose, onEdit } = props;
 
-  const initialValues = {
-    id: user.id,
-    username: user.username,
-    name: user.name,
-    type: user.role,
-    status: user.status,
-    coverImage: "",
-    inputDate: new Date(),
-  };
+  const [editedUser, setEditedUser] = useState(null);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [typeOfFile, setTypeOfFile] = useState("File");
+
+  useEffect(() => {
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/admins/${userId}`
+    ).then((res) => {
+      setEditedUser(res.data);
+    });
+  }, []);
 
   const SignupSchema = Yup.object().shape({
-    name: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Please fill out this field"),
-    username: Yup.string().min(2, "Too Short!").max(50, "Too Long!"),
-    coverImage: Yup.mixed().required("Please fill out this field"),
+    user: Yup.string().required("Please fill out this field"),
   });
 
-  const handleSubmit = (values, actions) => {
-    alert(JSON.stringify(values, null, 2));
-    actions.setSubmitting(false);
+  const handleSubmit = (data, actions) => {
+    setIsLoading(true);
+    Axios.put(
+      `https://bookstoreprojectdut.azurewebsites.net/api/admins/${userId}`,
+      data
+    )
+      .then((res) => {
+        console.log(res.status);
+        actions.setSubmitting(false);
+        setIsLoading(false);
+        setIsSubmitted(true);
+        toast.success("Edit sách thành công!");
+      })
+      .catch((err) => {
+        toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
+        setIsLoading(false);
+        actions.setSubmitting(false);
+      });
   };
 
   return (
     <Modal show={show}>
       <div className="modal-header">
-        <h5 className="modal-title" id="exampleModalLabel">
+        <h5 className="modal-title" user="exampleModalLabel">
           Chỉnh sửa người dùng
         </h5>
-        <button className="close" onClick={() => onClose()}>
+        <button
+          className="close"
+          onClick={() => {
+            onClose();
+            if (isSubmitted) onEdit();
+          }}
+        >
           <span>×</span>
         </button>
       </div>
 
-      <Formik
-        initialValues={initialValues}
-        onSubmit={(values, actions) => handleSubmit(values, actions)}
-        validationSchema={SignupSchema}
-      >
-        {(props) => {
-          const {
-            values,
-            touched,
-            errors,
-            dirty,
-            isSubmitting,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            handleReset,
-            setFieldValue,
-          } = props;
-          return (
-            <Form>
-              <div className="modal-body">
-                <div className="form-group">
-                  <label>Id</label>
-                  <input
-                    className="form-control"
+      {editedUser ? (
+        <Formik
+          enableReinitialize={true}
+          initialValues={editedUser}
+          onSubmit={(values, actions) => handleSubmit(values, actions)}
+          valuserationSchema={SignupSchema}
+        >
+          {(props) => {
+            const {
+              values,
+              touched,
+              errors,
+              dirty,
+              isSubmitting,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              handleReset,
+              setFieldValue,
+            } = props;
+
+            return (
+              <Form>
+                <div className="modal-body">
+                  <Field
                     type="text"
-                    value={values.id}
-                    readOnly
+                    name="applicationUserId"
+                    value={editedUser.applicationUserId}
+                    component={TextInput}
+                    className="form-control"
+                    label="ID"
+                    disabled
                   />
-                </div>
-                <Field
-                  type="text"
-                  name="username"
-                  component={TextInput}
-                  className={
-                    errors.username && touched.username
-                      ? "form-control error"
-                      : "form-control"
-                  }
-                  label="Username"
-                />
-
-                <Field
-                  type="text"
-                  name="name"
-                  component={TextInput}
-                  className={
-                    errors.name && touched.name
-                      ? "form-control error"
-                      : "form-control"
-                  }
-                  label="Tên"
-                />
-
-                <div class="form-group">
-                  <label>Vai trò</label>
-                  <select
-                    style={{ color: "black" }}
-                    class="form-control mb-3"
-                    name="type"
-                    value={values.type}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  >
-                    <option selected="" value="0">
-                      0
-                    </option>
-                    <option value="1">1</option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label>Trạng thái</label>
-                  <select
-                    style={{ color: "black" }}
-                    class="form-control mb-3"
-                    name="type"
-                    value={values.type}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  >
-                    <option selected="" value="0">
-                      0
-                    </option>
-                    <option value="1">1</option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label>Avatar</label>
-                  <input
-                    type="file"
-                    name="coverImage"
-                    accept="image/*"
-                    onChange={(event) => {
-                      setFieldValue("coverImage", event.currentTarget.files[0]);
-                    }}
+                  <Field
+                    type="text"
+                    name="email"
+                    component={TextInput}
                     className={
-                      errors.coverImage && touched.coverImage
+                      errors.email && touched.email
                         ? "form-control error"
                         : "form-control"
                     }
+                    label="Email"
                   />
-                  {errors.coverImage && touched.coverImage ? (
-                    <div className="input-feedback">{errors.coverImage}</div>
-                  ) : null}
+                  <Field
+                    type="text"
+                    name="name"
+                    component={TextInput}
+                    className={
+                      errors.name && touched.name
+                        ? "form-control error"
+                        : "form-control"
+                    }
+                    label="Tên"
+                  />
+                  <Field
+                    type="text"
+                    name="email"
+                    component={TextInput}
+                    className={
+                      errors.email && touched.email
+                        ? "form-control error"
+                        : "form-control"
+                    }
+                    label="Email"
+                  />
+
+                  <div className="row">
+                    <label className="col-md-7">Ảnh bìa</label>
+                    <div className="col-md-5 flex justify-content-between">
+                      <div>
+                        <input
+                          type="Radio"
+                          applicationUserId="Upload File"
+                          name="typeOfFile"
+                          value="Upload File"
+                          checked={typeOfFile === "File"}
+                          onChange={() => setTypeOfFile("File")}
+                        />
+                        <label htmlFor="Upload File">Upload File</label>
+                      </div>
+
+                      <div>
+                        <input
+                          type="Radio"
+                          applicationUserId="Upload Link"
+                          name="typeOfFile"
+                          value="Upload Link"
+                          checked={typeOfFile === "Link"}
+                          onChange={() => setTypeOfFile("Link")}
+                        />
+                        <label htmlFor="Upload Link">Upload Link</label>
+                      </div>
+                    </div>
+                  </div>
+                  {typeOfFile === "File" ? (
+                    <div className="form-group">
+                      <input
+                        type="file"
+                        name="avatarLink"
+                        accept="image/*"
+                        onChange={(event) => {
+                          setFieldValue(
+                            "avatarLink",
+                            event.currentTarget.files[0]
+                          );
+                        }}
+                        className={
+                          errors.avatarLink && touched.avatarLink
+                            ? "form-control error"
+                            : "form-control"
+                        }
+                      />
+                      {errors.avatarLink && touched.avatarLink ? (
+                        <div className="input-feedback">
+                          {errors.avatarLink}
+                        </div>
+                      ) : null}
+                    </div>
+                  ) : (
+                    <div className="form-group">
+                      <input
+                        type="text"
+                        name="avatarLink"
+                        onChange={(event) => {
+                          setFieldValue("avatarLink", event.target.value);
+                        }}
+                        className={
+                          errors.avatarLink && touched.avatarLink
+                            ? "form-control error"
+                            : "form-control"
+                        }
+                      />
+                      {errors.avatarLink && touched.avatarLink ? (
+                        <div className="input-feedback">
+                          {errors.avatarLink}
+                        </div>
+                      ) : null}
+                    </div>
+                  )}
+
+                  {!values.avatarLink ? null : values.avatarLink.name ? (
+                    <img
+                      src={URL.createObjectURL(values.avatarLink)}
+                      width="100%"
+                      style={{ marginBottom: "1rem" }}
+                    />
+                  ) : (
+                    <img
+                      src={values.avatarLink}
+                      width="100%"
+                      style={{ marginBottom: "1rem" }}
+                    />
+                  )}
+                  <ErrorFocus />
                 </div>
-
-                {values.coverImage ? (
+                <div className="modal-footer">
                   <img
-                    src={URL.createObjectURL(values.coverImage)}
-                    width="100%"
+                    style={{
+                      display: isLoading ? "inline" : "none",
+                      marginRight: "1rem",
+                    }}
+                    src={loading}
+                    wuserth="6%"
                   />
-                ) : null}
 
-                <Field
-                  type="text"
-                  name="inputDate"
-                  component={DateInput}
-                  label="Ngày đăng kí"
-                />
-
-                <ErrorFocus />
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="submit"
-                  className="btn btn-secondary"
-                  disabled={isSubmitting}
-                >
-                  Lưu
-                </button>
-                <button
-                  className="btn btn-secondary"
-                  onClick={handleReset}
-                  disabled={!dirty || isSubmitting}
-                >
-                  Reset
-                </button>
-                <button className="btn btn-primary" onClick={() => onClose()}>
-                  Hủy
-                </button>
-              </div>
-            </Form>
-          );
-        }}
-      </Formik>
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    disabled={isSubmitting}
+                  >
+                    Lưu
+                  </button>
+                  <button
+                    className="btn btn-secondary"
+                    onClick={handleReset}
+                    disabled={!dirty || isSubmitting}
+                  >
+                    Reset
+                  </button>
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() => {
+                      onClose();
+                      if (isSubmitted) onEdit();
+                    }}
+                    disabled={isSubmitting}
+                  >
+                    Hủy
+                  </button>
+                </div>
+              </Form>
+            );
+          }}
+        </Formik>
+      ) : (
+        <img style={{ margin: "20px auto" }} src={loading} width="10%" />
+      )}
     </Modal>
   );
 };
