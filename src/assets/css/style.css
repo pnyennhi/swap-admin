@@ -12409,15 +12409,15 @@ fieldset:disabled .wizard>.actions a,
 .btn-danger,
 .swal2-modal .swal2-actions button.swal2-cancel {
   color: #fff;
-  background-color: #ff3366;
-  border-color: #ff3366;
+  background-color: #d9534f;
+  border-color: #d43f3a;
 }
 
 .btn-danger:hover,
 .swal2-modal .swal2-actions button.swal2-cancel:hover {
   color: #fff;
-  background-color: #ff0d49;
-  border-color: #ff0040;
+  background-color: #c9302c;
+  border-color: #ac2925;
 }
 
 .btn-danger:focus,
@@ -12425,8 +12425,8 @@ fieldset:disabled .wizard>.actions a,
 .btn-danger.focus,
 .swal2-modal .swal2-actions button.focus.swal2-cancel {
   color: #fff;
-  background-color: #ff0d49;
-  border-color: #ff0040;
+  background-color: #c9302c;
+  border-color: #ac2925;
   box-shadow: 0 0 0 0.2rem rgba(255, 82, 125, 0.5);
 }
 
