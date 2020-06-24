@@ -39498,7 +39498,7 @@ input[type="radio"] {
   color: #0d9448;
 }
 
-.close:hover {
+.reject:hover {
   color: #64738f;
 }
 
@@ -39543,4 +39543,10 @@ tr.tr-header:hover {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
+}
+
+.svg-hover:hover {
+    box-shadow: 4px 2px 5px #7d7777;
+    border-radius: 4px;
+    border: 1px solid #ddd;
 }

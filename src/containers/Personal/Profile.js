@@ -8,7 +8,7 @@ import { uploadImage } from "../../firebase/uploadImage";
 import { toast } from "react-toastify";
 
 import loading from "../../assets/images/loading.gif";
-import { email, role, edit, check, close } from "../../components/svg/icon";
+import { email, role, edit, check, reject } from "../../components/svg/icon";
 
 import { useSelector } from "react-redux";
 import { updateUser } from "../../redux/actions/user";
@@ -228,11 +228,10 @@ const Profile = () => {
                                         />
 
                                         <button
-                                          className="icon-button"
+                                          className="icon-button mr-1"
                                           type="submit"
                                         >
                                           {check}
-                                          {"     "}
                                         </button>
                                         <span
                                           className="icon-button"
@@ -241,7 +240,7 @@ const Profile = () => {
                                             handleReset();
                                           }}
                                         >
-                                          {close}
+                                          {reject}
                                         </span>
                                       </div>
                                       {errors.name && touched.name ? (
@@ -270,23 +269,6 @@ const Profile = () => {
                                 <p>
                                   {role} {info?.role}
                                 </p>
-
-                                {/* <div style={{ textAlign: "right" }}>
-                                  {isSubmitting ? (
-                                    <img
-                                      src={loading}
-                                      width="5%"
-                                      style={{ marginRight: "1rem" }}
-                                    />
-                                  ) : null}
-                                  <button
-                                    type="submit"
-                                    className="btn btn-success"
-                                    disabled={isSubmitting}
-                                  >
-                                    Lưu
-                                  </button>
-                                </div> */}
                               </div>
                             </div>
                           </Form>
