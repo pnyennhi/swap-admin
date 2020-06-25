@@ -112,7 +112,7 @@ const AddUserModal = (props) => {
   });
 
   return (
-    <Modal show={show}>
+    <Modal show={show} maxWidth="910px">
       <div className="modal-header">
         <h5 className="modal-title" id="exampleModalLabel">
           Thêm người dùng
@@ -143,171 +143,184 @@ const AddUserModal = (props) => {
           return (
             <Form>
               <div className="modal-body">
-                <Field
-                  type="text"
-                  name="name"
-                  component={TextInput}
-                  className={
-                    errors.name && touched.name
-                      ? "form-control error"
-                      : "form-control"
-                  }
-                  label="Tên"
-                />
-
-                <Field
-                  type="email"
-                  name="email"
-                  component={TextInput}
-                  className={
-                    errors.email && touched.email
-                      ? "form-control error"
-                      : "form-control"
-                  }
-                  label="Email"
-                />
-
-                <Field
-                  type="password"
-                  name="password"
-                  component={TextInput}
-                  className={
-                    errors.password && touched.password
-                      ? "form-control error"
-                      : "form-control"
-                  }
-                  label="Mật khẩu"
-                />
-
-                <Field
-                  type="password"
-                  name="confirmedPassword"
-                  component={TextInput}
-                  className={
-                    errors.confirmedPassword && touched.confirmedPassword
-                      ? "form-control error"
-                      : "form-control"
-                  }
-                  label="Nhập lại mật khẩu"
-                />
-
                 <div className="row">
-                  <label className="col-md-6">Avatar</label>
-                  <div className="col-md-6 flex justify-content-end">
-                    <div style={{ marginRight: "1rem" }}>
-                      <input
-                        type="Radio"
-                        id="Upload File"
-                        name="typeOfFile"
-                        value="Upload File"
-                        checked={typeOfFile === "File"}
-                        onChange={() => setTypeOfFile("File")}
-                      />
-                      <label htmlFor="Upload File">Upload File</label>
-                    </div>
-
-                    <div>
-                      <input
-                        type="Radio"
-                        id="Upload Link"
-                        name="typeOfFile"
-                        value="Upload Link"
-                        checked={typeOfFile === "Link"}
-                        onChange={() => setTypeOfFile("Link")}
-                      />
-                      <label htmlFor="Upload Link">Upload Link</label>
-                    </div>
-                  </div>
-                </div>
-                {typeOfFile === "File" ? (
-                  <div className="form-group">
-                    <input
-                      type="file"
-                      name="avatarLink"
-                      accept="image/*"
-                      onChange={(event) => {
-                        setFieldValue(
-                          "avatarLink",
-                          event.currentTarget.files[0]
-                        );
-                      }}
-                      className={
-                        errors.avatarLink && touched.avatarLink
-                          ? "form-control error"
-                          : "form-control"
-                      }
-                    />
-                    {errors.avatarLink && touched.avatarLink ? (
-                      <div className="input-feedback">{errors.avatarLink}</div>
-                    ) : null}
-                  </div>
-                ) : (
-                  <div className="form-group">
-                    <input
+                  <div className="col-sm-12 col-md-6">
+                    <Field
                       type="text"
-                      name="avatarLink"
-                      onChange={(event) => {
-                        setFieldValue("avatarLink", event.target.value);
-                      }}
+                      name="name"
+                      component={TextInput}
                       className={
-                        errors.avatarLink && touched.avatarLink
+                        errors.name && touched.name
                           ? "form-control error"
                           : "form-control"
                       }
+                      label="Tên"
                     />
-                    {errors.avatarLink && touched.avatarLink ? (
-                      <div className="input-feedback">{errors.avatarLink}</div>
-                    ) : null}
+
+                    <Field
+                      type="email"
+                      name="email"
+                      component={TextInput}
+                      className={
+                        errors.email && touched.email
+                          ? "form-control error"
+                          : "form-control"
+                      }
+                      label="Email"
+                    />
+
+                    <Field
+                      type="password"
+                      name="password"
+                      component={TextInput}
+                      className={
+                        errors.password && touched.password
+                          ? "form-control error"
+                          : "form-control"
+                      }
+                      label="Mật khẩu"
+                    />
+
+                    <Field
+                      type="password"
+                      name="confirmedPassword"
+                      component={TextInput}
+                      className={
+                        errors.confirmedPassword && touched.confirmedPassword
+                          ? "form-control error"
+                          : "form-control"
+                      }
+                      label="Nhập lại mật khẩu"
+                    />
+                    <div className="form-group">
+                      <label>
+                        <b>Vai trò</b>
+                      </label>
+                      <select
+                        style={{ color: "black" }}
+                        className="form-control mb-3"
+                        name="role"
+                        value={values.role}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      >
+                        {roles.map((role) => {
+                          return (
+                            <option key={role} value={role}>
+                              {role}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+
+                    <div className="form-group">
+                      <label>
+                        <b>Tình trạng</b>
+                      </label>
+                      <select
+                        style={{ color: "black" }}
+                        className="form-control mb-3"
+                        name="status"
+                        value={values.status}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      >
+                        <option value="true">Đang hoạt động</option>
+                        <option value="false">Bị khóa</option>
+                      </select>
+                    </div>
                   </div>
-                )}
+                  <div className="col-sm-12 col-md-6">
+                    <label>
+                      <b>Avatar</b>
+                    </label>
+                    <div className="flex">
+                      <div style={{ marginRight: "1rem" }}>
+                        <input
+                          type="Radio"
+                          id="Upload File"
+                          name="typeOfFile"
+                          value="Upload File"
+                          checked={typeOfFile === "File"}
+                          onChange={() => setTypeOfFile("File")}
+                        />
+                        <label htmlFor="Upload File">Upload File</label>
+                      </div>
 
-                {!values.avatarLink ? null : values.avatarLink.name ? (
-                  <img
-                    src={URL.createObjectURL(values.avatarLink)}
-                    className="preview-image"
-                    style={{ marginBottom: "1rem" }}
-                  />
-                ) : (
-                  <img
-                    src={values.avatarLink}
-                    className="preview-image"
-                    style={{ marginBottom: "1rem" }}
-                  />
-                )}
+                      <div>
+                        <input
+                          type="Radio"
+                          id="Upload Link"
+                          name="typeOfFile"
+                          value="Upload Link"
+                          checked={typeOfFile === "Link"}
+                          onChange={() => setTypeOfFile("Link")}
+                        />
+                        <label htmlFor="Upload Link">Upload Link</label>
+                      </div>
+                    </div>
 
-                <div className="form-group">
-                  <label>Vai trò</label>
-                  <select
-                    style={{ color: "black" }}
-                    className="form-control mb-3"
-                    name="role"
-                    value={values.role}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  >
-                    {roles.map((role) => {
-                      return (
-                        <option key={role} value={role}>
-                          {role}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
+                    {typeOfFile === "File" ? (
+                      <div className="form-group">
+                        <input
+                          type="file"
+                          name="avatarLink"
+                          accept="image/*"
+                          onChange={(event) => {
+                            setFieldValue(
+                              "avatarLink",
+                              event.currentTarget.files[0]
+                            );
+                          }}
+                          className={
+                            errors.avatarLink && touched.avatarLink
+                              ? "form-control error"
+                              : "form-control"
+                          }
+                        />
+                        {errors.avatarLink && touched.avatarLink ? (
+                          <div className="input-feedback">
+                            {errors.avatarLink}
+                          </div>
+                        ) : null}
+                      </div>
+                    ) : (
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          name="avatarLink"
+                          onChange={(event) => {
+                            setFieldValue("avatarLink", event.target.value);
+                          }}
+                          className={
+                            errors.avatarLink && touched.avatarLink
+                              ? "form-control error"
+                              : "form-control"
+                          }
+                        />
+                        {errors.avatarLink && touched.avatarLink ? (
+                          <div className="input-feedback">
+                            {errors.avatarLink}
+                          </div>
+                        ) : null}
+                      </div>
+                    )}
 
-                <div className="form-group">
-                  <label>Tình trạng</label>
-                  <select
-                    style={{ color: "black" }}
-                    className="form-control mb-3"
-                    name="status"
-                    value={values.status}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  >
-                    <option value="true">Đang hoạt động</option>
-                    <option value="false">Bị khóa</option>
-                  </select>
+                    {!values.avatarLink ? null : values.avatarLink.name ? (
+                      <img
+                        src={URL.createObjectURL(values.avatarLink)}
+                        className="preview-image user"
+                        style={{ marginBottom: "1rem" }}
+                      />
+                    ) : (
+                      <img
+                        src={values.avatarLink}
+                        className="preview-image user"
+                        style={{ marginBottom: "1rem" }}
+                      />
+                    )}
+                  </div>
                 </div>
 
                 <ErrorFocus />
@@ -340,7 +353,7 @@ const AddUserModal = (props) => {
                   onClick={handleClose}
                   disabled={isSubmitting}
                 >
-                  Hủy
+                  Đóng
                 </button>
               </div>
             </Form>

@@ -15,7 +15,7 @@ const EditUserModal = (props) => {
   const { show, userId, onClose, onEdit } = props;
 
   const [editedUser, setEditedUser] = useState(null);
-
+  const [roles, setRoles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [typeOfFile, setTypeOfFile] = useState("File");
@@ -25,6 +25,11 @@ const EditUserModal = (props) => {
       `https://bookstoreprojectdut.azurewebsites.net/api/admins/${userId}`
     ).then((res) => {
       setEditedUser(res.data);
+    });
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/admins/getrole`
+    ).then((res) => {
+      setRoles(res.data.map((role) => role.name));
     });
   }, []);
 
@@ -53,7 +58,7 @@ const EditUserModal = (props) => {
   };
 
   return (
-    <Modal show={show}>
+    <Modal show={show} maxWidth="910px">
       <div className="modal-header">
         <h5 className="modal-title" user="exampleModalLabel">
           Chỉnh sửa người dùng
@@ -93,136 +98,183 @@ const EditUserModal = (props) => {
             return (
               <Form>
                 <div className="modal-body">
-                  <Field
-                    type="text"
-                    name="applicationUserId"
-                    value={editedUser.applicationUserId}
-                    component={TextInput}
-                    className="form-control"
-                    label="ID"
-                    disabled
-                  />
-                  <Field
-                    type="text"
-                    name="email"
-                    component={TextInput}
-                    className={
-                      errors.email && touched.email
-                        ? "form-control error"
-                        : "form-control"
-                    }
-                    label="Email"
-                  />
-                  <Field
-                    type="text"
-                    name="name"
-                    component={TextInput}
-                    className={
-                      errors.name && touched.name
-                        ? "form-control error"
-                        : "form-control"
-                    }
-                    label="Tên"
-                  />
-                  <Field
-                    type="text"
-                    name="email"
-                    component={TextInput}
-                    className={
-                      errors.email && touched.email
-                        ? "form-control error"
-                        : "form-control"
-                    }
-                    label="Email"
-                  />
-
                   <div className="row">
-                    <label className="col-md-7">Ảnh bìa</label>
-                    <div className="col-md-5 flex justify-content-between">
-                      <div>
-                        <input
-                          type="Radio"
-                          applicationUserId="Upload File"
-                          name="typeOfFile"
-                          value="Upload File"
-                          checked={typeOfFile === "File"}
-                          onChange={() => setTypeOfFile("File")}
-                        />
-                        <label htmlFor="Upload File">Upload File</label>
+                    <div className="col-sm-12 col-md-6">
+                      <Field
+                        type="text"
+                        name="applicationUserId"
+                        component={TextInput}
+                        className="form-control"
+                        label="Id"
+                        disabled
+                      />
+                      <Field
+                        type="text"
+                        name="name"
+                        component={TextInput}
+                        className={
+                          errors.name && touched.name
+                            ? "form-control error"
+                            : "form-control"
+                        }
+                        label="Tên"
+                      />
+
+                      <Field
+                        type="email"
+                        name="email"
+                        component={TextInput}
+                        className={
+                          errors.email && touched.email
+                            ? "form-control error"
+                            : "form-control"
+                        }
+                        label="Email"
+                      />
+
+                      <div className="form-group">
+                        <label>
+                          <b>Vai trò</b>
+                        </label>
+                        <select
+                          style={{ color: "black" }}
+                          className="form-control mb-3"
+                          name="role"
+                          value={values.role}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        >
+                          {roles.map((role) => {
+                            return (
+                              <option key={role} value={role}>
+                                {role}
+                              </option>
+                            );
+                          })}
+                        </select>
                       </div>
 
-                      <div>
-                        <input
-                          type="Radio"
-                          applicationUserId="Upload Link"
-                          name="typeOfFile"
-                          value="Upload Link"
-                          checked={typeOfFile === "Link"}
-                          onChange={() => setTypeOfFile("Link")}
-                        />
-                        <label htmlFor="Upload Link">Upload Link</label>
+                      <div className="form-group">
+                        <label>
+                          <b>Tình trạng</b>
+                        </label>
+                        <select
+                          style={{ color: "black" }}
+                          className="form-control mb-3"
+                          name="status"
+                          value={values.status}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        >
+                          <option value="true">Đang hoạt động</option>
+                          <option value="false">Bị khóa</option>
+                        </select>
                       </div>
+
+                      <div className="form-group">
+                        <label>Ngày đăng ký</label>
+                        <input
+                          type="text"
+                          name="accountCreateDate"
+                          className="form-control"
+                          value={new Date(
+                            editedUser.accountCreateDate
+                          ).toLocaleDateString("en-GB")}
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div className="col-sm-12 col-md-6">
+                      <label>
+                        <b>Avatar</b>
+                      </label>
+                      <div className="flex">
+                        <div style={{ marginRight: "1rem" }}>
+                          <input
+                            type="Radio"
+                            id="Upload File"
+                            name="typeOfFile"
+                            value="Upload File"
+                            checked={typeOfFile === "File"}
+                            onChange={() => setTypeOfFile("File")}
+                          />
+                          <label htmlFor="Upload File">Upload File</label>
+                        </div>
+
+                        <div>
+                          <input
+                            type="Radio"
+                            id="Upload Link"
+                            name="typeOfFile"
+                            value="Upload Link"
+                            checked={typeOfFile === "Link"}
+                            onChange={() => setTypeOfFile("Link")}
+                          />
+                          <label htmlFor="Upload Link">Upload Link</label>
+                        </div>
+                      </div>
+
+                      {typeOfFile === "File" ? (
+                        <div className="form-group">
+                          <input
+                            type="file"
+                            name="avatarLink"
+                            accept="image/*"
+                            onChange={(event) => {
+                              setFieldValue(
+                                "avatarLink",
+                                event.currentTarget.files[0]
+                              );
+                            }}
+                            className={
+                              errors.avatarLink && touched.avatarLink
+                                ? "form-control error"
+                                : "form-control"
+                            }
+                          />
+                          {errors.avatarLink && touched.avatarLink ? (
+                            <div className="input-feedback">
+                              {errors.avatarLink}
+                            </div>
+                          ) : null}
+                        </div>
+                      ) : (
+                        <div className="form-group">
+                          <input
+                            type="text"
+                            name="avatarLink"
+                            onChange={(event) => {
+                              setFieldValue("avatarLink", event.target.value);
+                            }}
+                            className={
+                              errors.avatarLink && touched.avatarLink
+                                ? "form-control error"
+                                : "form-control"
+                            }
+                          />
+                          {errors.avatarLink && touched.avatarLink ? (
+                            <div className="input-feedback">
+                              {errors.avatarLink}
+                            </div>
+                          ) : null}
+                        </div>
+                      )}
+
+                      {!values.avatarLink ? null : values.avatarLink.name ? (
+                        <img
+                          src={URL.createObjectURL(values.avatarLink)}
+                          className="preview-image user"
+                          style={{ marginBottom: "1rem" }}
+                        />
+                      ) : (
+                        <img
+                          src={values.avatarLink}
+                          className="preview-image user"
+                          style={{ marginBottom: "1rem" }}
+                        />
+                      )}
                     </div>
                   </div>
-                  {typeOfFile === "File" ? (
-                    <div className="form-group">
-                      <input
-                        type="file"
-                        name="avatarLink"
-                        accept="image/*"
-                        onChange={(event) => {
-                          setFieldValue(
-                            "avatarLink",
-                            event.currentTarget.files[0]
-                          );
-                        }}
-                        className={
-                          errors.avatarLink && touched.avatarLink
-                            ? "form-control error"
-                            : "form-control"
-                        }
-                      />
-                      {errors.avatarLink && touched.avatarLink ? (
-                        <div className="input-feedback">
-                          {errors.avatarLink}
-                        </div>
-                      ) : null}
-                    </div>
-                  ) : (
-                    <div className="form-group">
-                      <input
-                        type="text"
-                        name="avatarLink"
-                        onChange={(event) => {
-                          setFieldValue("avatarLink", event.target.value);
-                        }}
-                        className={
-                          errors.avatarLink && touched.avatarLink
-                            ? "form-control error"
-                            : "form-control"
-                        }
-                      />
-                      {errors.avatarLink && touched.avatarLink ? (
-                        <div className="input-feedback">
-                          {errors.avatarLink}
-                        </div>
-                      ) : null}
-                    </div>
-                  )}
-
-                  {!values.avatarLink ? null : values.avatarLink.name ? (
-                    <img
-                      src={URL.createObjectURL(values.avatarLink)}
-                      width="100%"
-                      style={{ marginBottom: "1rem" }}
-                    />
-                  ) : (
-                    <img
-                      src={values.avatarLink}
-                      width="100%"
-                      style={{ marginBottom: "1rem" }}
-                    />
-                  )}
                   <ErrorFocus />
                 </div>
                 <div className="modal-footer">
@@ -232,7 +284,7 @@ const EditUserModal = (props) => {
                       marginRight: "1rem",
                     }}
                     src={loading}
-                    wuserth="6%"
+                    width="30px%"
                   />
 
                   <button
@@ -257,7 +309,7 @@ const EditUserModal = (props) => {
                     }}
                     disabled={isSubmitting}
                   >
-                    Hủy
+                    Đóng
                   </button>
                 </div>
               </Form>
@@ -265,7 +317,7 @@ const EditUserModal = (props) => {
           }}
         </Formik>
       ) : (
-        <img style={{ margin: "20px auto" }} src={loading} width="10%" />
+        <img style={{ margin: "20px auto" }} src={loading} width="30px" />
       )}
     </Modal>
   );

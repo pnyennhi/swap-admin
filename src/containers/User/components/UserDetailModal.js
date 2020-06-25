@@ -22,7 +22,7 @@ const UserDetailModal = (props) => {
   }, []);
 
   return (
-    <Modal show={show}>
+    <Modal show={show} maxWidth="910px">
       <div className="modal-header">
         <h5 className="modal-title">Chi tiết người dùng</h5>
         <button
@@ -39,53 +39,68 @@ const UserDetailModal = (props) => {
         <>
           <div className="modal-body">
             <div className="form-detail">
-              <div className="form-group">
-                <label>
-                  <b>Id</b>
-                </label>
-                <p>{user.applicationUserId}</p>
-              </div>
+              <div className="row">
+                <div className="col-sm-12 col-md-6">
+                  <div className="form-group">
+                    <label>
+                      <b>Id</b>
+                    </label>
+                    <p>{user.applicationUserId}</p>
+                  </div>
 
-              <div className="form-group">
-                <label>
-                  <b>Tên</b>
-                </label>
-                <p>{user.name}</p>
-              </div>
+                  <div className="form-group">
+                    <label>
+                      <b>Tên</b>
+                    </label>
+                    <p>{user.name}</p>
+                  </div>
 
-              <div className="form-group">
-                <label>
-                  <b>Email</b>
-                </label>
-                <p>{user.email}</p>
-              </div>
+                  <div className="form-group">
+                    <label>
+                      <b>Email</b>
+                    </label>
+                    <p>{user.email}</p>
+                  </div>
 
-              <div className="form-group">
-                <label>
-                  <b>Vai trò</b>
-                </label>
-                <p>{user.role}</p>
-              </div>
+                  <div className="form-group">
+                    <label>
+                      <b>Vai trò</b>
+                    </label>
+                    <p>{user.role}</p>
+                  </div>
 
-              <div className="form-group">
-                <label>
-                  <b>Avatar</b>
-                </label>
-                <br />
-                <img
-                  src={user.avatarLink}
-                  alt={user.name}
-                  className="preview-image"
-                />
-              </div>
+                  <div className="form-group">
+                    <label>
+                      <b>Vai trò</b>
+                    </label>
+                    <p>{user.role}</p>
+                  </div>
 
-              <div className="form-group">
-                <label>
-                  <b>Ngày đăng ký</b>
-                </label>
-                <p>
-                  {new Date(user.accountCreateDate).toLocaleDateString("en-GB")}
-                </p>
+                  <div className="form-group">
+                    <label>
+                      <b>Ngày đăng ký</b>
+                    </label>
+                    <p>
+                      {new Date(user.accountCreateDate).toLocaleDateString(
+                        "en-GB"
+                      )}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="col-sm-12 col-md-6">
+                  <div className="form-group">
+                    <label>
+                      <b>Avatar</b>
+                    </label>
+                    <br />
+                    <img
+                      src={user.avatarLink}
+                      alt={user.name}
+                      className="preview-image"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
