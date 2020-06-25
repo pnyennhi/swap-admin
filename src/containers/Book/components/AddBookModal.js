@@ -126,12 +126,15 @@ const AddBookModal = (props) => {
     numberOfPage: Yup.number()
       .positive("This field must not be negative")
       .integer("This field must be non-decimal")
-
       .required("Please fill out this field"),
     quantityIn: Yup.number()
-      .positive("This field must not be negative")
+      .min(0, "This field must not be negative")
       .required("Please fill out this field"),
     imageLink: Yup.mixed().required("Please fill out this field"),
+    imageLink:
+      typeOfFile !== "File"
+        ? Yup.string().matches(/http/, "Link must be valid")
+        : null,
   });
 
   // const handleSubmit = (values, formikBag) => {
@@ -140,7 +143,7 @@ const AddBookModal = (props) => {
   // };
 
   return (
-    <Modal show={show}>
+    <Modal show={show} maxWidth="75%">
       <div className="modal-header">
         <h5 className="modal-title" id="exampleModalLabel">
           Thêm sách
@@ -171,295 +174,305 @@ const AddBookModal = (props) => {
           return (
             <Form>
               <div className="modal-body">
-                <Field
-                  type="text"
-                  name="nameBook"
-                  component={TextInput}
-                  className={
-                    errors.nameBook && touched.nameBook
-                      ? "form-control error"
-                      : "form-control"
-                  }
-                  label="Tên"
-                />
-
-                <Field
-                  type="text"
-                  name="author"
-                  component={TextInput}
-                  className={
-                    errors.author && touched.author
-                      ? "form-control error"
-                      : "form-control"
-                  }
-                  label="Tác giả"
-                />
-
-                <div class="form-group">
-                  <label>Thể loại</label>
-                  <select
-                    style={{ color: "black" }}
-                    class="form-control mb-3"
-                    name="categoryID"
-                    value={values.categoryID}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  >
-                    {categories.map((category) => {
-                      return (
-                        <option
-                          key={category.categoryID}
-                          value={category.categoryID}
-                        >
-                          {category.category}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label>Nhà xuất bản</label>
-                  <select
-                    style={{ color: "black" }}
-                    class="form-control mb-3"
-                    name="publisherID"
-                    value={values.publisherID}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  >
-                    {publishers.map((publisher) => {
-                      return (
-                        <option
-                          key={publisher.publisherID}
-                          value={publisher.publisherID}
-                        >
-                          {publisher.publisher}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-
-                <Field
-                  type="text"
-                  name="originalPrice"
-                  component={NumberInput}
-                  className={
-                    errors.originalPrice && touched.originalPrice
-                      ? "form-control error"
-                      : "form-control"
-                  }
-                  label="Giá gốc (VND)"
-                />
-
-                <Field
-                  type="text"
-                  name="price"
-                  component={NumberInput}
-                  className={
-                    errors.price && touched.price
-                      ? "form-control error"
-                      : "form-control"
-                  }
-                  label="Giá bán (VND)"
-                />
-
                 <div className="row">
-                  <label className="col-md-6">Ảnh bìa</label>
-                  <div className="col-md-6 flex justify-content-end">
-                    <div style={{ marginRight: "1rem" }}>
-                      <input
-                        type="Radio"
-                        id="Upload File"
-                        name="typeOfFile"
-                        value="Upload File"
-                        checked={typeOfFile === "File"}
-                        onChange={() => setTypeOfFile("File")}
-                      />
-                      <label htmlFor="Upload File">Upload File</label>
-                    </div>
-
-                    <div>
-                      <input
-                        type="Radio"
-                        id="Upload Link"
-                        name="typeOfFile"
-                        value="Upload Link"
-                        checked={typeOfFile === "Link"}
-                        onChange={() => setTypeOfFile("Link")}
-                      />
-                      <label htmlFor="Upload Link">Upload Link</label>
-                    </div>
-                  </div>
-                </div>
-                {typeOfFile === "File" ? (
-                  <div className="form-group">
-                    <input
-                      type="file"
-                      name="imageLink"
-                      accept="image/*"
-                      onChange={(event) => {
-                        setFieldValue(
-                          "imageLink",
-                          event.currentTarget.files[0]
-                        );
-                      }}
-                      className={
-                        errors.imageLink && touched.imageLink
-                          ? "form-control error"
-                          : "form-control"
-                      }
-                    />
-                    {errors.imageLink && touched.imageLink ? (
-                      <div className="input-feedback">{errors.imageLink}</div>
-                    ) : null}
-                  </div>
-                ) : (
-                  <div className="form-group">
-                    <input
+                  <div className="col-sm-12 col-md-6">
+                    <Field
                       type="text"
-                      name="imageLink"
-                      onChange={(event) => {
-                        setFieldValue("imageLink", event.target.value);
-                      }}
+                      name="nameBook"
+                      component={TextInput}
                       className={
-                        errors.imageLink && touched.imageLink
+                        errors.nameBook && touched.nameBook
                           ? "form-control error"
                           : "form-control"
                       }
+                      label="Tên"
                     />
-                    {errors.imageLink && touched.imageLink ? (
-                      <div className="input-feedback">{errors.imageLink}</div>
-                    ) : null}
+                    <Field
+                      type="text"
+                      name="author"
+                      component={TextInput}
+                      className={
+                        errors.author && touched.author
+                          ? "form-control error"
+                          : "form-control"
+                      }
+                      label="Tác giả"
+                    />
+                    <div class="form-group">
+                      <label>
+                        <b>Thể loại</b>
+                      </label>
+                      <select
+                        style={{ color: "black" }}
+                        class="form-control mb-3"
+                        name="categoryID"
+                        value={values.categoryID}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      >
+                        {categories.map((category) => {
+                          return (
+                            <option
+                              key={category.categoryID}
+                              value={category.categoryID}
+                            >
+                              {category.category}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>
+                        <b>Nhà xuất bản</b>
+                      </label>
+                      <select
+                        style={{ color: "black" }}
+                        class="form-control mb-3"
+                        name="publisherID"
+                        value={values.publisherID}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      >
+                        {publishers.map((publisher) => {
+                          return (
+                            <option
+                              key={publisher.publisherID}
+                              value={publisher.publisherID}
+                            >
+                              {publisher.publisher}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+
+                    <Field
+                      type="text"
+                      name="originalPrice"
+                      component={NumberInput}
+                      className={
+                        errors.originalPrice && touched.originalPrice
+                          ? "form-control error"
+                          : "form-control"
+                      }
+                      value={values.originalPrice}
+                      label="Giá gốc (VND)"
+                    />
+                    <Field
+                      type="text"
+                      name="price"
+                      component={NumberInput}
+                      className={
+                        errors.price && touched.price
+                          ? "form-control error"
+                          : "form-control"
+                      }
+                      value={values.price}
+                      label="Giá bán (VND)"
+                    />
+                    <Field
+                      type="text"
+                      name="dimensions"
+                      component={TextInput}
+                      className={
+                        errors.dimensions && touched.dimensions
+                          ? "form-control error"
+                          : "form-control"
+                      }
+                      label="Kích thước"
+                    />
+                    <Field
+                      type="text"
+                      name="weight"
+                      component={NumberInput}
+                      className={
+                        errors.weight && touched.weight
+                          ? "form-control error"
+                          : "form-control"
+                      }
+                      value={values.weight}
+                      label="Khối lượng (kg)"
+                    />
+                    <Field
+                      type="text"
+                      name="numberOfPage"
+                      component={NumberInput}
+                      className={
+                        errors.numberOfPage && touched.numberOfPage
+                          ? "form-control error"
+                          : "form-control"
+                      }
+                      value={values.numberOfPage}
+                      label="Số trang"
+                    />
+                    <Field
+                      type="text"
+                      name="quantityIn"
+                      component={NumberInput}
+                      className={
+                        errors.quantityIn && touched.quantityIn
+                          ? "form-control error"
+                          : "form-control"
+                      }
+                      value={values.quantityIn}
+                      label="Số lượng nhập"
+                    />
                   </div>
-                )}
+                  <div className="col-sm-12 col-md-6">
+                    <label>
+                      <b>Ảnh bìa</b>
+                    </label>
 
-                {!values.imageLink ? null : values.imageLink.name ? (
-                  <img
-                    src={URL.createObjectURL(values.imageLink)}
-                    className="preview-image"
-                    style={{ marginBottom: "1rem" }}
-                  />
-                ) : (
-                  <img
-                    src={values.imageLink}
-                    className="preview-image"
-                    style={{ marginBottom: "1rem" }}
-                  />
-                )}
+                    <div className="flex">
+                      <div style={{ marginRight: "1rem" }}>
+                        <input
+                          type="Radio"
+                          id="Upload File"
+                          name="typeOfFile"
+                          value="Upload File"
+                          checked={typeOfFile === "File"}
+                          onChange={() => setTypeOfFile("File")}
+                        />
+                        <label htmlFor="Upload File">Upload File</label>
+                      </div>
 
-                <div>
-                  <label>Loại</label>
-                  <br />
-                  <input
-                    type="Radio"
-                    id="Bìa mềm"
-                    name="format"
-                    value="Bìa mềm"
-                    checked={values.format === "Bìa mềm"}
-                    onChange={() => {
-                      setFieldValue("format", "Bìa mềm");
-                    }}
-                  />
-                  <label htmlFor="Bìa mềm">Bìa mềm</label>
-                  <br />
-                  <input
-                    type="Radio"
-                    id="Bìa cứng"
-                    name="format"
-                    value="Bìa cứng"
-                    checked={values.format === "Bìa cứng"}
-                    onChange={() => {
-                      setFieldValue("format", "Bìa cứng");
-                    }}
-                  />
-                  <label htmlFor="Bìa cứng">Bìa cứng</label>
-                  <br />
+                      <div>
+                        <input
+                          type="Radio"
+                          id="Upload Link"
+                          name="typeOfFile"
+                          value="Upload Link"
+                          checked={typeOfFile === "Link"}
+                          onChange={() => setTypeOfFile("Link")}
+                        />
+                        <label htmlFor="Upload Link">Upload Link</label>
+                      </div>
+                    </div>
+                    {typeOfFile === "File" ? (
+                      <div className="form-group">
+                        <input
+                          type="file"
+                          name="imageLink"
+                          accept="image/*"
+                          onChange={(event) => {
+                            setFieldValue(
+                              "imageLink",
+                              event.currentTarget.files[0]
+                            );
+                          }}
+                          className={
+                            errors.imageLink && touched.imageLink
+                              ? "form-control error"
+                              : "form-control"
+                          }
+                        />
+                        {errors.imageLink && touched.imageLink ? (
+                          <div className="input-feedback">
+                            {errors.imageLink}
+                          </div>
+                        ) : null}
+                      </div>
+                    ) : (
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          name="imageLink"
+                          onChange={(event) => {
+                            setFieldValue("imageLink", event.target.value);
+                          }}
+                          className={
+                            errors.imageLink && touched.imageLink
+                              ? "form-control error"
+                              : "form-control"
+                          }
+                        />
+                        {errors.imageLink && touched.imageLink ? (
+                          <div className="input-feedback">
+                            {errors.imageLink}
+                          </div>
+                        ) : null}
+                      </div>
+                    )}
+                    {!values.imageLink ? null : values.imageLink.name ? (
+                      <img
+                        src={URL.createObjectURL(values.imageLink)}
+                        className="preview-image"
+                        style={{
+                          marginBottom: "1rem",
+                          border: "1px solid #ccc",
+                        }}
+                      />
+                    ) : (
+                      <img
+                        src={values.imageLink}
+                        className="preview-image"
+                        style={{
+                          marginBottom: "1rem",
+                          border: "1px solid #ccc",
+                        }}
+                      />
+                    )}
+                    <div>
+                      <label>
+                        <b>Loại</b>
+                      </label>
+                      <br />
+                      <input
+                        type="Radio"
+                        id="Bìa mềm"
+                        name="format"
+                        value="Bìa mềm"
+                        checked={values.format === "Bìa mềm"}
+                        onChange={() => {
+                          setFieldValue("format", "Bìa mềm");
+                        }}
+                      />
+                      <label htmlFor="Bìa mềm">Bìa mềm</label>
+                      <br />
+                      <input
+                        type="Radio"
+                        id="Bìa cứng"
+                        name="format"
+                        value="Bìa cứng"
+                        checked={values.format === "Bìa cứng"}
+                        onChange={() => {
+                          setFieldValue("format", "Bìa cứng");
+                        }}
+                      />
+                      <label htmlFor="Bìa cứng">Bìa cứng</label>
+                      <br />
+                    </div>
+                    <Field
+                      type="text"
+                      name="information"
+                      component={TextAreaInput}
+                      className={
+                        errors.information && touched.information
+                          ? "form-control error"
+                          : "form-control"
+                      }
+                      label="Thông tin"
+                    />
+
+                    <div class="form-group">
+                      <label>
+                        <b>Tình trạng</b>
+                      </label>
+                      <select
+                        style={{ color: "black" }}
+                        class="form-control mb-3"
+                        name="status"
+                        value={values.status}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      >
+                        <option value="true">Đang hoạt động</option>
+                        <option value="false">Bị khóa</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
-
-                <Field
-                  type="text"
-                  name="dimensions"
-                  component={TextInput}
-                  className={
-                    errors.dimensions && touched.dimensions
-                      ? "form-control error"
-                      : "form-control"
-                  }
-                  label="Kích thước"
-                />
-
-                <Field
-                  type="text"
-                  name="weight"
-                  component={NumberInput}
-                  className={
-                    errors.weight && touched.weight
-                      ? "form-control error"
-                      : "form-control"
-                  }
-                  label="Khối lượng (kg)"
-                />
-
-                <Field
-                  type="text"
-                  name="numberOfPage"
-                  component={NumberInput}
-                  className={
-                    errors.numberOfPage && touched.numberOfPage
-                      ? "form-control error"
-                      : "form-control"
-                  }
-                  label="Số trang"
-                />
-
-                <Field
-                  type="text"
-                  name="information"
-                  component={TextAreaInput}
-                  className={
-                    errors.information && touched.information
-                      ? "form-control error"
-                      : "form-control"
-                  }
-                  label="Thông tin"
-                />
-
-                <Field
-                  type="text"
-                  name="quantityIn"
-                  component={NumberInput}
-                  className={
-                    errors.quantityIn && touched.quantityIn
-                      ? "form-control error"
-                      : "form-control"
-                  }
-                  label="Số lượng nhập"
-                />
-
-                <Field
-                  type="text"
-                  name="date"
-                  component={DateInput}
-                  label="Ngày nhập"
-                />
-
-                <div class="form-group">
-                  <label>Tình trạng</label>
-                  <select
-                    style={{ color: "black" }}
-                    class="form-control mb-3"
-                    name="status"
-                    value={values.status}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  >
-                    <option value="true">Đang hoạt động</option>
-                    <option value="false">Bị khóa</option>
-                  </select>
-                </div>
-
                 <ErrorFocus />
               </div>
               <div className="modal-footer">
@@ -469,7 +482,7 @@ const AddBookModal = (props) => {
                     marginRight: "1rem",
                   }}
                   src={loading}
-                  width="6%"
+                  width="30px"
                 />
                 <button
                   type="submit"
@@ -490,7 +503,7 @@ const AddBookModal = (props) => {
                   onClick={handleClose}
                   disabled={isSubmitting}
                 >
-                  Hủy
+                  Đóng
                 </button>
               </div>
             </Form>
