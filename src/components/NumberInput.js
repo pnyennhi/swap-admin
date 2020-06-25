@@ -4,7 +4,9 @@ import React from "react";
 const NumberInput = ({ field, form, ...props }) => {
   return (
     <div className="form-group">
-      <label>{props.label}</label>
+      <label>
+        <b>{props.label}</b>
+      </label>
       <NumberFormat
         value={field.value}
         name={field.name}

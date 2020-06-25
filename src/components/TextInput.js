@@ -3,7 +3,9 @@ import React from "react";
 const TextInput = ({ field, form, ...props }) => {
   return (
     <div class="form-group">
-      <label>{props.label}</label>
+      <label>
+        <b>{props.label}</b>
+      </label>
       <input {...field} {...props} />
 
       {form.errors[field.name] && form.touched[field.name] ? (

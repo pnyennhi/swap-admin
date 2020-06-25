@@ -3,11 +3,13 @@ import React from "react";
 const TextInput = ({ field, form, ...props }) => {
   return (
     <div class="form-group">
-      <label>{props.label}</label>
+      <label>
+        <b>{props.label}</b>
+      </label>
       <textarea
         {...field}
         {...props}
-        style={{ height: "150px", lineHeight: "1.5" }}
+        style={{ height: "152px", lineHeight: "1.5" }}
       />
 
       {form.errors[field.name] && form.touched[field.name] ? (

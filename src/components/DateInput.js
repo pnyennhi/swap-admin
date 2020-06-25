@@ -9,7 +9,9 @@ const DateInput = ({ field, form, ...props }) => {
 
   return (
     <div className="form-group">
-      <label>{props.label}</label>
+      <label>
+        <b>{props.label}</b>
+      </label>
       <DatePicker
         name={field.name}
         className="form-control"
