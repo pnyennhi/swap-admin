@@ -54,12 +54,15 @@ function App() {
       <Switch>
         <PublicRoute restricted={true} component={Login} path="/login" exact />
         <PrivateRoute component={AdminRoutes} path="/" exact />
+        <PrivateRoute component={AdminRoutes} path="/dashboard" exact />
         <PrivateRoute component={AdminRoutes} path="/book" exact />
         <PrivateRoute component={AdminRoutes} path="/user" exact />
         <PrivateRoute component={AdminRoutes} path="/category" exact />
         <PrivateRoute component={AdminRoutes} path="/publisher" exact />
         <PrivateRoute component={AdminRoutes} path="/coupon" exact />
+        <PrivateRoute component={AdminRoutes} path="/order" exact />
         <PrivateRoute component={AdminRoutes} path="/review" exact />
+        <PrivateRoute component={AdminRoutes} path="/contact" exact />
         <PrivateRoute component={AdminRoutes} path="/shipping" exact />
         <PrivateRoute component={AdminRoutes} path="/subcriber" exact />
         <PrivateRoute component={AdminRoutes} path="/profile" exact />
