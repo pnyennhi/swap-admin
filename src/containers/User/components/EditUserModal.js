@@ -179,7 +179,7 @@ const EditUserModal = (props) => {
                           className="form-control"
                           value={new Date(
                             editedUser.accountCreateDate
-                          ).toLocaleDateString("en-GB")}
+                          ).toLocaleString("en-GB")}
                           disabled
                         />
                       </div>

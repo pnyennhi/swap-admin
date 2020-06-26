@@ -47,6 +47,14 @@ const UserDetailModal = (props) => {
                 <div className="mt-5 col-sm-12 col-md-6">
                   <h4 className="mb-1">{user.name}</h4>
                   <div className="mb-5 flex justify-content-between">
+                    <p>
+                      <i>
+                        Ngày đăng kí:{" "}
+                        {new Date(user.accountCreateDate).toLocaleString(
+                          "en-GB"
+                        )}
+                      </i>
+                    </p>
                     <span
                       className={`badge ${
                         user.status ? "badge-success" : "badge-secondary"
