@@ -39,12 +39,12 @@ const SideBar = (props) => {
           onMouseOver={() => props.onOpen()}
           onMouseOut={() => props.onOpen()}
         >
-          <li className="nav-item">
-            <a href="dashboard-one.html" className="nav-link">
+          <NavLink to="/dashboard" className="nav-item">
+            <a className="nav-link">
               <i className="link-icon flex">{dashboard}</i>
               <span className="link-title">Dashboard</span>
             </a>
-          </li>
+          </NavLink>
           <NavLink to="/user" className="nav-item">
             <a href="dashboard-one.html" className="nav-link">
               <i className="link-icon flex">{user}</i>
