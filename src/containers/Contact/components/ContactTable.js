@@ -10,16 +10,7 @@ import Axios from "../../../Instance";
 const STATUSES = CONTACT_STATUS.map((status) => status.status);
 
 const ContactTable = (props) => {
-  const {
-    contacts,
-    selectedcontacts,
-    onDelete,
-    onSelect,
-    onSelectAll,
-    onSort,
-    onEdit,
-    onSetContacts,
-  } = props;
+  const { contacts, onSort, onEdit, onSetContacts } = props;
 
   const [editedContactId, setEditedContactId] = useState(null);
   const [detailedContactId, setDetailedContactId] = useState(null);

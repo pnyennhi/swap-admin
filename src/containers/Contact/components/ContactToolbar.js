@@ -2,14 +2,7 @@ import React from "react";
 import { del } from "../../../components/svg/icon";
 
 const ContactToolbar = (props) => {
-  const {
-    selectedLength,
-    onChangeSearch,
-    onChangePageSize,
-    onSearch,
-    onShowDeleteModal,
-    onShowAddModal,
-  } = props;
+  const { onChangeSearch, onChangePageSize, onSearch } = props;
   return (
     <>
       <div className="row mb-4 justify-content-between">
@@ -33,17 +26,6 @@ const ContactToolbar = (props) => {
 
         <div className="col-sm-12 col-md-6">
           <div className="row justify-content-end align-items-center">
-            {selectedLength > 0 && (
-              <div class="col-sm-12 col-md-2 text-right">
-                <a
-                  onClick={() => {
-                    onShowDeleteModal(true);
-                  }}
-                >
-                  <i className="mr-2">{del}</i>
-                </a>
-              </div>
-            )}
             <div class="col-sm-9 col-md-8 dataTables_filter">
               <input
                 class="form-control"

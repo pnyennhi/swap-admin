@@ -16,9 +16,6 @@ import { toast } from "react-toastify";
 const Contact = () => {
   const [contacts, setContacts] = useState([]);
   const [selectedContacts, setSelectedContacts] = useState([]);
-  const [deletedContact, setDeletedContact] = useState(null);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showAddModal, setShowAddModal] = useState(false);
   const [search, setSearch] = useState(null);
   const [totalRows, setTotalRows] = useState(21);
   const [filters, setFilters] = useState({
@@ -74,66 +71,6 @@ const Contact = () => {
       });
   };
 
-  const handleSetDeletedBook = (id) => {
-    setDeletedContact(id);
-  };
-
-  const handleCloseDeleteModal = () => {
-    setDeletedContact(null);
-    setShowDeleteModal(false);
-  };
-
-  const handleCloseAddModal = () => {
-    setShowAddModal(false);
-  };
-
-  const handleDeleteContact = (ids) => {
-    //delete contact API
-    //id is an array
-    const deletedAPIs = ids.map((id) => {
-      return axios.delete(
-        `https://bookstoreprojectdut.azurewebsites.net/api/contacts/${id}`
-      );
-    });
-    Promise.all(deletedAPIs)
-      .then((res) => {
-        toast.success("Delete thanh cong");
-        setSelectedContacts([]);
-        setDeletedContact(null);
-        setShowDeleteModal(false);
-        handleGetBook();
-      })
-      .catch((err) => {
-        toast.error("Fail");
-        setSelectedContacts([]);
-        setDeletedContact(null);
-        setShowDeleteModal(false);
-      });
-
-    // setDeletedContact(null);
-    // setShowDeleteModal(false);
-    // handleDeleteBooks(ids);
-  };
-
-  const handleSelectOneContact = (e, id) => {
-    const selectedIndex = selectedContacts.indexOf(id);
-    let newSelectedBooks = [...selectedContacts];
-    console.log(newSelectedBooks);
-
-    if (selectedIndex === -1) {
-      newSelectedBooks.push(id);
-    } else {
-      newSelectedBooks.splice(selectedIndex, 1);
-    }
-    setSelectedContacts(newSelectedBooks);
-  };
-
-  const handleSelectAll = (e) => {
-    if (e.target.checked)
-      setSelectedContacts(contacts.map((contact) => contact.contactID));
-    else setSelectedContacts([]);
-  };
-
   const handleSearchContacts = () => {
     setFilters({ ...filters, keyword: search, page: 1 });
   };
@@ -163,13 +100,11 @@ const Contact = () => {
           <div class="card">
             <div class="card-body">
               <ContactToolbar
-                selectedLength={selectedContacts.length}
                 onSearch={handleSearchContacts}
                 onChangeSearch={setSearch}
                 onChangePageSize={(val) => {
                   setFilters({ ...filters, pageSize: val });
                 }}
-                onShowDeleteModal={setShowDeleteModal}
               />
 
               {isLoading ? (
@@ -184,10 +119,6 @@ const Contact = () => {
                 <>
                   <ContactTable
                     contacts={contacts}
-                    selectedContacts={selectedContacts}
-                    onDelete={handleSetDeletedBook}
-                    onSelect={handleSelectOneContact}
-                    onSelectAll={handleSelectAll}
                     onSort={handleSort}
                     onEdit={handleGetBook}
                     onSetContacts={setContacts}
@@ -201,25 +132,6 @@ const Contact = () => {
                   />
                 </>
               )}
-
-              {/* {(Boolean(deletedContact) || showDeleteModal) && (
-                <DeleteContactModal
-                  show={Boolean(deletedContact) || showDeleteModal}
-                  contactIds={
-                    showDeleteModal ? selectedContacts : [deletedContact]
-                  }
-                  onClose={handleCloseDeleteModal}
-                  onDelete={handleDeleteContact}
-                />
-              )}
-
-              {showAddModal && (
-                <AddContactModal
-                  show={showAddModal}
-                  onClose={handleCloseAddModal}
-                  onAdd={handleGetBook}
-                />
-              )} */}
             </div>
           </div>
         </div>
