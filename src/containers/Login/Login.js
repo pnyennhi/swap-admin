@@ -51,7 +51,7 @@ const Login = (props) => {
                 setError(null);
                 localStorage.setItem("TOKEN_AUTH", response.data.token);
                 setIsLoading(false);
-                // props.onLogin(res.data);
+
                 updateUser(res.data);
               } else {
                 setError("Incorrect email or password");
@@ -59,7 +59,7 @@ const Login = (props) => {
               }
             })
             .catch((err) => {
-              console.log(err);
+              setError("Incorrect email or password");
               setIsLoading(false);
             });
         })
