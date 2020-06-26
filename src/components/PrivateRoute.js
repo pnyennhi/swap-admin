@@ -11,9 +11,11 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        localStorage.getItem("TOKEN_AUTH") ? (
-          <Component {...props} />
-        ) : user?.role === "Admin" ? (
+        !localStorage.getItem("TOKEN_AUTH") ? (
+          <Redirect to="/login" />
+        ) : !user ? (
+          <Redirect to="/login" />
+        ) : user.role === "Admin" ? (
           <Component {...props} />
         ) : (
           <Redirect to="/login" />
