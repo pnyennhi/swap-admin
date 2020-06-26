@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import Modal from "../../../components/Modal";
 
+import { email, role } from "../../../components/svg/icon";
 import loading from "../../../assets/images/loading.gif";
 
 import Axios from "../../../Instance";
@@ -22,7 +23,7 @@ const UserDetailModal = (props) => {
   }, []);
 
   return (
-    <Modal show={show} maxWidth="910px">
+    <Modal show={show} maxWidth="750px">
       <div className="modal-header">
         <h5 className="modal-title">Chi tiết người dùng</h5>
         <button
@@ -41,65 +42,25 @@ const UserDetailModal = (props) => {
             <div className="form-detail">
               <div className="row">
                 <div className="col-sm-12 col-md-6">
-                  <div className="form-group">
-                    <label>
-                      <b>Id</b>
-                    </label>
-                    <p>{user.applicationUserId}</p>
-                  </div>
-
-                  <div className="form-group">
-                    <label>
-                      <b>Tên</b>
-                    </label>
-                    <p>{user.name}</p>
-                  </div>
-
-                  <div className="form-group">
-                    <label>
-                      <b>Email</b>
-                    </label>
-                    <p>{user.email}</p>
-                  </div>
-
-                  <div className="form-group">
-                    <label>
-                      <b>Vai trò</b>
-                    </label>
-                    <p>{user.role}</p>
-                  </div>
-
-                  <div className="form-group">
-                    <label>
-                      <b>Vai trò</b>
-                    </label>
-                    <p>{user.role}</p>
-                  </div>
-
-                  <div className="form-group">
-                    <label>
-                      <b>Ngày đăng ký</b>
-                    </label>
-                    <p>
-                      {new Date(user.accountCreateDate).toLocaleDateString(
-                        "en-GB"
-                      )}
-                    </p>
-                  </div>
+                  <img src={user.avatarLink} className="preview-image user" />
                 </div>
-
-                <div className="col-sm-12 col-md-6">
-                  <div className="form-group">
-                    <label>
-                      <b>Avatar</b>
-                    </label>
-                    <br />
-                    <img
-                      src={user.avatarLink}
-                      alt={user.name}
-                      className="preview-image user"
-                    />
+                <div className="mt-5 col-sm-12 col-md-6">
+                  <h4 className="mb-1">{user.name}</h4>
+                  <div className="mb-5 flex justify-content-between">
+                    <span
+                      className={`badge ${
+                        user.status ? "badge-success" : "badge-secondary"
+                      }`}
+                    >
+                      {user.status ? "Available" : "Unavailable"}
+                    </span>
                   </div>
+                  <p>
+                    {email} {user.email}
+                  </p>
+                  <p>
+                    {role} {user.role}
+                  </p>
                 </div>
               </div>
             </div>
