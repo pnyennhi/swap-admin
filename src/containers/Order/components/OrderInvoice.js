@@ -44,7 +44,7 @@ const OrderInvoice = ({ order }) => {
       </table>
 
       <div>
-        <table className="table no-border">
+        <table className="table no-border order-table">
           <colgroup>
             <col span="3" style={{ width: "80%" }} />
             <col span="1" style={{ width: "20%" }} />
@@ -63,18 +63,16 @@ const OrderInvoice = ({ order }) => {
             </td>
             <td>
               <strong>
-                {" "}
                 {new Number(order.shippingFee).toLocaleString("vi-VN")}
               </strong>
             </td>
           </tr>
           <tr>
-            <td>
-              <strong className="text-right">Tổng cộng:</strong>
+            <td className="text-right">
+              <strong>Tổng cộng:</strong>
             </td>
             <td>
               <strong>
-                {" "}
                 {new Number(order.total2).toLocaleString("vi-VN")}
               </strong>
             </td>

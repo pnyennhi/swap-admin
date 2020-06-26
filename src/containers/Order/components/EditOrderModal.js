@@ -147,11 +147,11 @@ const EditOrderModal = (props) => {
                       </div>
                       <div className="form-group">
                         <label>
-                          <b>Ghi chú</b>
+                          <b>Ngày đặt</b>
                         </label>
                         <input
                           className="form-control"
-                          value={new Date(editedOrder.date).toLocaleDateString(
+                          value={new Date(editedOrder.date).toLocaleString(
                             "en-GB"
                           )}
                           disabled
