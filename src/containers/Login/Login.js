@@ -54,12 +54,14 @@ const Login = (props) => {
 
                 updateUser(res.data);
               } else {
-                setError("Incorrect email or password");
+                setError("Email hoặc mật khẩu không chính xác");
                 setIsLoading(false);
               }
             })
             .catch((err) => {
-              setError("Incorrect email or password");
+              if (err.response.status === 403)
+                setError("Bạn không có quyền truy cập");
+              else setError("Đã có lỗi xảy ra");
               setIsLoading(false);
             });
         })
