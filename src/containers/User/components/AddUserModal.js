@@ -56,9 +56,9 @@ const AddUserModal = (props) => {
     data.status = !!data.status;
 
     let api =
-      data.role === "Admin"
-        ? `https://bookstoreprojectdut.azurewebsites.net/api/admins/addadmin`
-        : `https://bookstoreprojectdut.azurewebsites.net/api/admins/adduser`;
+      // data.role === "Admin"
+      //   ? `https://bookstoreprojectdut.azurewebsites.net/api/admins/addadmin`
+      `https://bookstoreprojectdut.azurewebsites.net/api/admins/adduser`;
 
     Axios.post(api, data)
       .then((res) => {

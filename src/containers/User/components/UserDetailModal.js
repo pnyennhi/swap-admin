@@ -97,7 +97,7 @@ const UserDetailModal = (props) => {
                     <img
                       src={user.avatarLink}
                       alt={user.name}
-                      className="preview-image"
+                      className="preview-image user"
                     />
                   </div>
                 </div>

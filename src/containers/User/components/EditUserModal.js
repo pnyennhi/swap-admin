@@ -40,7 +40,7 @@ const EditUserModal = (props) => {
   const handleSubmit = (data, actions) => {
     setIsLoading(true);
     Axios.put(
-      `https://bookstoreprojectdut.azurewebsites.net/api/admins/${userId}`,
+      `https://bookstoreprojectdut.azurewebsites.net/api/admins/edituser/${userId}`,
       data
     )
       .then((res) => {
