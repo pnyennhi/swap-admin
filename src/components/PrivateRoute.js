@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const user = useSelector((store) => store.user);
-
   return (
     // Show the component only when the user is logged in
     // Otherwise, redirect the user to /signin page
@@ -13,12 +12,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       render={(props) =>
         !localStorage.getItem("TOKEN_AUTH") ? (
           <Redirect to="/login" />
-        ) : !user ? (
-          <Redirect to="/login" />
-        ) : user.role === "Admin" ? (
-          <Component {...props} />
         ) : (
-          <Redirect to="/login" />
+          <Component {...props} />
         )
       }
     />

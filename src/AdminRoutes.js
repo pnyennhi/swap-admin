@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 
 import Layout from "./containers/Layout/Layout";
-// import Dashboard from "./containers/Dashboard/Dashboard";
+import Dashboard from "./containers/Dashboard/Dashboard";
 import Book from "./containers/Book/Book";
 import User from "./containers/User/User";
 import Category from "./containers/Category/Category";
@@ -27,7 +27,7 @@ const AdminRoutes = () => {
     <Router>
       <Layout>
         <Switch>
-          {/* <Route path="/dashboard" component={Dashboard} /> */}
+          <Route path="/dashboard" component={Dashboard} />
           <Route path="/book" component={Book} />
           <Route path="/user" component={User} />
           <Route path="/category" component={Category} />
@@ -40,8 +40,8 @@ const AdminRoutes = () => {
           <Route path="/subcriber" component={Subcriber} />
           <Route path="/profile" component={Profile} />
           <Route path="/changepassword" component={ChangePassword} />
-          <Redirect exact from="/" to="/book" />
-          <Redirect exact from="/login" to="/book" />
+          <Redirect exact from="/" to="/dashboard" />
+          <Redirect exact from="/login" to="/dashboard" />
         </Switch>
       </Layout>
     </Router>
