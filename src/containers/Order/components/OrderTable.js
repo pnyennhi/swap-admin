@@ -15,7 +15,7 @@ const OrderTable = (props) => {
   const [editedOrderId, setEditedOrderId] = useState(null);
   const [detailedOrderId, setDetailedOrderId] = useState(null);
 
-  const handlesetEditedBookId = (id) => {
+  const handlesetEditedOrderId = (id) => {
     setEditedOrderId(id);
   };
 
@@ -23,7 +23,7 @@ const OrderTable = (props) => {
     setEditedOrderId(null);
   };
 
-  const handlesetDetailedBookId = (id) => {
+  const handlesetDetailedOrderId = (id) => {
     setDetailedOrderId(id);
   };
 
@@ -164,14 +164,14 @@ const OrderTable = (props) => {
                 {order.status !== "Đã hủy" && order.status !== "Hoàn thành" ? (
                   <button
                     className="icon-button"
-                    onClick={() => handlesetEditedBookId(order.id)}
+                    onClick={() => handlesetEditedOrderId(order.id)}
                   >
                     {edit}
                   </button>
                 ) : (
                   <button
                     className="icon-button"
-                    onClick={() => handlesetDetailedBookId(order.id)}
+                    onClick={() => handlesetDetailedOrderId(order.id)}
                   >
                     {view}
                   </button>

@@ -55843,3 +55843,8 @@ tr.tr-header:hover {
 table.no-border td {
   border-top: none;
 }
+
+.loading {
+  display: block;
+  margin: auto;
+}
