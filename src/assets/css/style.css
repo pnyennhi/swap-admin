@@ -55848,3 +55848,7 @@ table.no-border td {
   display: block;
   margin: auto;
 }
+
+.detail-table td {
+  padding: 0.25rem 0;
+}

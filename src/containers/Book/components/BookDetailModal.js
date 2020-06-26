@@ -34,7 +34,7 @@ const BookDetailModal = (props) => {
   }, []);
 
   return (
-    <Modal show={show} maxWidth="75%">
+    <Modal show={show} maxWidth="700px">
       <div className="modal-header">
         <h5 className="modal-title" id="exampleModalLabel">
           Chi tiết sách
@@ -55,139 +55,102 @@ const BookDetailModal = (props) => {
             <div className="form-detail">
               <div className="row">
                 <div className="col-sm-12 col-md-6">
-                  <div className="form-group">
-                    <label>
-                      <b>Id</b>
-                    </label>
-                    <p>{book.bookID}</p>
-                  </div>
-
-                  <div className="form-group">
-                    <label>
-                      <b>Tên sách</b>
-                    </label>
-                    <p>{book.nameBook}</p>
-                  </div>
-
-                  <div className="form-group">
-                    <label>
-                      <b>Tác giả</b>
-                    </label>
-                    <p>{book.author}</p>
-                  </div>
-
-                  <div className="form-group">
-                    <label>
-                      <b>Thể loại</b>
-                    </label>
-                    <p>
-                      {
-                        categories.find(
-                          (category) => category.categoryID === book.categoryID
-                        )?.category
-                      }
-                    </p>
-                  </div>
-
-                  <div className="form-group">
-                    <label>
-                      <b>Nhà xuất bản</b>
-                    </label>
-                    <p>
-                      {
-                        publishers.find(
-                          (publisher) =>
-                            publisher.publisherID === book.publisherID
-                        )?.publisher
-                      }
-                    </p>
-                  </div>
-
-                  <div className="form-group">
-                    <label>
-                      <b>Giá gốc</b>
-                    </label>
-                    <p>{book.originalPrice}</p>
-                  </div>
-
-                  <div className="form-group">
-                    <label>
-                      <b>Giá bán</b>
-                    </label>
-                    <p>{book.price}</p>
-                  </div>
-
-                  <div className="form-group">
-                    <label>
-                      <b>Kích thước</b>
-                    </label>
-                    <p>{book.dimensions}</p>
-                  </div>
-
-                  <div className="form-group">
-                    <label>
-                      <b>Khối lượng</b>
-                    </label>
-                    <p>{book.weight}</p>
-                  </div>
-
-                  <div className="form-group">
-                    <label>
-                      <b>Số trang</b>
-                    </label>
-                    <p>{book.numberOfPage}</p>
-                  </div>
-
-                  <div className="form-group">
-                    <label>
-                      <b>Số lượng nhập</b>
-                    </label>
-                    <p>{book.quantityIn}</p>
-                  </div>
-
-                  <div className="form-group">
-                    <label>
-                      <b>Số lượng bán</b>
-                    </label>
-                    <p>{book.quantityOut}</p>
-                  </div>
-
-                  <div className="form-group">
-                    <label>
-                      <b>Ngày nhập</b>
-                    </label>
-                    <p>{new Date(book.date).toLocaleDateString("en-GB")}</p>
-                  </div>
+                  <img src={book.imageLink} className="preview-image" />
                 </div>
                 <div className="col-sm-12 col-md-6">
-                  <div className="form-group">
-                    <label>
-                      <b>Ảnh bìa</b>
-                    </label>
-                    <br />
-                    <img
-                      src={book.imageLink}
-                      alt={book.nameBook}
-                      className="preview-image"
-                    />
+                  <h4 className="mb-1">{book.nameBook}</h4>
+                  <div className="mb-4 flex justify-content-between">
+                    <p>
+                      <i>
+                        Ngày nhập:{" "}
+                        {new Date(book.date).toLocaleDateString("en-GB")}
+                      </i>
+                    </p>
+                    <span
+                      className={`badge ${
+                        book.status ? "badge-success" : "badge-secondary"
+                      }`}
+                    >
+                      {book.status ? "Available" : "Unavailable"}
+                    </span>
                   </div>
+                  <h4 className="mb-3">
+                    {new Number(book.price).toLocaleString("vi-VI")}
+                  </h4>
 
-                  <div className="form-group">
-                    <label>
-                      <b>Loại</b>
-                    </label>
-                    <p>{book.format}</p>
-                  </div>
-
-                  <div className="form-group">
-                    <label>
-                      <b>Thông tin</b>
-                    </label>
-                    <div style={{ height: "300px", overflowY: "auto" }}>
-                      {book.information}
-                    </div>
-                  </div>
+                  <table className="detail-table">
+                    <tbody>
+                      <tr>
+                        <td className="font-weight-bold">Tác giả:</td>
+                        <td className="pl-3">{book.author}</td>
+                      </tr>
+                      <tr>
+                        <td className="font-weight-bold">Thể loại:</td>
+                        <td className="pl-3">
+                          {
+                            categories.find(
+                              (category) =>
+                                category.categoryID === book.categoryID
+                            )?.category
+                          }
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="font-weight-bold">Nhà xuất bản:</td>
+                        <td className="pl-3">
+                          {
+                            categories.find(
+                              (category) =>
+                                category.categoryID === book.categoryID
+                            )?.category
+                          }
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="font-weight-bold">Loại:</td>
+                        <td className="pl-3">{book.format}</td>
+                      </tr>
+                      <tr>
+                        <td className="font-weight-bold">Kích thước:</td>
+                        <td className="pl-3">{book.dimensions}</td>
+                      </tr>
+                      <tr>
+                        <td className="font-weight-bold">Khối lượng:</td>
+                        <td className="pl-3">{book.weight} kg</td>
+                      </tr>
+                      <tr>
+                        <td className="font-weight-bold">Số trang:</td>
+                        <td className="pl-3">{book.numberOfPage}</td>
+                      </tr>
+                      <tr>
+                        <td className="font-weight-bold">Giá gốc:</td>
+                        <td className="pl-3">
+                          {new Number(book.originalPrice).toLocaleString(
+                            "vi-VI"
+                          )}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="font-weight-bold">Số lượng nhập:</td>
+                        <td className="pl-3">
+                          {new Number(book.quantityIn).toLocaleString("vi-VI")}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="font-weight-bold">Số lượng bán:</td>
+                        <td className="pl-3">
+                          {new Number(book.quantityOut).toLocaleString("vi-VI")}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
+              </div>
+              <div>
+                <p className="mb-2">
+                  <b>Thông tin</b>
+                </p>
+                <p>{book.information}</p>
               </div>
             </div>
           </div>
