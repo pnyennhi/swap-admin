@@ -22,22 +22,44 @@ import Order from "./containers/Order/Order";
 import Shipping from "./containers/Shipping/Shipping";
 import Subcriber from "./containers/Subcriber/Subcriber";
 
+import PrivateAdminRoute from "./components/PrivateAdminRoute";
+
 const AdminRoutes = () => {
   return (
     <Router>
       <Layout>
         <Switch>
           <Route path="/dashboard" component={Dashboard} />
-          <Route path="/book" component={Book} />
-          <Route path="/user" component={User} />
-          <Route path="/category" component={Category} />
-          <Route path="/publisher" component={Publisher} />
-          <Route path="/review" component={Review} />
-          <Route path="/contact" component={Contact} />
-          <Route path="/coupon" component={Coupon} />
-          <Route path="/order" component={Order} />
-          <Route path="/shipping" component={Shipping} />
-          <Route path="/subcriber" component={Subcriber} />
+          <PrivateAdminRoute path="/book" component={Book} type="book" />
+          <PrivateAdminRoute path="/user" component={User} type="user" />
+          <PrivateAdminRoute
+            path="/category"
+            component={Category}
+            type="category"
+          />
+          <PrivateAdminRoute
+            path="/publisher"
+            component={Publisher}
+            type="publisher"
+          />
+          <PrivateAdminRoute path="/review" component={Review} type="review" />
+          <PrivateAdminRoute
+            path="/contact"
+            component={Contact}
+            type="contact"
+          />
+          <PrivateAdminRoute path="/coupon" component={Coupon} type="coupon" />
+          <PrivateAdminRoute path="/order" component={Order} type="order" />
+          <PrivateAdminRoute
+            path="/shipping"
+            component={Shipping}
+            type="shipping"
+          />
+          <PrivateAdminRoute
+            path="/subcriber"
+            component={Subcriber}
+            type="subscriber"
+          />
           <Route path="/profile" component={Profile} />
           <Route path="/changepassword" component={ChangePassword} />
           <Redirect exact from="/" to="/dashboard" />
