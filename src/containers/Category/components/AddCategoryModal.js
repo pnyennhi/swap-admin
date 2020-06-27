@@ -7,7 +7,7 @@ import TextInput from "../../../components/TextInput";
 
 import loading from "../../../assets/images/loading.gif";
 
-import axios from "axios";
+import Axios from "../../../Instance";
 import { toast } from "react-toastify";
 
 const AddCategoryModal = (props) => {
@@ -18,11 +18,10 @@ const AddCategoryModal = (props) => {
 
   const handleSubmit = (values, formikBag) => {
     setIsLoading(true);
-    axios
-      .post(
-        `https://bookstoreprojectdut.azurewebsites.net/api/categories`,
-        values
-      )
+    Axios.post(
+      `https://bookstoreprojectdut.azurewebsites.net/api/categories`,
+      values
+    )
       .then((res) => {
         toast.success("Thêm thể loại thành công");
         setIsLoading(false);

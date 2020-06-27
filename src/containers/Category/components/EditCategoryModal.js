@@ -7,7 +7,7 @@ import TextInput from "../../../components/TextInput";
 
 import loading from "../../../assets/images/loading.gif";
 
-import axios from "axios";
+import Axios from "../../../Instance";
 
 import { toast } from "react-toastify";
 
@@ -20,13 +20,11 @@ const EditCategoryModal = (props) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(
-        `https://bookstoreprojectdut.azurewebsites.net/api/categories/${categoryId}`
-      )
-      .then((res) => {
-        setEditedCategory(res.data);
-      });
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/categories/${categoryId}`
+    ).then((res) => {
+      setEditedCategory(res.data);
+    });
   }, []);
 
   const SignupSchema = Yup.object().shape({
@@ -35,11 +33,10 @@ const EditCategoryModal = (props) => {
 
   const handleSubmit = (data, actions) => {
     setIsLoading(true);
-    axios
-      .put(
-        `https://bookstoreprojectdut.azurewebsites.net/api/categories/${categoryId}`,
-        data
-      )
+    Axios.put(
+      `https://bookstoreprojectdut.azurewebsites.net/api/categories/${categoryId}`,
+      data
+    )
       .then((res) => {
         console.log(res.status);
         actions.setSubmitting(false);
