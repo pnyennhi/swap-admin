@@ -4,7 +4,7 @@ import Modal from "../../../components/Modal";
 
 import loading from "../../../assets/images/loading.gif";
 
-import axios from "axios";
+import Axios from "../../../Instance";
 
 const ShippingDetailModal = (props) => {
   const { show, districtID, onClose } = props;
@@ -14,13 +14,11 @@ const ShippingDetailModal = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(
-        `https://bookstoreprojectdut.azurewebsites.net/api/shipping/${districtID}`
-      )
-      .then((res) => {
-        setCategory(res.data);
-      });
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/shipping/${districtID}`
+    ).then((res) => {
+      setCategory(res.data);
+    });
   }, []);
 
   return (

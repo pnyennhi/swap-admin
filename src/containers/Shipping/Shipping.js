@@ -9,7 +9,7 @@ import Pagination from "../../components/Pagination";
 import { add } from "../../components/svg/icon";
 import loading from "../../assets/images/loading.gif";
 
-import axios from "axios";
+import Axios from "../../Instance";
 import queryString from "query-string";
 import { toast } from "react-toastify";
 
@@ -56,10 +56,9 @@ const Shipping = () => {
         sort: filters.sort,
       });
     setIsLoading(true);
-    axios
-      .get(
-        `https://bookstoreprojectdut.azurewebsites.net/api/shipping?${query}`
-      )
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/shipping?${query}`
+    )
       .then((res) => {
         setShippings(res.data.items);
         setTotalRows(res.data.total);
