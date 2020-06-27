@@ -27,7 +27,7 @@ export const book = (
   </svg>
 );
 
-export const type = (
+export const category = (
   <svg style={{ width: "16px", height: "16px" }} viewBox="0 0 20 22">
     <path
       fill="currentColor"
@@ -45,7 +45,7 @@ export const coupon = (
   </svg>
 );
 
-export const invoice = (
+export const order = (
   <svg style={{ width: "16px", height: "16px" }} viewBox="0 0 20 22">
     <path
       fill="currentColor"
@@ -63,7 +63,7 @@ export const review = (
   </svg>
 );
 
-export const reply = (
+export const contact = (
   <svg style={{ width: "16px", height: "16px" }} viewBox="0 0 20 22">
     <path
       fill="currentColor"
