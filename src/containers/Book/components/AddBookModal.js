@@ -61,7 +61,7 @@ const AddBookModal = (props) => {
   const handleAddBook = (data, formikBag) => {
     data.categoryID = parseInt(data.categoryID);
     data.publisherID = parseInt(data.publisherID);
-    data.status = !!data.status;
+    data.status = data.status === "true" ? true : false;
 
     Axios.post(`https://bookstoreprojectdut.azurewebsites.net/api/books`, data)
       .then((res) => {

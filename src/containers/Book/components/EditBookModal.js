@@ -104,7 +104,7 @@ const EditBookModal = (props) => {
   const handleEditBook = (data, actions) => {
     data.categoryID = parseInt(data.categoryID);
     data.publisherID = parseInt(data.publisherID);
-    data.status = !!data.status;
+    data.status = data.status === "true" ? true : false;
     Axios.put(
       `https://bookstoreprojectdut.azurewebsites.net/api/books/${bookId}`,
       data
