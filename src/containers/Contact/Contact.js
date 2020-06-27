@@ -9,7 +9,7 @@ import Pagination from "../../components/Pagination";
 import { add } from "../../components/svg/icon";
 import loading from "../../assets/images/loading.gif";
 
-import axios from "axios";
+import Axios from "../../Instance";
 import queryString from "query-string";
 import { toast } from "react-toastify";
 
@@ -56,10 +56,9 @@ const Contact = () => {
         sort: filters.sort,
       });
     setIsLoading(true);
-    axios
-      .get(
-        `https://bookstoreprojectdut.azurewebsites.net/api/contacts?${query}`
-      )
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/contacts?${query}`
+    )
       .then((res) => {
         setContacts(res.data.items);
         setTotalRows(res.data.total);
@@ -92,7 +91,7 @@ const Contact = () => {
   return (
     <>
       <nav class="page-breadcrumb flex align-items-center justify-content-between">
-        <h5>QUẢN LÝ ĐƠN HÀNG</h5>
+        <h5>QUẢN LÝ LIÊN HỆ</h5>
       </nav>
 
       <div class="row">

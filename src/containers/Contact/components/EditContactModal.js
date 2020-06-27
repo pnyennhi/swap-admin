@@ -8,7 +8,7 @@ import TextAreaInput from "../../../components/TextAreaInput";
 
 import loading from "../../../assets/images/loading.gif";
 
-import axios from "axios";
+import Axios from "../../../Instance";
 
 import { toast } from "react-toastify";
 
@@ -25,23 +25,20 @@ const EditContactModal = (props) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(
-        `https://bookstoreprojectdut.azurewebsites.net/api/contacts/${contactId}`
-      )
-      .then((res) => {
-        setEditedContact(res.data);
-      });
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/contacts/${contactId}`
+    ).then((res) => {
+      setEditedContact(res.data);
+    });
   }, []);
 
   const handleSubmit = (actions) => {
     setIsLoading(true);
     const newStatus = STATUSES[STATUSES.indexOf(editedContact.status) + 1];
-    axios
-      .put(
-        `https://bookstoreprojectdut.azurewebsites.net/api/contacts/${contactId}`,
-        { status: newStatus }
-      )
+    Axios.put(
+      `https://bookstoreprojectdut.azurewebsites.net/api/contacts/${contactId}`,
+      { status: newStatus }
+    )
       .then((res) => {
         console.log(res.status);
         actions.setSubmitting(false);

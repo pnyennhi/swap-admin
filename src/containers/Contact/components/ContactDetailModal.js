@@ -4,7 +4,7 @@ import Modal from "../../../components/Modal";
 
 import loading from "../../../assets/images/loading.gif";
 
-import axios from "axios";
+import Axios from "../../../Instance";
 
 const ContactDetailModal = (props) => {
   const { show, contactId, onClose } = props;
@@ -14,13 +14,11 @@ const ContactDetailModal = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(
-        `https://bookstoreprojectdut.azurewebsites.net/api/contacts/${contactId}`
-      )
-      .then((res) => {
-        setContact(res.data);
-      });
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/contacts/${contactId}`
+    ).then((res) => {
+      setContact(res.data);
+    });
   }, []);
 
   return (
