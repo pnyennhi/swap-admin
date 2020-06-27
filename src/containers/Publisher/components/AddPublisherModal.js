@@ -7,7 +7,7 @@ import TextInput from "../../../components/TextInput";
 
 import loading from "../../../assets/images/loading.gif";
 
-import axios from "axios";
+import Axios from "../../../Instance";
 import { toast } from "react-toastify";
 
 const AddPublisherModal = (props) => {
@@ -18,11 +18,10 @@ const AddPublisherModal = (props) => {
 
   const handleSubmit = (values, formikBag) => {
     setIsLoading(true);
-    axios
-      .post(
-        `https://bookstoreprojectdut.azurewebsites.net/api/publishers`,
-        values
-      )
+    Axios.post(
+      `https://bookstoreprojectdut.azurewebsites.net/api/publishers`,
+      values
+    )
       .then((res) => {
         toast.success("Thêm thể loại thành công");
         setIsLoading(false);
