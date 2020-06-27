@@ -9,78 +9,130 @@ import loading from "../../assets/images/loading.gif";
 import Axios from "../../Instance";
 
 const Dashboard = () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [date, setDate] = useState({ from: null, to: new Date() });
+
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([
+    { type: "order", count: null },
+    { type: "completed", count: null },
+    { type: "total", count: null },
+    { type: "user", count: null },
+    { type: "subscriber", count: null },
+  ]);
   const calendarIcon = useRef();
 
   useEffect(() => {
     (async () => {
-      const data = [];
-      setIsLoading(true);
-      const userReq = await Axios.get(
-        `https://bookstoreprojectdut.azurewebsites.net/api/applicationuser/statistic/all`
-      );
-      const subcriberReq = await Axios.get(
-        `https://bookstoreprojectdut.azurewebsites.net/api/subcribers/statistic/all`
-      );
-      const orderReq = await Axios.get(
-        `https://bookstoreprojectdut.azurewebsites.net/api/orders/statistic/all`
-      );
-
-      if (!userReq.error && !subcriberReq.error && !orderReq.error) {
-        const user = {
-          type: "user",
-          title: "Total Users",
-          total: userReq.data.userCount,
-          background:
-            "linear-gradient(to right, rgb(103, 115, 255), rgb(93, 204, 185))",
+      if (date.from && date.to) {
+        const formatedDate = {
+          from: date.from.toLocaleDateString("en-GB"),
+          to: date.to.toLocaleDateString("en-GB"),
         };
-        const subscriber = {
-          type: "subscriber",
-          title: "Total Subscribers",
-          total: subcriberReq.data.subcirberCount,
-          background:
-            "linear-gradient(to right, rgb(188, 228, 66), rgb(255, 204, 44))",
-        };
-        const order = {
-          type: "order",
-          title: "Total Orders",
-          total: orderReq.data.orderCount,
-          background:
-            "linear-gradient(to right, rgb(255, 168, 117), rgb(251, 72, 72))",
-        };
-
-        setData([user, subscriber, order]);
-      } else {
-        setHasError(true);
+        const query = `from=${formatedDate.from}&to=${formatedDate.to}`;
+        getDataFromApi(
+          `https://bookstoreprojectdut.azurewebsites.net/api/applicationuser/statistic/all?${query}`
+        );
+        getDataFromApi(
+          `https://bookstoreprojectdut.azurewebsites.net/api/subcribers/statistic/all?${query}`
+        );
+        getDataFromApi(
+          `https://bookstoreprojectdut.azurewebsites.net/api/orders/statistic/all?${query}`
+        );
+        getDataFromApi(
+          `https://bookstoreprojectdut.azurewebsites.net/api/orders/statistic/completed?${query}`
+        );
+        getDataFromApi(
+          `https://bookstoreprojectdut.azurewebsites.net/api/orders/statistic/total?${query}`
+        );
       }
-      setIsLoading(false);
     })();
+  }, [date]);
+
+  useEffect(() => {
+    const data = [];
+
+    getDataFromApi(
+      `https://bookstoreprojectdut.azurewebsites.net/api/applicationuser/statistic/all`
+    );
+    getDataFromApi(
+      `https://bookstoreprojectdut.azurewebsites.net/api/subcribers/statistic/all`
+    );
+    getDataFromApi(
+      `https://bookstoreprojectdut.azurewebsites.net/api/orders/statistic/all`
+    );
+    getDataFromApi(
+      `https://bookstoreprojectdut.azurewebsites.net/api/orders/statistic/completed`
+    );
+    getDataFromApi(
+      `https://bookstoreprojectdut.azurewebsites.net/api/orders/statistic/total`
+    );
   }, []);
+
+  const getDataFromApi = (api) => {
+    setIsLoading(true);
+    Axios.get(api)
+      .then((res) => {
+        const resData = res.data;
+        const key = Object.keys(resData)[0];
+        const type = key.substring(0, key.indexOf("Count"));
+        const types = data.map((item) => item.type);
+        const newData = [...data];
+        newData[types.indexOf(type)].count = resData[key];
+        setData(newData);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setHasError(true);
+        setIsLoading(false);
+      });
+  };
 
   return (
     <>
       <nav class="page-breadcrumb flex justify-content-between">
         <h5>DASHBOARD</h5>
-        <div class="input-group date datepicker dashboard-date mr-2 mb-2 mb-md-0  d-xl-flex">
-          <span
-            class="input-group-addon bg-transparent"
-            onClick={() => {
-              calendarIcon.current.setOpen(true);
-            }}
-          >
-            {calendar}
-          </span>
-          <DatePicker
-            className="form-control"
-            dateFormat="dd/MM/yyyy"
-            popperPlacement="top-left"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            ref={calendarIcon}
-          />
+        <div className="flex jusify-content-end">
+          <div class="input-group date datepicker dashboard-date mr-2 mb-2 mb-md-0  d-xl-flex">
+            <span
+              class="input-group-addon bg-transparent"
+              onClick={() => {
+                calendarIcon.current.setOpen(true);
+              }}
+            >
+              {calendar}
+            </span>
+            <DatePicker
+              className="form-control"
+              dateFormat="dd/MM/yyyy"
+              popperPlacement="top-left"
+              selected={date.from}
+              onChange={(selectedDate) =>
+                setDate({ ...date, from: selectedDate })
+              }
+              ref={calendarIcon}
+            />
+          </div>
+          <div class="input-group date datepicker dashboard-date mr-2 mb-2 mb-md-0  d-xl-flex">
+            <span
+              class="input-group-addon bg-transparent"
+              onClick={() => {
+                calendarIcon.current.setOpen(true);
+              }}
+            >
+              {calendar}
+            </span>
+            <DatePicker
+              className="form-control"
+              dateFormat="dd/MM/yyyy"
+              popperPlacement="top-left"
+              selected={date.to}
+              onChange={(selectedDate) =>
+                setDate({ ...date, to: selectedDate })
+              }
+              ref={calendarIcon}
+            />
+          </div>
         </div>
       </nav>
 
@@ -96,9 +148,7 @@ const Dashboard = () => {
                 <DashboardItem
                   key={item.title}
                   type={item.type}
-                  title={item.title}
-                  total={item.total}
-                  background={item.background}
+                  total={item.count}
                 />
               ))}
             </div>
