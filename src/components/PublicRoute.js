@@ -12,7 +12,7 @@ const PublicRoute = ({ component: Component, restricted, ...rest }) => {
       {...rest}
       render={(props) =>
         localStorage.getItem("TOKEN_AUTH") ? (
-          user?.role === "Admin" ? (
+          user?.role !== "User" ? (
             <Redirect to="/" />
           ) : (
             <Component {...props} />
