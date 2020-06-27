@@ -1,27 +1,19 @@
 import React from "react";
-import {
-  dashboard,
-  user,
-  book,
-  type,
-  coupon,
-  invoice,
-  review,
-  reply,
-  shipping,
-  subscribe,
-  publisher,
-} from "../../../components/svg/icon";
+import { dashboard } from "../../../components/svg/icon";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
+
+import { ROUTES } from "../../../constants";
+import { useSelector } from "react-redux";
 
 const SideBar = (props) => {
+  const user = useSelector((store) => store.user);
   return (
     <nav className="sidebar">
       <div className="sidebar-header">
-        <a href="#" className="sidebar-brand">
+        <Link to="/dashboard" className="sidebar-brand">
           ADMIN <span>website</span>
-        </a>
+        </Link>
         <div
           className="sidebar-toggler not-active"
           onClick={() => {
@@ -45,66 +37,16 @@ const SideBar = (props) => {
               <span className="link-title">Dashboard</span>
             </a>
           </NavLink>
-          <NavLink to="/user" className="nav-item">
-            <a href="dashboard-one.html" className="nav-link">
-              <i className="link-icon flex">{user}</i>
-              <span className="link-title">Quản lí người dùng</span>
-            </a>
-          </NavLink>
-          <NavLink to="/book" className="nav-item">
-            <a className="nav-link">
-              <i className="link-icon flex">{book}</i>
-              <span className="link-title">Quản lí sách</span>
-            </a>
-          </NavLink>
-          <NavLink to="/category" className="nav-item">
-            <a className="nav-link">
-              <i className="link-icon flex">{type}</i>
-              <span className="link-title">Quản lí thể loại sách</span>
-            </a>
-          </NavLink>
-          <NavLink to="/publisher" className="nav-item">
-            <a className="nav-link">
-              <i className="link-icon flex">{publisher}</i>
-              <span className="link-title">Quản lí nhà xuất bản</span>
-            </a>
-          </NavLink>
-          <NavLink to="/coupon" className="nav-item">
-            <a className="nav-link">
-              <i className="link-icon flex">{coupon}</i>
-              <span className="link-title">Quản lí mã giảm giá</span>
-            </a>
-          </NavLink>
-          <NavLink to="/order" className="nav-item">
-            <a className="nav-link">
-              <i className="link-icon flex">{invoice}</i>
-              <span className="link-title">Quản lí đơn hàng</span>
-            </a>
-          </NavLink>
-          <NavLink to="/review" className="nav-item">
-            <a className="nav-link">
-              <i className="link-icon flex">{publisher}</i>
-              <span className="link-title">Quản lí đánh giá</span>
-            </a>
-          </NavLink>
-          <NavLink to="/contact" className="nav-item">
-            <a className="nav-link">
-              <i className="link-icon flex">{reply}</i>
-              <span className="link-title">Quản lí liên hệ</span>
-            </a>
-          </NavLink>
-          <NavLink to="/shipping" className="nav-item">
-            <a className="nav-link">
-              <i className="link-icon flex">{shipping}</i>
-              <span className="link-title">Quản lí phí vận chuyển</span>
-            </a>
-          </NavLink>
-          <NavLink to="/subcriber" className="nav-item">
-            <a className="nav-link">
-              <i className="link-icon flex">{subscribe}</i>
-              <span className="link-title">Quản lí người theo dõi</span>
-            </a>
-          </NavLink>
+          {ROUTES.map((route) =>
+            user?.permissions.indexOf(route.type.toUpperCase()) > -1 ? (
+              <NavLink to={route.path} className="nav-item">
+                <a className="nav-link">
+                  <i className="link-icon flex">{route.icon}</i>
+                  <span className="link-title">{route.title}</span>
+                </a>
+              </NavLink>
+            ) : null
+          )}
         </ul>
       </div>
     </nav>

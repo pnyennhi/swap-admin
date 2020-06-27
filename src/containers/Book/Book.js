@@ -10,7 +10,6 @@ import Pagination from "../../components/Pagination";
 import { add } from "../../components/svg/icon";
 import loading from "../../assets/images/loading.gif";
 
-import axios from "axios";
 import queryString from "query-string";
 import { toast } from "react-toastify";
 

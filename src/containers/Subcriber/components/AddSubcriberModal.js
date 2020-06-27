@@ -7,7 +7,7 @@ import TextInput from "../../../components/TextInput";
 
 import loading from "../../../assets/images/loading.gif";
 
-import axios from "axios";
+import Axios from "../../../Instance";
 import { toast } from "react-toastify";
 import { bindActionCreators } from "redux";
 
@@ -19,11 +19,10 @@ const AddSubcriberModal = (props) => {
 
   const handleSubmit = (values, formikBag) => {
     setIsLoading(true);
-    axios
-      .post(
-        `https://bookstoreprojectdut.azurewebsites.net/api/subcribers`,
-        values
-      )
+    Axios.post(
+      `https://bookstoreprojectdut.azurewebsites.net/api/subcribers`,
+      values
+    )
       .then((res) => {
         toast.success("Thêm người theo dõi thành công");
         setIsLoading(false);

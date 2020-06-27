@@ -13,7 +13,7 @@ import {
 
 export const ORDER_STATUS = [
   {
-    status: "Chưa xử lí",
+    status: "Chờ tiếp nhận",
     color: "badge-info-muted",
     nextStep: "Tiếp nhận",
   },
@@ -27,7 +27,7 @@ export const ORDER_STATUS = [
     color: "badge-warning",
     nextStep: "Hoàn thành",
   },
-  { status: "Hoàn thành", color: "badge-success" },
+  { status: "Đã hoàn thành", color: "badge-success" },
   { status: "Đã hủy", color: "badge-danger" },
 ];
 

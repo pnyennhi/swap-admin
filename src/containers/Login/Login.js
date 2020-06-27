@@ -47,16 +47,11 @@ const Login = (props) => {
               },
             })
             .then((res) => {
-              if (res.data.role === "Admin") {
-                setError(null);
-                localStorage.setItem("TOKEN_AUTH", response.data.token);
-                setIsLoading(false);
+              setError(null);
+              localStorage.setItem("TOKEN_AUTH", response.data.token);
+              setIsLoading(false);
 
-                updateUser(res.data);
-              } else {
-                setError("Email hoặc mật khẩu không chính xác");
-                setIsLoading(false);
-              }
+              updateUser(res.data);
             })
             .catch((err) => {
               if (err.response.status === 403)
