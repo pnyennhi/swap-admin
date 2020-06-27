@@ -4,7 +4,7 @@ import Modal from "../../../components/Modal";
 
 import loading from "../../../assets/images/loading.gif";
 
-import axios from "axios";
+import Axios from "../../../Instance";
 
 const CouponDetailModal = (props) => {
   const { show, couponId, onClose } = props;
@@ -14,13 +14,11 @@ const CouponDetailModal = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(
-        `https://bookstoreprojectdut.azurewebsites.net/api/coupons/${couponId}`
-      )
-      .then((res) => {
-        setCoupon(res.data);
-      });
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/coupons/${couponId}`
+    ).then((res) => {
+      setCoupon(res.data);
+    });
   }, []);
 
   return (

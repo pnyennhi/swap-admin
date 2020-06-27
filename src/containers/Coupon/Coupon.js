@@ -8,7 +8,7 @@ import Pagination from "../../components/Pagination";
 import { add } from "../../components/svg/icon";
 import loading from "../../assets/images/loading.gif";
 
-import axios from "axios";
+import Axios from "../../Instance";
 import queryString from "query-string";
 import { toast } from "react-toastify";
 
@@ -57,8 +57,9 @@ const Coupon = () => {
         sort: filters.sort,
       });
     setIsLoading(true);
-    axios
-      .get(`https://bookstoreprojectdut.azurewebsites.net/api/coupons?${query}`)
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/coupons?${query}`
+    )
       .then((res) => {
         setCoupons(res.data.items);
         setTotalRows(res.data.total);

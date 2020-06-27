@@ -8,7 +8,7 @@ import NumberInput from "../../../components/NumberInput";
 
 import loading from "../../../assets/images/loading.gif";
 
-import axios from "axios";
+import Axios from "../../../Instance";
 
 import { toast } from "react-toastify";
 
@@ -21,13 +21,11 @@ const EditCouponModal = (props) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(
-        `https://bookstoreprojectdut.azurewebsites.net/api/coupons/${couponId}`
-      )
-      .then((res) => {
-        setEditedCoupon(res.data);
-      });
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/coupons/${couponId}`
+    ).then((res) => {
+      setEditedCoupon(res.data);
+    });
   }, []);
 
   const SignupSchema = Yup.object().shape({
@@ -46,11 +44,10 @@ const EditCouponModal = (props) => {
 
   const handleSubmit = (data, actions) => {
     setIsLoading(true);
-    axios
-      .put(
-        `https://bookstoreprojectdut.azurewebsites.net/api/coupons/${couponId}`,
-        data
-      )
+    Axios.put(
+      `https://bookstoreprojectdut.azurewebsites.net/api/coupons/${couponId}`,
+      data
+    )
       .then((res) => {
         console.log(res.status);
         actions.setSubmitting(false);
