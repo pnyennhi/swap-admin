@@ -4,7 +4,7 @@ import Modal from "../../../components/Modal";
 
 import loading from "../../../assets/images/loading.gif";
 
-import axios from "axios";
+import Axios from "../../../Instance";
 
 const BookDetailModal = (props) => {
   const { show, reviewId, onClose } = props;
@@ -14,13 +14,11 @@ const BookDetailModal = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(
-        `https://bookstoreprojectdut.azurewebsites.net/api/reviews/${reviewId}`
-      )
-      .then((res) => {
-        setReview(res.data);
-      });
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/reviews/${reviewId}`
+    ).then((res) => {
+      setReview(res.data);
+    });
   }, []);
 
   return (

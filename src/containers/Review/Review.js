@@ -7,7 +7,7 @@ import Pagination from "../../components/Pagination";
 
 import loading from "../../assets/images/loading.gif";
 
-import axios from "axios";
+import Axios from "../../Instance";
 import queryString from "query-string";
 import { toast } from "react-toastify";
 
@@ -56,8 +56,9 @@ const Review = () => {
         sort: filters.sort,
       });
     setIsLoading(true);
-    axios
-      .get(`https://bookstoreprojectdut.azurewebsites.net/api/reviews?${query}`)
+    Axios.get(
+      `https://bookstoreprojectdut.azurewebsites.net/api/reviews?${query}`
+    )
       .then((res) => {
         setReviews(res.data.items);
         setTotalRows(res.data.total);
@@ -82,7 +83,7 @@ const Review = () => {
     //delete review API
     //id is an array
     const deletedAPIs = ids.map((id) => {
-      return axios.delete(
+      return Axios.delete(
         `https://bookstoreprojectdut.azurewebsites.net/api/reviews/${id}`
       );
     });
