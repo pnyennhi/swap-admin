@@ -15,6 +15,7 @@ import loading from "../../../assets/images/loading.gif";
 // import Axios from "Axios";
 import { toast } from "react-toastify";
 import Axios from "../../../Instance";
+import { useSelector } from "react-redux";
 
 const AddUserModal = (props) => {
   const { show, onClose, onAdd } = props;
@@ -23,6 +24,8 @@ const AddUserModal = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [typeOfFile, setTypeOfFile] = useState("File");
+
+  const loggedUser = useSelector((store) => store.user);
 
   useEffect(() => {
     //call API to get list of types, PublisherIDs when mounted
@@ -53,12 +56,9 @@ const AddUserModal = (props) => {
   };
 
   const handleAddUser = (data, formikBag) => {
-    data.status = !!data.status;
+    data.status = data.status === "true" ? true : false;
 
-    let api =
-      // data.role === "Admin"
-      //   ? `https://bookstoreprojectdut.azurewebsites.net/api/admins/addadmin`
-      `https://bookstoreprojectdut.azurewebsites.net/api/admins/adduser`;
+    let api = `https://bookstoreprojectdut.azurewebsites.net/api/admins/adduser`;
 
     Axios.post(api, data)
       .then((res) => {
@@ -203,6 +203,7 @@ const AddUserModal = (props) => {
                         value={values.role}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        disabled={loggedUser.role !== "Admin"}
                       >
                         {roles.map((role) => {
                           return (

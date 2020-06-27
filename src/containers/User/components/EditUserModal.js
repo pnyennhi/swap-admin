@@ -10,6 +10,7 @@ import loading from "../../../assets/images/loading.gif";
 import Axios from "../../../Instance";
 
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const EditUserModal = (props) => {
   const { show, userId, onClose, onEdit } = props;
@@ -19,6 +20,8 @@ const EditUserModal = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [typeOfFile, setTypeOfFile] = useState("File");
+
+  const loggedUser = useSelector((store) => store.user);
 
   useEffect(() => {
     Axios.get(
@@ -38,6 +41,7 @@ const EditUserModal = (props) => {
   });
 
   const handleSubmit = (data, actions) => {
+    data.status = data.status === "true" ? true : false;
     setIsLoading(true);
     Axios.put(
       `https://bookstoreprojectdut.azurewebsites.net/api/admins/edituser/${userId}`,
@@ -143,6 +147,11 @@ const EditUserModal = (props) => {
                           value={values.role}
                           onChange={handleChange}
                           onBlur={handleBlur}
+                          disabled={
+                            loggedUser.role !== "Admin" ||
+                            loggedUser.applicationUserId ===
+                              editedUser.applicationUserId
+                          }
                         >
                           {roles.map((role) => {
                             return (
