@@ -198,13 +198,13 @@ const AddBookModal = (props) => {
                       }
                       label="Tác giả"
                     />
-                    <div class="form-group">
+                    <div className="form-group">
                       <label>
                         <b>Thể loại</b>
                       </label>
                       <select
                         style={{ color: "black" }}
-                        class="form-control mb-3"
+                        className="form-control mb-3"
                         name="categoryID"
                         value={values.categoryID}
                         onChange={handleChange}
@@ -222,13 +222,13 @@ const AddBookModal = (props) => {
                         })}
                       </select>
                     </div>
-                    <div class="form-group">
+                    <div className="form-group">
                       <label>
                         <b>Nhà xuất bản</b>
                       </label>
                       <select
                         style={{ color: "black" }}
-                        class="form-control mb-3"
+                        className="form-control mb-3"
                         name="publisherID"
                         value={values.publisherID}
                         onChange={handleChange}
@@ -455,13 +455,13 @@ const AddBookModal = (props) => {
                       label="Thông tin"
                     />
 
-                    <div class="form-group">
+                    <div className="form-group">
                       <label>
                         <b>Tình trạng</b>
                       </label>
                       <select
                         style={{ color: "black" }}
-                        class="form-control mb-3"
+                        className="form-control mb-3"
                         name="status"
                         value={values.status}
                         onChange={handleChange}

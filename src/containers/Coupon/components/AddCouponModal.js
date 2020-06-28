@@ -133,11 +133,11 @@ const AddCouponModal = (props) => {
                   }
                   label="Tổng số mã"
                 />
-                <div class="form-group">
+                <div className="form-group">
                   <label>Tình trạng</label>
                   <select
                     style={{ color: "black" }}
-                    class="form-control mb-3"
+                    className="form-control mb-3"
                     name="status"
                     value={values.status}
                     onChange={handleChange}

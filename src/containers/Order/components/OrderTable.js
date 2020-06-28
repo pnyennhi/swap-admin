@@ -56,8 +56,8 @@ const OrderTable = (props) => {
   };
 
   return (
-    <div class="table-responsive">
-      <table class="table table-striped table-hover dataTable">
+    <div className="table-responsive">
+      <table className="table table-striped table-hover dataTable">
         <colgroup>
           <col span="1" style={{ width: "5%" }} />
           <col span="1" style={{ width: "15%" }} />

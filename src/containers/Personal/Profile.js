@@ -21,8 +21,7 @@ const Profile = () => {
   const [isEditMode, setIsEditMode] = useState(false);
 
   const SignupSchema = Yup.object().shape({
-    name: Yup.string()
-    .required("Please fill out this field"),
+    name: Yup.string().required("Please fill out this field"),
     avatarLink: Yup.mixed().required("Please fill out this field"),
   });
 
@@ -59,14 +58,14 @@ const Profile = () => {
 
   return (
     <>
-      <nav class="page-breadcrumb flex align-items-center justify-content-between">
+      <nav className="page-breadcrumb flex align-items-center justify-content-between">
         <h5>TRANG CÁ NHÂN</h5>
       </nav>
 
-      <div class="row">
-        <div class="col-md-12 grid-margin stretch-card">
-          <div class="card">
-            <div class="card-body">
+      <div className="row">
+        <div className="col-md-12 grid-margin stretch-card">
+          <div className="card">
+            <div className="card-body">
               {isLoading ? (
                 <img
                   src={loading}
@@ -76,8 +75,11 @@ const Profile = () => {
               ) : hasError ? (
                 <p style={{ color: "red" }}>Đã có lỗi xảy ra</p>
               ) : (
-                <div class="row align-items-md-center justify-content-between mb-4">
-                  <div class="col-sm-12 col-md-9" style={{ margin: "auto" }}>
+                <div className="row align-items-md-center justify-content-between mb-4">
+                  <div
+                    className="col-sm-12 col-md-9"
+                    style={{ margin: "auto" }}
+                  >
                     <Formik
                       enableReinitialize={true}
                       initialValues={info}
@@ -101,9 +103,9 @@ const Profile = () => {
                         } = props;
                         return (
                           <Form>
-                            <div class="row justify-content-between mb-4 profile">
-                              <div class="col-sm-12 col-md-4">
-                                <div class="form-group">
+                            <div className="row justify-content-between mb-4 profile">
+                              <div className="col-sm-12 col-md-4">
+                                <div className="form-group">
                                   <div style={{ textAlign: "center" }}>
                                     {!values?.avatarLink ? null : values
                                         .avatarLink.name ? (
@@ -207,7 +209,7 @@ const Profile = () => {
                                   )}
                                 </div>
                               </div>
-                              <div class="col-sm-12 col-md-8 info">
+                              <div className="col-sm-12 col-md-8 info">
                                 <div className="mb-5">
                                   {isEditMode ? (
                                     <>

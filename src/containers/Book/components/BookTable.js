@@ -30,8 +30,8 @@ const BookTable = (props) => {
   };
 
   return (
-    <div class="table-responsive">
-      <table class="table table-striped table-hover dataTable">
+    <div className="table-responsive">
+      <table className="table table-striped table-hover dataTable">
         <colgroup>
           <col span="1" style={{ width: "2%" }} />
           <col span="1" style={{ width: "6%" }} />

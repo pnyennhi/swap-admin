@@ -88,14 +88,14 @@ const Order = () => {
 
   return (
     <>
-      <nav class="page-breadcrumb flex align-items-center justify-content-between">
+      <nav className="page-breadcrumb flex align-items-center justify-content-between">
         <h5>QUẢN LÝ ĐƠN HÀNG</h5>
       </nav>
 
-      <div class="row">
-        <div class="col-md-12 grid-margin stretch-card">
-          <div class="card">
-            <div class="card-body">
+      <div className="row">
+        <div className="col-md-12 grid-margin stretch-card">
+          <div className="card">
+            <div className="card-body">
               <OrderToolbar
                 onSearch={handleSearchOrders}
                 onChangeSearch={setSearch}

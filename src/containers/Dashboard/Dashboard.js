@@ -90,12 +90,12 @@ const Dashboard = () => {
 
   return (
     <>
-      <nav class="page-breadcrumb flex justify-content-between">
+      <nav className="page-breadcrumb flex justify-content-between">
         <h5>DASHBOARD</h5>
         <div className="flex jusify-content-end">
-          <div class="input-group date datepicker dashboard-date mr-2 mb-2 mb-md-0  d-xl-flex">
+          <div className="input-group date datepicker dashboard-date mr-2 mb-2 mb-md-0  d-xl-flex">
             <span
-              class="input-group-addon bg-transparent"
+              className="input-group-addon bg-transparent"
               onClick={() => {
                 calendarIcon.current.setOpen(true);
               }}
@@ -113,9 +113,9 @@ const Dashboard = () => {
               ref={calendarIcon}
             />
           </div>
-          <div class="input-group date datepicker dashboard-date mr-2 mb-2 mb-md-0  d-xl-flex">
+          <div className="input-group date datepicker dashboard-date mr-2 mb-2 mb-md-0  d-xl-flex">
             <span
-              class="input-group-addon bg-transparent"
+              className="input-group-addon bg-transparent"
               onClick={() => {
                 calendarIcon.current.setOpen(true);
               }}
@@ -141,9 +141,9 @@ const Dashboard = () => {
       ) : hasError ? (
         <p>abc</p>
       ) : (
-        <div class="row">
-          <div class="col-12 col-xl-12 stretch-card">
-            <div class="row flex-grow">
+        <div className="row">
+          <div className="col-12 col-xl-12 stretch-card">
+            <div className="row flex-grow">
               {data.map((item) => (
                 <DashboardItem
                   key={item.title}

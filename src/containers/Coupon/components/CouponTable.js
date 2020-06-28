@@ -22,8 +22,8 @@ const CouponTable = (props) => {
   };
 
   return (
-    <div class="table-responsive">
-      <table class="table table-striped table-hover dataTable">
+    <div className="table-responsive">
+      <table className="table table-striped table-hover dataTable">
         <tr className="tr-header">
           <th
             onClick={() => {

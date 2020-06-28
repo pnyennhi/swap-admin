@@ -154,9 +154,9 @@ const Book = () => {
 
   return (
     <>
-      <nav class="page-breadcrumb flex align-items-center justify-content-between">
+      <nav className="page-breadcrumb flex align-items-center justify-content-between">
         <h5>QUẢN LÝ SÁCH</h5>
-        <div class="col-sm-12 col-md-2 text-right">
+        <div className="col-sm-12 col-md-2 text-right">
           <a
             className="btn btn-primary mb-md-0 text-white"
             onClick={() => {
@@ -169,10 +169,10 @@ const Book = () => {
         </div>
       </nav>
 
-      <div class="row">
-        <div class="col-md-12 grid-margin stretch-card">
-          <div class="card">
-            <div class="card-body">
+      <div className="row">
+        <div className="col-md-12 grid-margin stretch-card">
+          <div className="card">
+            <div className="card-body">
               <BookToolbar
                 selectedLength={selectedBooks.length}
                 onSearch={handleSearchBooks}

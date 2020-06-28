@@ -2,7 +2,7 @@ import React from "react";
 
 const TextInput = ({ field, form, ...props }) => {
   return (
-    <div class="form-group">
+    <div className="form-group">
       <label>
         <b>{props.label}</b>
       </label>

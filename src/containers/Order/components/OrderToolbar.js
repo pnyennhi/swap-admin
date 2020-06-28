@@ -6,11 +6,11 @@ const OrderToolbar = (props) => {
   return (
     <>
       <div className="row mb-4 justify-content-between">
-        <div class="col-sm-12 col-md-5">
-          <div class="dataTables_length flex align-items-center">
+        <div className="col-sm-12 col-md-5">
+          <div className="dataTables_length flex align-items-center">
             <span className="mr-2">Show </span>
             <select
-              class="custom-select custom-select-sm form-control mr-2"
+              className="custom-select custom-select-sm form-control mr-2"
               style={{ width: "30%" }}
               onChange={(e) => {
                 onChangePageSize(e.target.value);
@@ -26,9 +26,9 @@ const OrderToolbar = (props) => {
 
         <div className="col-sm-12 col-md-6">
           <div className="row justify-content-end align-items-center">
-            <div class="col-sm-9 col-md-8 dataTables_filter">
+            <div className="col-sm-9 col-md-8 dataTables_filter">
               <input
-                class="form-control"
+                className="form-control"
                 placeholder="Search"
                 onChange={(e) => {
                   onChangeSearch(e.target.value);
