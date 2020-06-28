@@ -137,17 +137,7 @@ const Login = (props) => {
                           </button>
                         </div>
                       </form>
-                      <div className="mt-3 text-center">
-                        <button
-                          onClick={() => {
-                            setEmail(`cuongnguyen@gmail.com`);
-                            setPassword(`123456`);
-                          }}
-                          className="btn btn-secondary"
-                        >
-                          Auto Complete
-                        </button>
-                      </div>
+
                       {isLoading ? (
                         <div className="mt-3 text-center">
                           <img src={loading} width="35px" />
