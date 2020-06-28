@@ -104,25 +104,24 @@ export const DASHBOARD = [
     type: "user",
     title: "Total Users",
     background:
-      "linear-gradient(to right, rgb(103, 115, 255), rgb(93, 204, 185))",
+      "linear-gradient(to right, rgb(103, 115, 255), rgb(84, 206, 239))",
   },
   {
     type: "subscriber",
     title: "Total Subscribers",
-    background:
-      "linear-gradient(to right, rgb(188, 228, 66), rgb(255, 204, 44))",
+    background: "linear-gradient(to right, orange, rgb(255, 204, 44))",
   },
   {
     type: "order",
     title: "Total Orders",
     background:
-      "linear-gradient(to right, rgb(255, 168, 117), rgb(251, 72, 72))",
+      "linear-gradient(to right, rgb(135, 60, 154), rgb(222, 164, 207))",
   },
   {
     type: "completed",
     title: "Completed Orders",
     background:
-      "linear-gradient(to right, rgb(255, 168, 117), rgb(251, 72, 72))",
+      "linear-gradient(to right, rgb(59, 193, 42), rgb(64, 228, 107))",
   },
   {
     type: "total",

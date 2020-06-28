@@ -143,7 +143,7 @@ const Dashboard = () => {
       ) : (
         <div className="row">
           <div className="col-12 col-xl-12 stretch-card">
-            <div className="row flex-grow">
+            <div className="row flex-grow justify-content-center">
               {data.map((item) => (
                 <DashboardItem
                   key={item.title}
