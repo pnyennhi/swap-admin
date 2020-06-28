@@ -22,9 +22,7 @@ const Profile = () => {
 
   const SignupSchema = Yup.object().shape({
     name: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Please fill out this field"),
+    .required("Please fill out this field"),
     avatarLink: Yup.mixed().required("Please fill out this field"),
   });
 

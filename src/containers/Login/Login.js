@@ -12,12 +12,6 @@ const Login = (props) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const user = {
-    email: "admin",
-    firstName: "Nguyen Van",
-    lastName: "Admin",
-  };
-
   const form = useRef();
 
   const handleLogin = (e) => {
@@ -147,7 +141,7 @@ const Login = (props) => {
                         <button
                           onClick={() => {
                             setEmail(`cuongnguyen@gmail.com`);
-                            setPassword(`cuongnguyen123`);
+                            setPassword(`123456`);
                           }}
                           className="btn btn-secondary"
                         >

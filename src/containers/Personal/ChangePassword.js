@@ -35,7 +35,7 @@ const ChangePass = () => {
       })
       .catch((err) => {
         if (err.response.data.message === "Old password is incorrect!") {
-          actions.setFieldError("oldpassword", err.response.data.message);
+          actions.setFieldError("oldpassword", "Mật khẩu cũ không chính xác");
         } else {
           toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
         }

@@ -56,7 +56,7 @@ const AddUserModal = (props) => {
   };
 
   const handleAddUser = (data, formikBag) => {
-    data.status = data.status === "true" ? true : false;
+    data.status = data.status === "true" || data.status === true ? true : false;
 
     let api = `https://bookstoreprojectdut.azurewebsites.net/api/admins/adduser`;
 

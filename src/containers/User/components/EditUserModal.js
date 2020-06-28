@@ -41,7 +41,7 @@ const EditUserModal = (props) => {
   });
 
   const handleSubmit = (data, actions) => {
-    data.status = data.status === "true" ? true : false;
+    data.status = data.status === "true" || data.status === true ? true : false;
     setIsLoading(true);
     Axios.put(
       `https://bookstoreprojectdut.azurewebsites.net/api/admins/edituser/${userId}`,
@@ -52,7 +52,7 @@ const EditUserModal = (props) => {
         actions.setSubmitting(false);
         setIsLoading(false);
         setIsSubmitted(true);
-        toast.success("Edit sách thành công!");
+        toast.success("Edit người dùng thành công!");
       })
       .catch((err) => {
         toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");

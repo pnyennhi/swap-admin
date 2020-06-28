@@ -23,7 +23,7 @@ const AddPublisherModal = (props) => {
       values
     )
       .then((res) => {
-        toast.success("Thêm thể loại thành công");
+        toast.success("Thêm nhà xuất bản thành công");
         setIsLoading(false);
         setIsSubmitted(true);
         formikBag.resetForm({ values: "" });

@@ -144,7 +144,7 @@ const OrderTable = (props) => {
                 </span>
               </td>
               <td>
-                {order.status !== "Đã hủy" && order.status !== "Hoàn thành" && (
+                {order.status !== "Đã hủy" && order.status !== "Đã hoàn thành" && (
                   <>
                     <button
                       className="icon-button"
@@ -161,7 +161,8 @@ const OrderTable = (props) => {
                     </button>
                   </>
                 )}
-                {order.status !== "Đã hủy" && order.status !== "Hoàn thành" ? (
+                {order.status !== "Đã hủy" &&
+                order.status !== "Đã hoàn thành" ? (
                   <button
                     className="icon-button"
                     onClick={() => handlesetEditedOrderId(order.id)}

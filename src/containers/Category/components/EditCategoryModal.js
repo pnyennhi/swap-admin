@@ -42,7 +42,7 @@ const EditCategoryModal = (props) => {
         actions.setSubmitting(false);
         setIsLoading(false);
         setIsSubmitted(true);
-        toast.success("Edit sách thành công!");
+        toast.success("Edit thể loại thành công!");
       })
       .catch((err) => {
         toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");

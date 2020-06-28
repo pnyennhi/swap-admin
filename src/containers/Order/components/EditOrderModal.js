@@ -206,7 +206,7 @@ const EditOrderModal = (props) => {
                     )}
 
                   {editedOrder.status !== "Đã hủy" &&
-                    editedOrder.status !== "Hoàn thành" && (
+                    editedOrder.status !== "Đã hoàn thành" && (
                       <button className="btn btn-danger">Hủy</button>
                     )}
                   <button

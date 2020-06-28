@@ -24,16 +24,20 @@ const AddCouponModal = (props) => {
       values
     )
       .then((res) => {
-        toast.success("Thêm thể loại thành công");
+        toast.success("Thêm Mã giảm giá thành công");
         setIsLoading(false);
         setIsSubmitted(true);
         formikBag.resetForm({ values: "" });
       })
       .catch((err) => {
-        toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
+        if (err.response.data.message === "Coupon already exists") {
+          formikBag.setFieldError("couponID", "Mã này đã tồn tại");
+        } else {
+          toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
+          formikBag.resetForm({ values: initialValues });
+        }
         setIsLoading(false);
         setIsSubmitted(true);
-        formikBag.resetForm({ values: initialValues });
       });
   };
 
