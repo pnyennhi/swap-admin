@@ -76,6 +76,7 @@ const SubcriberTable = (props) => {
                   ? "selected tr-body"
                   : "tr-body"
               }
+              key={subcriber.subcriberId}
             >
               <td>
                 <input

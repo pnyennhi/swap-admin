@@ -59,7 +59,7 @@ const ShippingTable = (props) => {
 
         <tbody>
           {shippings.map((shipping) => (
-            <tr className="tr-body">
+            <tr className="tr-body" key={shipping.districtID}>
               <td>{shipping.districtID}</td>
               <td>
                 <a

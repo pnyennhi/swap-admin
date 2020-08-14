@@ -109,6 +109,7 @@ const BookTable = (props) => {
         <tbody>
           {books.map((book) => (
             <tr
+              key={book.bookID}
               className={
                 selectedBooks.indexOf(book.bookID) > -1
                   ? "selected tr-body"

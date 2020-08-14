@@ -125,7 +125,7 @@ const OrderTable = (props) => {
 
         <tbody>
           {orders.map((order, index) => (
-            <tr className="tr-body">
+            <tr className="tr-body" key={order.id}>
               <td>{order.id}</td>
               <td>{order.email}</td>
               <td>{order.address}</td>

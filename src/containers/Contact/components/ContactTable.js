@@ -87,7 +87,7 @@ const ContactTable = (props) => {
 
         <tbody>
           {contacts.map((contact, index) => (
-            <tr className="tr-body">
+            <tr className="tr-body" key={contact.contactID}>
               <td>{contact.contactID}</td>
               <td>{contact.email}</td>
               <td>{contact.message}</td>

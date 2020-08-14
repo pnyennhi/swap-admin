@@ -76,6 +76,7 @@ const PublisherTable = (props) => {
                   ? "selected tr-body"
                   : "tr-body"
               }
+              key={publisher.publisherID}
             >
               <td>
                 <input

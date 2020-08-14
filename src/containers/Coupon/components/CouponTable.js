@@ -66,7 +66,7 @@ const CouponTable = (props) => {
 
         <tbody>
           {coupons.map((coupon) => (
-            <tr className="tr-body">
+            <tr className="tr-body" key={coupon.couponID}>
               <td>
                 <a
                   onClick={() => {

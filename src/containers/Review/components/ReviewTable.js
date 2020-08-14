@@ -91,6 +91,7 @@ const ReviewTable = (props) => {
         <tbody>
           {reviews.map((review) => (
             <tr
+              key={review.reviewId}
               className={
                 selectedReviews.indexOf(review.reviewId) > -1
                   ? "selected tr-body"

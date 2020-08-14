@@ -103,6 +103,7 @@ const UserTable = (props) => {
                   ? "selected tr-body"
                   : "tr-body"
               }
+              key={user.id}
             >
               <td>
                 <input

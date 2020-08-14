@@ -71,6 +71,7 @@ const CategoryTable = (props) => {
         <tbody>
           {categories.map((category) => (
             <tr
+              key={category.categoryID}
               className={
                 selectedCategories.indexOf(category.categoryID) > -1
                   ? "selected tr-body"
