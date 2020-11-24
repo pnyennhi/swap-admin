@@ -12,18 +12,31 @@ import Axios from "../../../Instance";
 import { toast } from "react-toastify";
 
 const EditCategoryModal = (props) => {
-  const { show, categoryId, onClose, onEdit } = props;
+  const { show, categoryId, isSub, onClose, onEdit } = props;
 
   const [editedCategory, setEditedCategory] = useState(null);
+  const [parents, setParents] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     Axios.get(
-      `https://bookstoreprojectdut.azurewebsites.net/api/categories/${categoryId}`
-    ).then((res) => {
-      setEditedCategory(res.data);
+      `http://localhost:3001/${
+        isSub ? "subCategories" : "categories"
+      }/${categoryId}`
+    )
+      .then((res) => {
+        setEditedCategory(
+          !isSub ? res.data : { ...res.data, category: res.data.subCategory }
+        );
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
+      });
+    Axios.get(`http://localhost:3001/categories/all`).then((res) => {
+      setParents(res.data);
     });
   }, []);
 
@@ -32,9 +45,13 @@ const EditCategoryModal = (props) => {
   });
 
   const handleSubmit = (data, actions) => {
+    data.subCategory = data.category;
+
     setIsLoading(true);
     Axios.put(
-      `https://bookstoreprojectdut.azurewebsites.net/api/categories/${categoryId}`,
+      `http://localhost:3001/${
+        isSub ? "subCategories" : "categories"
+      }/${categoryId}`,
       data
     )
       .then((res) => {
@@ -94,8 +111,8 @@ const EditCategoryModal = (props) => {
                 <div className="modal-body">
                   <Field
                     type="text"
-                    name="categoryID"
-                    value={editedCategory.categoryID}
+                    name="id"
+                    value={editedCategory.id}
                     component={TextInput}
                     className="form-control"
                     label="ID"
@@ -112,6 +129,39 @@ const EditCategoryModal = (props) => {
                     }
                     label="Tên"
                   />
+                  <Field
+                    type="text"
+                    name="path"
+                    component={TextInput}
+                    className={
+                      errors.path && touched.path
+                        ? "form-control error"
+                        : "form-control"
+                    }
+                    label="Đường dẫn"
+                  />
+                  <div className="form-group">
+                    <label>
+                      <b>Thể loại cha</b>
+                    </label>
+                    <select
+                      style={{ color: "black" }}
+                      className="form-control mb-3"
+                      name="parentId"
+                      value={values.parentId}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      disabled={isSub ? false : true}
+                    >
+                      <option
+                        value={undefined}
+                        style={{ display: isSub ? "none" : "block" }}
+                      ></option>
+                      {parents.map((parent) => (
+                        <option value={parent.id}>{parent.category}</option>
+                      ))}
+                    </select>
+                  </div>
                   <ErrorFocus />
                 </div>
                 <div className="modal-footer">

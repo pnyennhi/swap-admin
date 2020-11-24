@@ -38,7 +38,8 @@ const SideBar = (props) => {
             </a>
           </NavLink>
           {ROUTES.map((route) =>
-            user?.permissions.indexOf(route.type.toUpperCase()) > -1 ? (
+            // user?.permissions.indexOf(route.type.toUpperCase()) > -1 ? (
+            1 > -1 ? (
               <NavLink to={route.path} className="nav-item" key={route.path}>
                 <a className="nav-link">
                   <i className="link-icon flex">{route.icon}</i>

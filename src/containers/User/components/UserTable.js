@@ -38,11 +38,13 @@ const UserTable = (props) => {
         <colgroup>
           <col span="1" style={{ width: "2%" }} />
           <col span="1" style={{ width: "6%" }} />
-          <col span="1" style={{ width: "20%" }} />
-          <col span="1" style={{ width: "18%" }} />
-          <col span="1" style={{ width: "10%" }} />
           <col span="1" style={{ width: "15%" }} />
-          <col span="1" style={{ width: "5%" }} />
+          <col span="1" style={{ width: "23%" }} />
+          <col span="1" style={{ width: "10%" }} />
+          <col span="1" style={{ width: "8%" }} />
+          <col span="1" style={{ width: "10%" }} />
+          <col span="1" style={{ width: "8%" }} />
+          <col span="1" style={{ width: "8%" }} />
         </colgroup>
         <tr className="tr-header">
           <th>
@@ -64,6 +66,13 @@ const UserTable = (props) => {
           </th>
           <th
             onClick={() => {
+              onSort("username");
+            }}
+          >
+            Username
+          </th>
+          <th
+            onClick={() => {
               onSort("email");
             }}
           >
@@ -71,25 +80,32 @@ const UserTable = (props) => {
           </th>
           <th
             onClick={() => {
-              onSort("name");
+              onSort("phone");
             }}
           >
-            Tên
+            Điện thoại
           </th>
           <th
             onClick={() => {
-              onSort("accountCreateDate");
+              onSort("roleId");
+            }}
+          >
+            Vai trò
+          </th>
+          <th
+            onClick={() => {
+              onSort("createdAt");
             }}
           >
             Ngày đăng kí
           </th>
           <th
             onClick={() => {
-              onSort("status");
+              onSort("isActive");
             }}
             className="text-center"
           >
-            Trạng thái
+            Status
           </th>
 
           <th>Action</th>
@@ -132,20 +148,20 @@ const UserTable = (props) => {
                     setDetailedUserId(user.id);
                   }}
                 >
-                  {user.email}
+                  {user.username}
                 </a>
               </td>
-              <td>{user.name}</td>
-              <td>
-                {new Date(user.accountCreateDate).toLocaleDateString("en-GB")}
-              </td>
+              <td>{user.email}</td>
+              <td>{user.phone}</td>
+              <td>{user.role.role}</td>
+              <td>{new Date(user.createdAt).toLocaleDateString("en-GB")}</td>
               <td className="text-center">
                 <span
                   className={`badge ${
-                    user.status ? "badge-success" : "badge-secondary"
+                    user.isActive ? "badge-success" : "badge-secondary"
                   }`}
                 >
-                  {user.status ? "Available" : "Unavailable"}
+                  {user.isActive ? "Active" : "Inactive"}
                 </span>
               </td>
               <td>

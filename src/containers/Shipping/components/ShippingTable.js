@@ -27,31 +27,45 @@ const ShippingTable = (props) => {
         <tr className="tr-header">
           <th
             onClick={() => {
-              onSort("districtID");
+              onSort("id");
             }}
           >
             ID
           </th>
           <th
             onClick={() => {
-              onSort("district");
+              onSort("name");
             }}
           >
-            Quận, Huyện
+            Phương thức vận chuyển
           </th>
           <th
             onClick={() => {
-              onSort("city");
+              onSort("baseFee");
             }}
           >
-            Tỉnh, Thành phố
+            Phí tiêu chuẩn
           </th>
           <th
             onClick={() => {
-              onSort("fee");
+              onSort("feePerUnit");
             }}
           >
-            Phí ship
+            Phí / kg
+          </th>
+          <th
+            onClick={() => {
+              onSort("minForFree");
+            }}
+          >
+            Miễn phí tối thiểu
+          </th>
+          <th
+            onClick={() => {
+              onSort("");
+            }}
+          >
+            Thời gian
           </th>
 
           <th>Action</th>
@@ -59,23 +73,27 @@ const ShippingTable = (props) => {
 
         <tbody>
           {shippings.map((shipping) => (
-            <tr className="tr-body" key={shipping.districtID}>
-              <td>{shipping.districtID}</td>
+            <tr className="tr-body" key={shipping.id}>
+              <td>{shipping.id}</td>
               <td>
                 <a
                   onClick={() => {
-                    setDetailedDistrictID(shipping.districtID);
+                    setDetailedDistrictID(shipping.id);
                   }}
                 >
-                  {shipping.district}
+                  {shipping.name}
                 </a>
               </td>
-              <td>{shipping.city}</td>
-              <td>{new Number(shipping.fee).toLocaleString("vi-VI")}</td>
+              <td>{shipping.baseFee}</td>
+              <td>{shipping.feePerUnit}</td>
+              <td>{shipping.minForFree}</td>
+              <td>
+                {shipping.minTime} - {shipping.maxTime} ngày
+              </td>
               <td>
                 <button
                   className="icon-button"
-                  onClick={() => handlesetEditedBookId(shipping.districtID)}
+                  onClick={() => handlesetEditedBookId(shipping.id)}
                 >
                   {edit}
                 </button>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { edit, del, ban } from "../../../components/svg/icon";
+import { check, reject } from "../../../components/svg/icon";
 import EditBookModal from "./EditBookModal";
 import BookDetailModal from "./BookDetailModal";
 
@@ -7,7 +7,8 @@ const BookTable = (props) => {
   const {
     books,
     selectedBooks,
-    onDelete,
+    onVerify,
+    onReject,
     onSelect,
     onSelectAll,
     onSort,
@@ -33,7 +34,7 @@ const BookTable = (props) => {
     <div className="table-responsive">
       <table className="table table-striped table-hover dataTable">
         <colgroup>
-          <col span="1" style={{ width: "2%" }} />
+          {/* <col span="1" style={{ width: "2%" }} /> */}
           <col span="1" style={{ width: "6%" }} />
           <col span="1" style={{ width: "27%" }} />
           <col span="1" style={{ width: "13%" }} />
@@ -44,15 +45,15 @@ const BookTable = (props) => {
           <col span="1" style={{ width: "5%" }} />
         </colgroup>
         <tr className="tr-header">
-          <th>
-            {/* <input
+          {/* <th> */}
+          {/* <input
               type="checkbox"
               checked={
                 selectedBooks.length === books.length && books.length > 0
               }
               onChange={(e) => onSelectAll(e)}
             /> */}
-          </th>
+          {/* </th> */}
           <th
             onClick={() => {
               onSort("id");
@@ -116,7 +117,7 @@ const BookTable = (props) => {
                   : "tr-body"
               }
             >
-              <td>
+              {/* <td>
                 <input
                   type="checkbox"
                   onChange={(e) => {
@@ -124,7 +125,7 @@ const BookTable = (props) => {
                   }}
                   checked={selectedBooks.indexOf(book.id) > -1}
                 />
-              </td>
+              </td> */}
               <td>{book.id}</td>
               <td>
                 <a
@@ -149,26 +150,22 @@ const BookTable = (props) => {
                 </span>
               </td>
               <td>
-                {/* {/* <button
-                  className="icon-button"
-                  onClick={() => handlesetEditedBookId(book.id)}
-                >
-                  {edit}
-                </button> */}
-
                 <button
-                  style={{
-                    display:
-                      book.statusId === 1 || book.statusId === 2
-                        ? "block"
-                        : "none",
-                  }}
                   className="icon-button"
                   onClick={() => {
-                    onDelete(book.id);
+                    onVerify(book.id);
                   }}
                 >
-                  {ban}
+                  {check}
+                </button>
+
+                <button
+                  className="icon-button"
+                  onClick={() => {
+                    onReject(book.id);
+                  }}
+                >
+                  {reject}
                 </button>
               </td>
             </tr>

@@ -32,6 +32,14 @@ const PublisherTable = (props) => {
   return (
     <div className="table-responsive">
       <table className="table table-striped table-hover dataTable">
+        <colgroup>
+          <col span="1" style={{ width: "2%" }} />
+          <col span="1" style={{ width: "4%" }} />
+          <col span="1" style={{ width: "20%" }} />
+          <col span="1" style={{ width: "50%" }} />
+          <col span="1" style={{ width: "12%" }} />
+          <col span="1" style={{ width: "8%" }} />
+        </colgroup>
         <tr className="tr-header">
           <th>
             {/* <input
@@ -45,24 +53,31 @@ const PublisherTable = (props) => {
           </th>
           <th
             onClick={() => {
-              onSort("publisherID");
+              onSort("id");
             }}
           >
             ID
           </th>
           <th
             onClick={() => {
-              onSort("publisher");
+              onSort("condition");
             }}
           >
-            Thể loại
+            Tình trạng
           </th>
           <th
             onClick={() => {
-              onSort("bookTitleCount");
+              onSort("description");
             }}
           >
-            Số đầu sách
+            Mô tả
+          </th>
+          <th
+            onClick={() => {
+              onSort("totalProducts");
+            }}
+          >
+            Số sản phẩm
           </th>
 
           <th>Action</th>
@@ -72,38 +87,37 @@ const PublisherTable = (props) => {
           {publishers.map((publisher) => (
             <tr
               className={
-                selectedPublishers.indexOf(publisher.publisherID) > -1
+                selectedPublishers.indexOf(publisher.id) > -1
                   ? "selected tr-body"
                   : "tr-body"
               }
-              key={publisher.publisherID}
+              key={publisher.id}
             >
               <td>
                 <input
                   type="checkbox"
                   onChange={(e) => {
-                    onSelect(e, publisher.publisherID);
+                    onSelect(e, publisher.id);
                   }}
-                  checked={
-                    selectedPublishers.indexOf(publisher.publisherID) > -1
-                  }
+                  checked={selectedPublishers.indexOf(publisher.id) > -1}
                 />
               </td>
-              <td>{publisher.publisherID}</td>
+              <td>{publisher.id}</td>
               <td>
                 <a
                   onClick={() => {
-                    setDetailedPublisherId(publisher.publisherID);
+                    setDetailedPublisherId(publisher.id);
                   }}
                 >
-                  {publisher.publisher}
+                  {publisher.condition}
                 </a>
               </td>
-              <td>{publisher.bookTitleCount}</td>
+              <td>{publisher.description}</td>
+              <td>{publisher.totalProducts}</td>
               <td>
                 <button
                   className="icon-button"
-                  onClick={() => handlesetEditedBookId(publisher.publisherID)}
+                  onClick={() => handlesetEditedBookId(publisher.id)}
                 >
                   {edit}
                 </button>
@@ -111,7 +125,7 @@ const PublisherTable = (props) => {
                 <button
                   className="icon-button"
                   onClick={() => {
-                    onDelete(publisher.publisherID);
+                    onDelete(publisher.id);
                   }}
                 >
                   {del}

@@ -10,6 +10,7 @@ import {
 
 import "./assets/css/style.css";
 import "react-toastify/dist/ReactToastify.css";
+import "antd/dist/antd.css";
 
 import Login from "./containers/Login/Login";
 
@@ -41,7 +42,8 @@ function App() {
   useEffect(() => {
     if (token) {
       Axios.get(
-        `https://bookstoreprojectdut.azurewebsites.net/api/admins`
+        // `https://bookstoreprojectdut.azurewebsites.net/api/admins`
+        `http://localhost:3001/users/profile`
       ).then((res) => {
         // setUser(res.data);
         updateUser(res.data);
@@ -56,6 +58,7 @@ function App() {
         <PrivateRoute component={AdminRoutes} path="/" exact />
         <PrivateRoute component={AdminRoutes} path="/dashboard" exact />
         <PrivateRoute component={AdminRoutes} path="/book" exact />
+        <PrivateRoute component={AdminRoutes} path="/verifyProduct" exact />
         <PrivateRoute component={AdminRoutes} path="/user" exact />
         <PrivateRoute component={AdminRoutes} path="/category" exact />
         <PrivateRoute component={AdminRoutes} path="/publisher" exact />

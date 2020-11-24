@@ -59,18 +59,20 @@ const TopBar = (props) => {
               className="nav-link dropdown-toggle"
               onClick={() => handleToggleDropdown()}
             >
-              <img src={user?.avatarLink} />
+              <img src={user?.avatarImage} />
             </a>
             {show && (
               <Dropdown onClick={handleToggleDropdown}>
                 <div className={show ? "dropdown-menu show" : "dropdown-menu"}>
                   <div className="dropdown-header d-flex flex-column align-items-center">
                     <div className="figure mb-3">
-                      <img src={user?.avatarLink} alt="Avatar" />
+                      <img src={user?.avatarImage} alt="Avatar" />
                     </div>
                     <div className="info text-center">
-                      <p className="name font-weight-bold mb-0">{user?.name}</p>
-                      <p className="email text-muted mb-3">{user?.role}</p>
+                      <p className="name font-weight-bold mb-0">
+                        {user?.username}
+                      </p>
+                      <p className="email text-muted mb-3">{user?.role.role}</p>
                     </div>
                   </div>
                   <div className="dropdown-body">

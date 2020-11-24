@@ -61,11 +61,9 @@ const Book = () => {
         sort: filters.sort,
       });
     setIsLoading(true);
-    Axios.get(
-      `https://bookstoreprojectdut.azurewebsites.net/api/books?${query}`
-    )
+    Axios.get(`http://localhost:3001/products?${query}`)
       .then((res) => {
-        setBooks(res.data.items);
+        setBooks(res.data.data);
         setTotalRows(res.data.total);
         setIsLoading(false);
       })
@@ -92,9 +90,7 @@ const Book = () => {
     //delete book API
     //id is an array
     const deletedAPIs = ids.map((id) => {
-      return Axios.delete(
-        `https://bookstoreprojectdut.azurewebsites.net/api/books/${id}`
-      );
+      return Axios.delete(`http://localhost:3001/products/${id}`);
     });
     Promise.all(deletedAPIs)
       .then((res) => {
@@ -144,12 +140,12 @@ const Book = () => {
 
   const handleSort = (criteria) => {
     if (!filters.criteria)
-      setFilters({ ...filters, criteria: criteria, sort: 1 });
+      setFilters({ ...filters, criteria: criteria, sort: "asc" });
     else if (filters.criteria !== criteria)
-      setFilters({ ...filters, criteria: criteria, sort: 1 });
-    else if (filters.sort === 1)
-      setFilters({ ...filters, criteria: criteria, sort: 0 });
-    else setFilters({ ...filters, criteria: criteria, sort: 1 });
+      setFilters({ ...filters, criteria: criteria, sort: "asc" });
+    else if (filters.sort === "asc")
+      setFilters({ ...filters, criteria: criteria, sort: "desc" });
+    else setFilters({ ...filters, criteria: criteria, sort: "asc" });
   };
 
   return (
@@ -157,7 +153,7 @@ const Book = () => {
       <nav className="page-breadcrumb flex align-items-center justify-content-between">
         <h5>QUẢN LÝ SÁCH</h5>
         <div className="col-sm-12 col-md-2 text-right">
-          <a
+          {/* <a
             className="btn btn-primary mb-md-0 text-white"
             onClick={() => {
               setShowAddModal(true);
@@ -165,7 +161,7 @@ const Book = () => {
           >
             <i className="mr-2">{add}</i>
             Thêm
-          </a>
+          </a> */}
         </div>
       </nav>
 

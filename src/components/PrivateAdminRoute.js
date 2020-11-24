@@ -15,7 +15,8 @@ const PrivateAdminRoute = ({ type, component: Component, ...rest }) => {
       render={(props) =>
         !user ? (
           <img src={loading} className="loading" width="50px" />
-        ) : user.permissions.indexOf(type.toUpperCase()) < 0 ? (
+        ) : // ) : user.permissions.indexOf(type.toUpperCase()) < 0 ? (
+        1 < 0 ? (
           <Redirect to="/dashboard" />
         ) : (
           <Component {...props} />

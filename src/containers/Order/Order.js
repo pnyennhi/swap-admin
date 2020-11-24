@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
+  const [status, setStatus] = useState([]);
 
   const [search, setSearch] = useState(null);
   const [totalRows, setTotalRows] = useState(21);
@@ -54,11 +55,9 @@ const Order = () => {
         sort: filters.sort,
       });
     setIsLoading(true);
-    Axios.get(
-      `https://bookstoreprojectdut.azurewebsites.net/api/orders?${query}`
-    )
+    Axios.get(`http://localhost:3001/orders?${query}`)
       .then((res) => {
-        setOrders(res.data.items);
+        setOrders(res.data.data);
         setTotalRows(res.data.total);
         setIsLoading(false);
       })

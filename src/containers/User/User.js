@@ -59,11 +59,9 @@ const User = () => {
         sort: filters.sort,
       });
     setIsLoading(true);
-    Axios.get(
-      `https://bookstoreprojectdut.azurewebsites.net/api/admins/listuser?${query}`
-    )
+    Axios.get(`http://localhost:3001/users?${query}`)
       .then((res) => {
-        setUsers(res.data.items);
+        setUsers(res.data.data);
         setTotalRows(res.data.total);
         setIsLoading(false);
       })
@@ -90,9 +88,7 @@ const User = () => {
     //delete user API
     //id is an array
     const deletedAPIs = ids.map((id) => {
-      return Axios.delete(
-        `https://bookstoreprojectdut.azurewebsites.net/api/admins/${id}`
-      );
+      return Axios.delete(`http://localhost:3001/users/${id}`);
     });
     Promise.all(deletedAPIs)
       .then((res) => {
@@ -142,12 +138,12 @@ const User = () => {
 
   const handleSort = (criteria) => {
     if (!filters.criteria)
-      setFilters({ ...filters, criteria: criteria, sort: 1 });
+      setFilters({ ...filters, criteria: criteria, sort: "asc" });
     else if (filters.criteria !== criteria)
-      setFilters({ ...filters, criteria: criteria, sort: 1 });
-    else if (filters.sort === 1)
-      setFilters({ ...filters, criteria: criteria, sort: 0 });
-    else setFilters({ ...filters, criteria: criteria, sort: 1 });
+      setFilters({ ...filters, criteria: criteria, sort: "asc" });
+    else if (filters.sort === "asc")
+      setFilters({ ...filters, criteria: criteria, sort: "desc" });
+    else setFilters({ ...filters, criteria: criteria, sort: "desc" });
   };
 
   return (

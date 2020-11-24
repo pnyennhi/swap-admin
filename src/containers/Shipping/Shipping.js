@@ -56,11 +56,9 @@ const Shipping = () => {
         sort: filters.sort,
       });
     setIsLoading(true);
-    Axios.get(
-      `https://bookstoreprojectdut.azurewebsites.net/api/shipping?${query}`
-    )
+    Axios.get(`http://localhost:3001/shipping?${query}`)
       .then((res) => {
-        setShippings(res.data.items);
+        setShippings(res.data.data);
         setTotalRows(res.data.total);
         setIsLoading(false);
       })
@@ -91,7 +89,7 @@ const Shipping = () => {
   return (
     <>
       <nav className="page-breadcrumb flex align-items-center justify-content-between">
-        <h5>QUẢN LÝ MÃ VẬN CHUYỂN</h5>
+        <h5>QUẢN LÝ PHÍ VẬN CHUYỂN</h5>
         {/* <div className="col-sm-12 col-md-2 text-right">
           <a
             className="btn btn-primary mb-md-0 text-white"

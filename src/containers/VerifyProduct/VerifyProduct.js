@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
 
-import CategoryTable from "./components/CategoryTable";
-import CategoryToolbar from "./components/CategoryToolbar";
-import DeleteCategoryModal from "./components/DeleteCategoryModal";
-import AddCategoryModal from "./components/AddCategoryModal";
+import BookTable from "./components/BookTable";
+import BookToolbar from "./components/BookToolbar";
+import { books as fakeBooks } from "../../FakeData";
+import DeleteBookModal from "./components/DeleteBookModal";
+import AddBookModal from "./components/AddBookModal";
 import Pagination from "../../components/Pagination";
-import TreeTable from "./components/TreeCategoryTable";
 
 import { add } from "../../components/svg/icon";
 import loading from "../../assets/images/loading.gif";
 
-import Axios from "../../Instance";
 import queryString from "query-string";
 import { toast } from "react-toastify";
 
-const Category = () => {
-  const [categories, setCategories] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [deletedCategory, setDeletedCategory] = useState(null);
+import Axios from "../../Instance";
+
+const Book = () => {
+  const [books, setBooks] = useState(fakeBooks);
+  const [selectedBooks, setSelectedBooks] = useState([]);
+  const [deletedBook, setDeletedBook] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [search, setSearch] = useState(null);
@@ -33,7 +34,7 @@ const Category = () => {
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    //call API get when filters change (get category list)
+    //call API get when filters change (get book list)
     handleGetBook();
   }, [filters]);
 
@@ -60,25 +61,24 @@ const Category = () => {
         sort: filters.sort,
       });
     setIsLoading(true);
-    Axios.get(`http://localhost:3001/categories?${query}`)
+    Axios.get(`http://localhost:3001/products?statusId=1&${query}`)
       .then((res) => {
-        setCategories(transformData(res.data.data));
+        setBooks(res.data.data);
         setTotalRows(res.data.total);
         setIsLoading(false);
       })
       .catch((err) => {
-        console.log(err);
         setIsLoading(false);
         setHasError(true);
       });
   };
 
   const handleSetDeletedBook = (id) => {
-    setDeletedCategory(id);
+    setDeletedBook(id);
   };
 
   const handleCloseDeleteModal = () => {
-    setDeletedCategory(null);
+    setDeletedBook(null);
     setShowDeleteModal(false);
   };
 
@@ -86,37 +86,35 @@ const Category = () => {
     setShowAddModal(false);
   };
 
-  const handleDeleteCategory = (ids) => {
-    //delete category API
+  const handleDeleteBook = (ids) => {
+    //delete book API
     //id is an array
     const deletedAPIs = ids.map((id) => {
-      return Axios.delete(
-        `https://bookstoreprojectdut.azurewebsites.net/api/categories/${id}`
-      );
+      return Axios.delete(`http://localhost:3001/products/${id}`);
     });
     Promise.all(deletedAPIs)
       .then((res) => {
         toast.success("Delete thanh cong");
-        setSelectedCategories([]);
-        setDeletedCategory(null);
+        setSelectedBooks([]);
+        setDeletedBook(null);
         setShowDeleteModal(false);
         handleGetBook();
       })
       .catch((err) => {
         toast.error("Fail");
-        setSelectedCategories([]);
-        setDeletedCategory(null);
+        setSelectedBooks([]);
+        setDeletedBook(null);
         setShowDeleteModal(false);
       });
 
-    // setDeletedCategory(null);
+    // setDeletedBook(null);
     // setShowDeleteModal(false);
     // handleDeleteBooks(ids);
   };
 
-  const handleSelectOneCategory = (e, id) => {
-    const selectedIndex = selectedCategories.indexOf(id);
-    let newSelectedBooks = [...selectedCategories];
+  const handleSelectOneBook = (e, id) => {
+    const selectedIndex = selectedBooks.indexOf(id);
+    let newSelectedBooks = [...selectedBooks];
     console.log(newSelectedBooks);
 
     if (selectedIndex === -1) {
@@ -124,16 +122,15 @@ const Category = () => {
     } else {
       newSelectedBooks.splice(selectedIndex, 1);
     }
-    setSelectedCategories(newSelectedBooks);
+    setSelectedBooks(newSelectedBooks);
   };
 
   const handleSelectAll = (e) => {
-    if (e.target.checked)
-      setSelectedCategories(categories.map((category) => category.categoryID));
-    else setSelectedCategories([]);
+    if (e.target.checked) setSelectedBooks(books.map((book) => book.bookID));
+    else setSelectedBooks([]);
   };
 
-  const handleSearchCategories = () => {
+  const handleSearchBooks = () => {
     setFilters({ ...filters, keyword: search, page: 1 });
   };
 
@@ -143,20 +140,38 @@ const Category = () => {
 
   const handleSort = (criteria) => {
     if (!filters.criteria)
-      setFilters({ ...filters, criteria: criteria, sort: 1 });
+      setFilters({ ...filters, criteria: criteria, sort: "asc" });
     else if (filters.criteria !== criteria)
-      setFilters({ ...filters, criteria: criteria, sort: 1 });
-    else if (filters.sort === 1)
-      setFilters({ ...filters, criteria: criteria, sort: 0 });
-    else setFilters({ ...filters, criteria: criteria, sort: 1 });
+      setFilters({ ...filters, criteria: criteria, sort: "asc" });
+    else if (filters.sort === "asc")
+      setFilters({ ...filters, criteria: criteria, sort: "desc" });
+    else setFilters({ ...filters, criteria: criteria, sort: "asc" });
+  };
+
+  const handleVerify = (id) => {
+    Axios.put(`http://localhost:3001/products/verify/${id}`)
+      .then((res) => handleGetBook())
+      .catch((err) => {
+        console.log(err);
+        toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
+      });
+  };
+
+  const handleReject = (id) => {
+    Axios.put(`http://localhost:3001/products/reject/${id}`)
+      .then((res) => handleGetBook())
+      .catch((err) => {
+        console.log(err);
+        toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
+      });
   };
 
   return (
     <>
       <nav className="page-breadcrumb flex align-items-center justify-content-between">
-        <h5>QUẢN LÝ THỂ LOẠI</h5>
+        <h5>QUẢN LÝ SÁCH</h5>
         <div className="col-sm-12 col-md-2 text-right">
-          <a
+          {/* <a
             className="btn btn-primary mb-md-0 text-white"
             onClick={() => {
               setShowAddModal(true);
@@ -164,7 +179,7 @@ const Category = () => {
           >
             <i className="mr-2">{add}</i>
             Thêm
-          </a>
+          </a> */}
         </div>
       </nav>
 
@@ -172,9 +187,9 @@ const Category = () => {
         <div className="col-md-12 grid-margin stretch-card">
           <div className="card">
             <div className="card-body">
-              <CategoryToolbar
-                selectedLength={selectedCategories.length}
-                onSearch={handleSearchCategories}
+              <BookToolbar
+                selectedLength={selectedBooks.length}
+                onSearch={handleSearchBooks}
                 onChangeSearch={setSearch}
                 onChangePageSize={(val) => {
                   setFilters({ ...filters, pageSize: val });
@@ -192,48 +207,38 @@ const Category = () => {
                 <p style={{ color: "red" }}>Đã có lỗi xảy ra</p>
               ) : (
                 <>
-                  {/* <CategoryTable
-                    categories={categories}
-                    selectedCategories={selectedCategories}
+                  <BookTable
+                    books={books}
+                    selectedBooks={selectedBooks}
                     onDelete={handleSetDeletedBook}
-                    onSelect={handleSelectOneCategory}
+                    onSelect={handleSelectOneBook}
                     onSelectAll={handleSelectAll}
                     onSort={handleSort}
                     onEdit={handleGetBook}
-                  /> */}
-
-                  <TreeTable
-                    categories={categories}
-                    selectedCategories={selectedCategories}
-                    onDelete={handleSetDeletedBook}
-                    onSelect={handleSelectOneCategory}
-                    onSelectAll={handleSelectAll}
-                    onSort={handleSort}
-                    onEdit={handleGetBook}
+                    onVerify={handleVerify}
+                    onReject={handleReject}
                   />
 
-                  {/* <Pagination
+                  <Pagination
                     totalRows={totalRows}
                     page={filters.page}
                     pageSize={filters.pageSize}
                     onChange={handleChangePage}
-                  /> */}
+                  />
                 </>
               )}
 
-              {(Boolean(deletedCategory) || showDeleteModal) && (
-                <DeleteCategoryModal
-                  show={Boolean(deletedCategory) || showDeleteModal}
-                  categoryIds={
-                    showDeleteModal ? selectedCategories : [deletedCategory]
-                  }
+              {(Boolean(deletedBook) || showDeleteModal) && (
+                <DeleteBookModal
+                  show={Boolean(deletedBook) || showDeleteModal}
+                  bookIds={showDeleteModal ? selectedBooks : [deletedBook]}
                   onClose={handleCloseDeleteModal}
-                  onDelete={handleDeleteCategory}
+                  onDelete={handleDeleteBook}
                 />
               )}
 
               {showAddModal && (
-                <AddCategoryModal
+                <AddBookModal
                   show={showAddModal}
                   onClose={handleCloseAddModal}
                   onAdd={handleGetBook}
@@ -247,17 +252,4 @@ const Category = () => {
   );
 };
 
-const transformData = (categories) => {
-  return categories.map((category) => {
-    return {
-      data: category,
-      children: category.children.map((child) => ({
-        data: { ...child, category: child.subCategory },
-        height: 49,
-      })),
-      height: 49,
-    };
-  });
-};
-
-export default Category;
+export default Book;

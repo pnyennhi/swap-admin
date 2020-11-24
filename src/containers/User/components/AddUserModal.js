@@ -1,12 +1,14 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from "react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import Modal from "../../../components/Modal";
 import ErrorFocus from "../../../components/ErrorFocus";
 import TextInput from "../../../components/TextInput";
-import TextAreaInput from "../../../components/TextAreaInput";
-import NumberInput from "../../../components/NumberInput";
-import DateInput from "../../../components/DateInput";
+// import TextAreaInput from "../../../components/TextAreaInput";
+// import NumberInput from "../../../components/NumberInput";
+// import DateInput from "../../../components/DateInput";
+import { camera } from "../../../components/svg/icon";
 
 import { uploadImage } from "../../../firebase/uploadImage";
 
@@ -27,21 +29,21 @@ const AddUserModal = (props) => {
 
   const loggedUser = useSelector((store) => store.user);
 
-  useEffect(() => {
-    //call API to get list of types, PublisherIDs when mounted
-    Axios.get(
-      `https://bookstoreprojectdut.azurewebsites.net/api/admins/getrole`
-    ).then((res) => {
-      setRoles(res.data.map((role) => role.name));
-    });
-  }, []);
+  // useEffect(() => {
+  //   //call API to get list of types, PublisherIDs when mounted
+  //   Axios.get(
+  //     `https://bookstoreprojectdut.azurewebsites.net/api/admins/getrole`
+  //   ).then((res) => {
+  //     setRoles(res.data.map((role) => role.name));
+  //   });
+  // }, []);
 
   const handleSubmit = (values, formikBag) => {
     setIsLoading(true);
-    if (values.avatarLink.name) {
-      uploadImage(values.avatarLink)
+    if (values.avatarImage.name) {
+      uploadImage(values.avatarImage)
         .then((res) => {
-          values.avatarLink = res;
+          values.avatarImage = res;
           console.log(values);
           handleAddUser(values, formikBag);
         })
@@ -56,13 +58,14 @@ const AddUserModal = (props) => {
   };
 
   const handleAddUser = (data, formikBag) => {
-    data.status = data.status === "true" || data.status === true ? true : false;
+    data.isActive =
+      data.isActive === "true" || data.isActive === true ? true : false;
 
-    let api = `https://bookstoreprojectdut.azurewebsites.net/api/admins/adduser`;
+    let api = `http://localhost:3001/users`;
 
     Axios.post(api, data)
       .then((res) => {
-        console.log(res.status);
+        console.log(res.isActive);
         formikBag.setSubmitting(false);
         formikBag.resetForm({ values: "" });
         setIsLoading(false);
@@ -70,14 +73,14 @@ const AddUserModal = (props) => {
         toast.success("Thêm người dùng thành công!");
       })
       .catch((err) => {
-        if (err.response.data.errors[0].code === "DuplicateUserName") {
-          formikBag.setFieldError(
-            "email",
-            err.response.data.errors[0].description
-          );
-        } else {
-          toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
-        }
+        // if (err.response.data.errors[0].code === "DuplicateUserName") {
+        //   formikBag.setFieldError(
+        //     "email",
+        //     err.response.data.errors[0].description
+        //   );
+        // } else {
+        toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
+        // }
         setIsLoading(false);
         formikBag.setSubmitting(false);
       });
@@ -91,15 +94,15 @@ const AddUserModal = (props) => {
   const initialValues = {
     email: "",
     password: "",
-    name: "",
+    username: "",
     confirmedPassword: "",
-    role: "User",
-    avatarLink: "",
-    status: true,
+    // role: "User",
+    avatarImage: "",
+    isActive: true,
   };
 
   const SignupSchema = Yup.object().shape({
-    name: Yup.string().required("Please fill out this field"),
+    username: Yup.string().required("Please fill out this field"),
     email: Yup.string().required("Please fill out this field"),
     password: Yup.string()
       .min(6, "Password must be more than 6 characters")
@@ -108,7 +111,8 @@ const AddUserModal = (props) => {
       [Yup.ref("newpassword"), null],
       "Passwords must match"
     ),
-    avatarLink: Yup.mixed().required("Please fill out this field"),
+    phone: Yup.string().required("Please fill out this field"),
+    // avatarImage: Yup.mixed().required("Please fill out this field"),
   });
 
   return (
@@ -144,29 +148,77 @@ const AddUserModal = (props) => {
             <Form>
               <div className="modal-body">
                 <div className="row">
+                  <div className="col-sm-12 col-md-12 position-relative">
+                    <img
+                      // src="https://img.thuthuatphanmem.vn/uploads/2018/09/19/anh-bia-facebook-cuc-dep-22_105256956.jpg"
+                      src={
+                        values.coverImage
+                          ? URL.createObjectURL(values.coverImage)
+                          : "https://img.thuthuatphanmem.vn/uploads/2018/09/19/anh-bia-facebook-cuc-dep-22_105256956.jpg"
+                      }
+                      className="cover-image user"
+                    />
+                    <label htmlFor="coverImage" className="label-upload-cover">
+                      {camera} Upload picture
+                    </label>
+                    <input
+                      type="file"
+                      name="coverImage"
+                      id="coverImage"
+                      accept="image/*"
+                      onChange={(event) => {
+                        setFieldValue(
+                          "coverImage",
+                          event.currentTarget.files[0]
+                        );
+                      }}
+                      hidden
+                      className="upload-image-input"
+                    />
+                  </div>
+                  <div className="col-12">
+                    <div className="position-relative avatar-wrapper">
+                      <img
+                        src={
+                          values.avatarImage
+                            ? URL.createObjectURL(values.avatarImage)
+                            : "https://static.toiimg.com/photo/76729750.cms"
+                        }
+                        className="preview-image user"
+                      />{" "}
+                      <label
+                        htmlFor="avatarImage"
+                        className="label-upload-avatar"
+                      >
+                        {camera}
+                      </label>
+                      <input
+                        type="file"
+                        name="avatarImage"
+                        id="avatarImage"
+                        accept="image/*"
+                        onChange={(event) => {
+                          setFieldValue(
+                            "avatarImage",
+                            event.currentTarget.files[0]
+                          );
+                        }}
+                        hidden
+                        className="upload-image-input"
+                      />
+                    </div>
+                  </div>
                   <div className="col-sm-12 col-md-6">
                     <Field
                       type="text"
-                      name="name"
+                      name="username"
                       component={TextInput}
                       className={
-                        errors.name && touched.name
+                        errors.username && touched.username
                           ? "form-control error"
                           : "form-control"
                       }
-                      label="Tên"
-                    />
-
-                    <Field
-                      type="email"
-                      name="email"
-                      component={TextInput}
-                      className={
-                        errors.email && touched.email
-                          ? "form-control error"
-                          : "form-control"
-                      }
-                      label="Email"
+                      label="Username"
                     />
 
                     <Field
@@ -192,7 +244,9 @@ const AddUserModal = (props) => {
                       }
                       label="Nhập lại mật khẩu"
                     />
-                    <div className="form-group">
+                  </div>
+                  <div className="col-sm-12 col-md-6">
+                    {/* <div className="form-group">
                       <label>
                         <b>Vai trò</b>
                       </label>
@@ -203,7 +257,7 @@ const AddUserModal = (props) => {
                         value={values.role}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        disabled={loggedUser.role !== "Admin"}
+                        // disabled={loggedUser.role !== "Admin"}
                       >
                         {roles.map((role) => {
                           return (
@@ -213,7 +267,30 @@ const AddUserModal = (props) => {
                           );
                         })}
                       </select>
-                    </div>
+                    </div> */}
+
+                    <Field
+                      type="email"
+                      name="email"
+                      component={TextInput}
+                      className={
+                        errors.email && touched.email
+                          ? "form-control error"
+                          : "form-control"
+                      }
+                      label="Email"
+                    />
+                    <Field
+                      type="text"
+                      name="phone"
+                      component={TextInput}
+                      className={
+                        errors.phone && touched.phone
+                          ? "form-control error"
+                          : "form-control"
+                      }
+                      label="Số điện thoại"
+                    />
 
                     <div className="form-group">
                       <label>
@@ -222,8 +299,8 @@ const AddUserModal = (props) => {
                       <select
                         style={{ color: "black" }}
                         className="form-control mb-3"
-                        name="status"
-                        value={values.status}
+                        name="isActive"
+                        value={values.isActive}
                         onChange={handleChange}
                         onBlur={handleBlur}
                       >
@@ -231,9 +308,7 @@ const AddUserModal = (props) => {
                         <option value="false">Bị khóa</option>
                       </select>
                     </div>
-                  </div>
-                  <div className="col-sm-12 col-md-6">
-                    <label>
+                    {/* <label>
                       <b>Avatar</b>
                     </label>
                     <div className="flex">
@@ -266,23 +341,23 @@ const AddUserModal = (props) => {
                       <div className="form-group">
                         <input
                           type="file"
-                          name="avatarLink"
+                          name="avatarImage"
                           accept="image/*"
                           onChange={(event) => {
                             setFieldValue(
-                              "avatarLink",
+                              "avatarImage",
                               event.currentTarget.files[0]
                             );
                           }}
                           className={
-                            errors.avatarLink && touched.avatarLink
+                            errors.avatarImage && touched.avatarImage
                               ? "form-control error"
                               : "form-control"
                           }
                         />
-                        {errors.avatarLink && touched.avatarLink ? (
+                        {errors.avatarImage && touched.avatarImage ? (
                           <div className="input-feedback">
-                            {errors.avatarLink}
+                            {errors.avatarImage}
                           </div>
                         ) : null}
                       </div>
@@ -290,37 +365,37 @@ const AddUserModal = (props) => {
                       <div className="form-group">
                         <input
                           type="text"
-                          name="avatarLink"
+                          name="avatarImage"
                           onChange={(event) => {
-                            setFieldValue("avatarLink", event.target.value);
+                            setFieldValue("avatarImage", event.target.value);
                           }}
                           className={
-                            errors.avatarLink && touched.avatarLink
+                            errors.avatarImage && touched.avatarImage
                               ? "form-control error"
                               : "form-control"
                           }
                         />
-                        {errors.avatarLink && touched.avatarLink ? (
+                        {errors.avatarImage && touched.avatarImage ? (
                           <div className="input-feedback">
-                            {errors.avatarLink}
+                            {errors.avatarImage}
                           </div>
                         ) : null}
                       </div>
                     )}
 
-                    {!values.avatarLink ? null : values.avatarLink.name ? (
+                    {!values.avatarImage ? null : values.avatarImage.name ? (
                       <img
-                        src={URL.createObjectURL(values.avatarLink)}
+                        src={URL.createObjectURL(values.avatarImage)}
                         className="preview-image user"
                         style={{ marginBottom: "1rem" }}
                       />
                     ) : (
                       <img
-                        src={values.avatarLink}
+                        src={values.avatarImage}
                         className="preview-image user"
                         style={{ marginBottom: "1rem" }}
                       />
-                    )}
+                    )} */}
                   </div>
                 </div>
 

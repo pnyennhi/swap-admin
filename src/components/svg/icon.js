@@ -237,3 +237,27 @@ export const view = (
     />
   </svg>
 );
+
+export const camera = (
+  <svg style={{ width: "20px", height: "20px" }} viewBox="0 0 24 24">
+    <path
+      fill="#fff"
+      d="M4,4H7L9,2H15L17,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4M12,7A5,5 0 0,0 7,12A5,5 0 0,0 12,17A5,5 0 0,0 17,12A5,5 0 0,0 12,7M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9Z"
+    />
+  </svg>
+);
+
+export const ban = (
+  <svg style={{ width: "20px", height: "20px" }} viewBox="0 0 24 24">
+    <path
+      fill="red"
+      d="M12 2C17.5 2 22 6.5 22 12S17.5 22 12 22 2 17.5 2 12 6.5 2 12 2M12 4C10.1 4 8.4 4.6 7.1 5.7L18.3 16.9C19.3 15.5 20 13.8 20 12C20 7.6 16.4 4 12 4M16.9 18.3L5.7 7.1C4.6 8.4 4 10.1 4 12C4 16.4 7.6 20 12 20C13.9 20 15.6 19.4 16.9 18.3Z"
+    />
+  </svg>
+);
+
+// export const reject = (
+//   <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+//   <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
+// </svg>
+// );

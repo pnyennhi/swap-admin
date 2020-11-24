@@ -19,8 +19,9 @@ import Review from "./containers/Review/Review";
 import Contact from "./containers/Contact/Contact";
 import Coupon from "./containers/Coupon/Coupon";
 import Order from "./containers/Order/Order";
-import Shipping from "./containers/Shipping/Shipping";
+import Shipping from "./containers/Shipping/NewShipping";
 import Subcriber from "./containers/Subcriber/Subcriber";
+import VerifyProduct from "./containers/VerifyProduct/VerifyProduct";
 
 import PrivateAdminRoute from "./components/PrivateAdminRoute";
 
@@ -31,6 +32,11 @@ const AdminRoutes = () => {
         <Switch>
           <Route path="/dashboard" component={Dashboard} />
           <PrivateAdminRoute path="/book" component={Book} type="book" />
+          <PrivateAdminRoute
+            path="/verifyProduct"
+            component={VerifyProduct}
+            type="verifyProduct"
+          />
           <PrivateAdminRoute path="/user" component={User} type="user" />
           <PrivateAdminRoute
             path="/category"

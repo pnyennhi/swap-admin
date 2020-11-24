@@ -43,14 +43,13 @@ const OrderTable = (props) => {
   };
 
   const handleProcessOrder = (id, index) => {
-    let status = STATUSES[STATUSES.indexOf(orders[index].status) + 1];
+    let status = STATUSES.indexOf(orders[index].status) + 1;
 
-    Axios.put(
-      `https://bookstoreprojectdut.azurewebsites.net/api/orders/${id}`,
-      { status: status }
-    ).then((res) => {
+    Axios.put(`http://localhost:3001/orders/${id}`, {
+      statusId: status + 1,
+    }).then((res) => {
       let newOrders = [...orders];
-      newOrders[index].status = status;
+      newOrders[index].status = STATUSES[status];
       onSetOrders(newOrders);
     });
   };
@@ -81,7 +80,7 @@ const OrderTable = (props) => {
               onSort("email");
             }}
           >
-            Email
+            Người đặt
           </th>
 
           <th
@@ -89,14 +88,14 @@ const OrderTable = (props) => {
               onSort("address");
             }}
           >
-            Địa chỉ
+            Người bán
           </th>
           <th
             onClick={() => {
               onSort("phone");
             }}
           >
-            Số điện thoại
+            Phương thức thanh toán
           </th>
           <th
             onClick={() => {
@@ -110,7 +109,7 @@ const OrderTable = (props) => {
               onSort("coupon");
             }}
           >
-            Mã giảm giá
+            Tổng tiền
           </th>
           <th
             onClick={() => {
@@ -127,11 +126,16 @@ const OrderTable = (props) => {
           {orders.map((order, index) => (
             <tr className="tr-body" key={order.id}>
               <td>{order.id}</td>
-              <td>{order.email}</td>
-              <td>{order.address}</td>
-              <td>{order.phone}</td>
-              <td>{new Date(order.date).toLocaleDateString("en-GB")}</td>
-              <td>{order.coupon}</td>
+              <td>{order.user.email}</td>
+              <td>{order.seller.email}</td>
+              <td>
+                {order.paymentMethod === "cod"
+                  ? "Thanh toán khi nhận hàng"
+                  : "Thanh toán qua Paypal"}
+              </td>
+              <td>{new Date(order.createdAt).toLocaleDateString("en-GB")}</td>
+              <td>{order.total}</td>
+
               <td>
                 <span
                   className={`badge ${
@@ -144,24 +148,34 @@ const OrderTable = (props) => {
                 </span>
               </td>
               <td>
-                {order.status !== "Đã hủy" && order.status !== "Đã hoàn thành" && (
-                  <>
-                    <button
-                      className="icon-button"
-                      onClick={() => handleProcessOrder(order.id, index)}
-                    >
-                      {check}
-                    </button>
-                    {"   "}
-                    <button
+                <button
+                  className="icon-button"
+                  onClick={() => handlesetDetailedOrderId(order.id)}
+                >
+                  {view}
+                </button>
+                {"  "}
+                {order.statusId !== 5 &&
+                  order.statusId !== 4 &&
+                  order.statusId !== 1 && (
+                    <>
+                      <button
+                        className="icon-button"
+                        onClick={() => handleProcessOrder(order.id, index)}
+                      >
+                        {check}
+                      </button>
+
+                      {/* <button
                       className="icon-button"
                       onClick={() => handleRejectOrder(order.id, index)}
                     >
                       {reject}
-                    </button>
-                  </>
-                )}
-                {order.status !== "Đã hủy" &&
+                    </button> */}
+                    </>
+                  )}
+
+                {/* {order.status !== "Đã hủy" &&
                 order.status !== "Đã hoàn thành" ? (
                   <button
                     className="icon-button"
@@ -176,7 +190,7 @@ const OrderTable = (props) => {
                   >
                     {view}
                   </button>
-                )}
+                )}  */}
               </td>
             </tr>
           ))}

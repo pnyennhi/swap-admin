@@ -24,16 +24,14 @@ const EditUserModal = (props) => {
   const loggedUser = useSelector((store) => store.user);
 
   useEffect(() => {
-    Axios.get(
-      `https://bookstoreprojectdut.azurewebsites.net/api/admins/${userId}`
-    ).then((res) => {
+    Axios.get(`http://localhost:3001/users/${userId}`).then((res) => {
       setEditedUser(res.data);
     });
-    Axios.get(
-      `https://bookstoreprojectdut.azurewebsites.net/api/admins/getrole`
-    ).then((res) => {
-      setRoles(res.data.map((role) => role.name));
-    });
+    // Axios.get(
+    //   `https://bookstoreprojectdut.azurewebsites.net/api/admins/getrole`
+    // ).then((res) => {
+    //   setRoles(res.data.map((role) => role.name));
+    // });
   }, []);
 
   const SignupSchema = Yup.object().shape({
@@ -106,7 +104,7 @@ const EditUserModal = (props) => {
                     <div className="col-sm-12 col-md-6">
                       <Field
                         type="text"
-                        name="applicationUserId"
+                        name="id"
                         component={TextInput}
                         className="form-control"
                         label="Id"
@@ -114,14 +112,15 @@ const EditUserModal = (props) => {
                       />
                       <Field
                         type="text"
-                        name="name"
+                        name="username"
                         component={TextInput}
                         className={
-                          errors.name && touched.name
+                          errors.username && touched.username
                             ? "form-control error"
                             : "form-control"
                         }
-                        label="Tên"
+                        label="Username"
+                        disabled
                       />
 
                       <Field
@@ -134,6 +133,7 @@ const EditUserModal = (props) => {
                             : "form-control"
                         }
                         label="Email"
+                        disabled
                       />
 
                       <div className="form-group">

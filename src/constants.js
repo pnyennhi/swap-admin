@@ -13,12 +13,12 @@ import {
 
 export const ORDER_STATUS = [
   {
-    status: "Chờ tiếp nhận",
+    status: "Chờ xác nhận",
     color: "badge-info-muted",
     nextStep: "Tiếp nhận",
   },
   {
-    status: "Đã tiếp nhận",
+    status: "Chờ lấy hàng",
     color: "badge-primary",
     nextStep: "Bắt đầu vận chuyển",
   },
@@ -27,33 +27,49 @@ export const ORDER_STATUS = [
     color: "badge-warning",
     nextStep: "Hoàn thành",
   },
-  { status: "Đã hoàn thành", color: "badge-success" },
+  { status: "Đã giao hàng", color: "badge-success" },
   { status: "Đã hủy", color: "badge-danger" },
 ];
 
 export const CONTACT_STATUS = [
   {
     id: 0,
-    status: "Chưa xử lí",
+    status: "Chờ xác nhận",
     color: "badge-info-muted",
     nextStep: "Xử lí",
   },
   {
     id: 1,
-    status: "Đang xử lí",
+    status: "Chờ lấy hàng",
     color: "badge-warning",
     nextStep: "Đã xử lí",
   },
   {
     id: 2,
-    status: "Đã xử lí",
+    status: "Đã giao hàng",
+    color: "badge-success",
+  },
+  {
+    id: 2,
+    status: "Đang giao hàng",
+    color: "badge-success",
+  },
+  {
+    id: 2,
+    status: "Đã hủy",
     color: "badge-success",
   },
 ];
 
 export const ROUTES = [
   { type: "user", path: "/user", title: "Quản lí người dùng", icon: user },
-  { type: "book", path: "/book", title: "Quản lí sách", icon: book },
+  { type: "book", path: "/book", title: "Quản lí sản phẩm", icon: book },
+  {
+    type: "verifyProduct",
+    path: "/verifyProduct",
+    title: "Duyệt sản phẩm",
+    icon: book,
+  },
   {
     type: "category",
     path: "/category",
@@ -63,14 +79,8 @@ export const ROUTES = [
   {
     type: "publisher",
     path: "/publisher",
-    title: "Quản lí nhà xuất bản",
+    title: "Quản lí tình trạng",
     icon: publisher,
-  },
-  {
-    type: "coupon",
-    path: "/coupon",
-    title: "Quản lí mã giảm giá",
-    icon: coupon,
   },
   { type: "order", path: "/order", title: "Quản lí đơn hàng", icon: order },
   {
@@ -80,22 +90,10 @@ export const ROUTES = [
     icon: review,
   },
   {
-    type: "contact",
-    path: "/contact",
-    title: "Quản lí liên hệ",
-    icon: contact,
-  },
-  {
     type: "shipping",
     path: "/shipping",
     title: "Quản lí phí vận chuyển",
     icon: shipping,
-  },
-  {
-    type: "subscriber",
-    path: "/subcriber",
-    title: "Quản lí người theo dõi",
-    icon: subscribe,
   },
 ];
 

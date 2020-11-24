@@ -15,12 +15,21 @@ const AddCategoryModal = (props) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [parents, setParents] = useState([]);
+
+  useEffect(() => {
+    Axios.get(`http://localhost:3001/categories/all`).then((res) => {
+      setParents(res.data);
+    });
+  }, []);
 
   const handleSubmit = (values, formikBag) => {
     setIsLoading(true);
+    const data = { ...values };
+    if (data.parentId) data.subCategory = data.category;
     Axios.post(
-      `https://bookstoreprojectdut.azurewebsites.net/api/categories`,
-      values
+      `http://localhost:3001/${data.parentId ? "subCategories" : "categories"}`,
+      data
     )
       .then((res) => {
         toast.success("Thêm thể loại thành công");
@@ -43,10 +52,13 @@ const AddCategoryModal = (props) => {
 
   const initialValues = {
     category: "",
+    path: "",
+    parentId: "",
   };
 
   const SignupSchema = Yup.object().shape({
     category: Yup.string().required("Please fill out this field"),
+    path: Yup.string().required("Please fill out this field"),
   });
 
   return (
@@ -92,6 +104,35 @@ const AddCategoryModal = (props) => {
                   }
                   label="Tên thể loại"
                 />
+                <Field
+                  type="text"
+                  name="path"
+                  component={TextInput}
+                  className={
+                    errors.path && touched.path
+                      ? "form-control error"
+                      : "form-control"
+                  }
+                  label="Đường dẫn"
+                />
+                <div className="form-group">
+                  <label>
+                    <b>Thể loại cha</b>
+                  </label>
+                  <select
+                    style={{ color: "black" }}
+                    className="form-control mb-3"
+                    name="parentId"
+                    value={values.parentId}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  >
+                    <option value={undefined}></option>
+                    {parents.map((parent) => (
+                      <option value={parent.id}>{parent.category}</option>
+                    ))}
+                  </select>
+                </div>
 
                 <ErrorFocus />
               </div>

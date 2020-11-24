@@ -14,9 +14,7 @@ const BookDetailModal = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    Axios.get(
-      `https://bookstoreprojectdut.azurewebsites.net/api/publishers/${publisherId}`
-    ).then((res) => {
+    Axios.get(`http://localhost:3001/conditions/${publisherId}`).then((res) => {
       setPublisher(res.data);
     });
   }, []);
@@ -24,7 +22,7 @@ const BookDetailModal = (props) => {
   return (
     <Modal show={show}>
       <div className="modal-header">
-        <h5 className="modal-title">Chi tiết nhà xuất bản</h5>
+        <h5 className="modal-title">Chi tiết tình trạng</h5>
         <button
           className="close"
           onClick={() => {
@@ -43,21 +41,28 @@ const BookDetailModal = (props) => {
                 <label>
                   <b>Id</b>
                 </label>
-                <p>{publisher.publisherID}</p>
+                <p>{publisher.id}</p>
               </div>
 
               <div className="form-group">
                 <label>
                   <b>Thể loại</b>
                 </label>
-                <p>{publisher.publisher}</p>
+                <p>{publisher.condition}</p>
               </div>
 
               <div className="form-group">
                 <label>
-                  <b>Số đầu sách</b>
+                  <b>Mô tả</b>
                 </label>
-                <p>{publisher.bookTitleCount}</p>
+                <p>{publisher.description}</p>
+              </div>
+
+              <div className="form-group">
+                <label>
+                  <b>Số sản phẩm</b>
+                </label>
+                <p>{publisher.totalProducts}</p>
               </div>
             </div>
           </div>

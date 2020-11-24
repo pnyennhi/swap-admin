@@ -29,13 +29,15 @@ const Login = (props) => {
       setIsLoading(true);
       axios
         .post(
-          `https://bookstoreprojectdut.azurewebsites.net/api/applicationuser/login`,
+          // `https://bookstoreprojectdut.azurewebsites.net/api/applicationuser/login`,
+          `http://localhost:3001/auth/loginAdmin`,
           { email: email, password: password }
         )
         .then((response) => {
           let token = response.data.token;
+          localStorage.setItem("TOKEN_AUTH", response.data.token);
           axios
-            .get(`https://bookstoreprojectdut.azurewebsites.net/api/admins`, {
+            .get(`http://localhost:3001/users/profile`, {
               headers: {
                 Authorization: "Bearer " + token,
               },
@@ -91,9 +93,9 @@ const Login = (props) => {
                             Email
                           </label>
                           <input
-                            type="email"
+                            type="text"
                             className="form-control"
-                            value={email}
+                            // value={email}
                             placeholder="Email"
                             onChange={(e) => {
                               setEmail(e.target.value.trim());
@@ -111,7 +113,7 @@ const Login = (props) => {
                           <input
                             type="password"
                             className="form-control"
-                            value={password}
+                            // value={password}
                             placeholder="Password"
                             onChange={(e) => {
                               setPassword(e.target.value);

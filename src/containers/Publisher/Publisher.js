@@ -59,11 +59,9 @@ const Publisher = () => {
         sort: filters.sort,
       });
     setIsLoading(true);
-    Axios.get(
-      `https://bookstoreprojectdut.azurewebsites.net/api/publishers?${query}`
-    )
+    Axios.get(`http://localhost:3001/conditions?${query}`)
       .then((res) => {
-        setPublishers(res.data.items);
+        setPublishers(res.data.data);
         setTotalRows(res.data.total);
         setIsLoading(false);
       })
@@ -145,12 +143,12 @@ const Publisher = () => {
 
   const handleSort = (criteria) => {
     if (!filters.criteria)
-      setFilters({ ...filters, criteria: criteria, sort: 1 });
+      setFilters({ ...filters, criteria: criteria, sort: "asc" });
     else if (filters.criteria !== criteria)
-      setFilters({ ...filters, criteria: criteria, sort: 1 });
-    else if (filters.sort === 1)
-      setFilters({ ...filters, criteria: criteria, sort: 0 });
-    else setFilters({ ...filters, criteria: criteria, sort: 1 });
+      setFilters({ ...filters, criteria: criteria, sort: "asc" });
+    else if (filters.sort === "asc")
+      setFilters({ ...filters, criteria: criteria, sort: "desc" });
+    else setFilters({ ...filters, criteria: criteria, sort: "asc" });
   };
 
   return (
