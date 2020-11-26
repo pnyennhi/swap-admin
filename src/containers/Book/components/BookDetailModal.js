@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ImageGallery from "react-image-gallery";
 
 import Modal from "../../../components/Modal";
+import { PRODUCT_STATUS } from "../../../constants";
 
 import loading from "../../../assets/images/loading.gif";
 import "react-image-gallery/styles/css/image-gallery.css";
@@ -15,7 +16,7 @@ const BookDetailModal = (props) => {
   const [book, setBook] = useState(null);
   const [images, setImages] = useState([]);
   const [status, setStatus] = useState([]);
-  const [publishers, setPublishers] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -38,10 +39,8 @@ const BookDetailModal = (props) => {
     // ).then((res) => {
     //   setStatus(res.data);
     // });
-    // Axios.get(
-    //   `https://bookstoreprojectdut.azurewebsites.net/api/publishers/all`
-    // ).then((res) => {
-    //   setPublishers(res.data);
+    // Axios.get(`http://localhost:3001/categories`).then((res) => {
+    //   setCategories(res.data);
     // });
   }, []);
 
@@ -85,14 +84,16 @@ const BookDetailModal = (props) => {
                     </p>
                     <span
                       className={`badge ${
-                        book.isActive ? "badge-success" : "badge-secondary"
+                        PRODUCT_STATUS.find(
+                          (status) => status.status === book.status?.status
+                        )?.color
                       }`}
                     >
                       {book.status?.status}
                     </span>
                   </div>
                   <h4 className="mb-3">
-                    {new Number(book.price).toLocaleString("vi-VI")}
+                    $ {new Number(book.price).toFixed(2)}
                   </h4>
 
                   <table className="detail-table">
@@ -102,14 +103,10 @@ const BookDetailModal = (props) => {
                         <td className="pl-3">{book.owner.email}</td>
                       </tr>
                       <tr>
-                        <td className="font-weight-bold">Thể loại:</td>
+                        <td className="font-weight-bold">Danh mục:</td>
                         <td className="pl-3">
-                          {/* {
-                            categories.find(
-                              (category) =>
-                                category.categoryID === book.categoryID
-                            )?.category
-                          } */}
+                          {book.category.parent.category} /
+                          {book.category.subCategory}
                         </td>
                       </tr>
                       <tr>
@@ -127,12 +124,6 @@ const BookDetailModal = (props) => {
                       <tr>
                         <td className="font-weight-bold">Chất liệu:</td>
                         <td className="pl-3">{book.material}</td>
-                      </tr>
-                      <tr>
-                        <td className="font-weight-bold">Giá:</td>
-                        <td className="pl-3">
-                          {new Number(book.price).toLocaleString("vi-VI")}
-                        </td>
                       </tr>
                       <tr>
                         <td className="font-weight-bold">Số lượng:</td>

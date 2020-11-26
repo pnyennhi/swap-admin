@@ -60,8 +60,8 @@ const OrderTable = (props) => {
         <colgroup>
           <col span="1" style={{ width: "5%" }} />
           <col span="1" style={{ width: "15%" }} />
-          <col span="1" style={{ width: "25%" }} />
-          <col span="1" style={{ width: "12%" }} />
+          <col span="1" style={{ width: "15%" }} />
+          <col span="1" style={{ width: "15%" }} />
           <col span="1" style={{ width: "10%" }} />
           <col span="1" style={{ width: "12%" }} />
           <col span="1" style={{ width: "12%" }} />
@@ -155,25 +155,23 @@ const OrderTable = (props) => {
                   {view}
                 </button>
                 {"  "}
-                {order.statusId !== 5 &&
-                  order.statusId !== 4 &&
-                  order.statusId !== 1 && (
-                    <>
-                      <button
-                        className="icon-button"
-                        onClick={() => handleProcessOrder(order.id, index)}
-                      >
-                        {check}
-                      </button>
+                {![1, 2, 5, 6].includes(order.statusId) && (
+                  <>
+                    <button
+                      className="icon-button"
+                      onClick={() => handleProcessOrder(order.id, index)}
+                    >
+                      {check}
+                    </button>
 
-                      {/* <button
+                    {/* <button
                       className="icon-button"
                       onClick={() => handleRejectOrder(order.id, index)}
                     >
                       {reject}
                     </button> */}
-                    </>
-                  )}
+                  </>
+                )}
 
                 {/* {order.status !== "Đã hủy" &&
                 order.status !== "Đã hoàn thành" ? (

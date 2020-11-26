@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { edit, del, ban } from "../../../components/svg/icon";
 import EditBookModal from "./EditBookModal";
 import BookDetailModal from "./BookDetailModal";
+import { PRODUCT_STATUS } from "../../../constants";
 
 const BookTable = (props) => {
   const {
@@ -142,7 +143,9 @@ const BookTable = (props) => {
               <td className="text-center">
                 <span
                   className={`badge ${
-                    book.isActive ? "badge-success" : "badge-secondary"
+                    PRODUCT_STATUS.find(
+                      (status) => status.status === book.status?.status
+                    )?.color
                   }`}
                 >
                   {book.status?.status}
@@ -158,10 +161,7 @@ const BookTable = (props) => {
 
                 <button
                   style={{
-                    display:
-                      book.statusId === 1 || book.statusId === 2
-                        ? "block"
-                        : "none",
+                    display: book.statusId === 2 ? "block" : "none",
                   }}
                   className="icon-button"
                   onClick={() => {

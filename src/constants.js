@@ -11,7 +11,28 @@ import {
   publisher,
 } from "./components/svg/icon";
 
+export const PRODUCT_STATUS = [
+  {
+    status: "Chờ duyệt",
+    color: "badge-info-muted",
+  },
+  {
+    status: "Đang hoạt động",
+    color: "badge-success",
+  },
+  {
+    status: "Bán hết",
+    color: "badge-warning",
+  },
+  { status: "Bị từ chối", color: "badge-primary" },
+  { status: "Bị khóa", color: "badge-danger" },
+];
+
 export const ORDER_STATUS = [
+  {
+    status: "Chờ thanh toán",
+    color: "badge-secondary",
+  },
   {
     status: "Chờ xác nhận",
     color: "badge-info-muted",
@@ -19,12 +40,12 @@ export const ORDER_STATUS = [
   },
   {
     status: "Chờ lấy hàng",
-    color: "badge-primary",
+    color: "badge-warning",
     nextStep: "Bắt đầu vận chuyển",
   },
   {
     status: "Đang vận chuyển",
-    color: "badge-warning",
+    color: "badge-primary",
     nextStep: "Hoàn thành",
   },
   { status: "Đã giao hàng", color: "badge-success" },
@@ -34,15 +55,23 @@ export const ORDER_STATUS = [
 export const CONTACT_STATUS = [
   {
     id: 0,
-    status: "Chờ xác nhận",
+    status: "Chờ thanh toán",
     color: "badge-info-muted",
-    nextStep: "Xử lí",
+  },
+  {
+    id: 0,
+    status: "Chờ xác nhận",
+    color: "badge-warning",
   },
   {
     id: 1,
     status: "Chờ lấy hàng",
     color: "badge-warning",
-    nextStep: "Đã xử lí",
+  },
+  {
+    id: 2,
+    status: "Đang vận chuyển",
+    color: "badge-primary",
   },
   {
     id: 2,
@@ -51,13 +80,8 @@ export const CONTACT_STATUS = [
   },
   {
     id: 2,
-    status: "Đang giao hàng",
-    color: "badge-success",
-  },
-  {
-    id: 2,
     status: "Đã hủy",
-    color: "badge-success",
+    color: "badge-danger",
   },
 ];
 

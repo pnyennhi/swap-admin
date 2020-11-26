@@ -3,10 +3,9 @@ import React from "react";
 const OrderItem = ({ products }) => {
   return (
     <div>
-      <div className="row align-items-center"></div>
       {products.map((item, index) => {
         return (
-          <div key={index} className="row align-items-center">
+          <div key={index} className="row align-items-center mb-3">
             <div className="col-9">
               <div className="product-name flex align-items-center">
                 <img src={item.product.coverImage ?? null} alt="" />
