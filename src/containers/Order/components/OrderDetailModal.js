@@ -92,9 +92,10 @@ const EditOrderModal = (props) => {
               <div className="flex justify-content-end align-items-center mb-3">
                 <p className="mr-4">Tổng tiền:</p>
                 <h4 className="text-orange font-weight-600">
-                  {order.items.reduce((sum, item) => {
+                  {/* {order.items.reduce((sum, item) => {
                     return (sum += item.price * item.quantity);
-                  }, 0) + order.shippingFee}
+                  }, 0) + order.shippingFee} */}
+                  {order.total}
                 </h4>
               </div>
             </>

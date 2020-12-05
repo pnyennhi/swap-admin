@@ -6,17 +6,17 @@ import React from "react";
 import { DASHBOARD } from "../../../constants";
 
 const DashboardItem = (props) => {
-  const { type, total } = props;
+  const { type, total, title } = props;
 
   const config = DASHBOARD.find((item) => item.type === type);
 
   return (
-    <div className="col-md-4 grid-margin stretch-card">
+    <div className="col-md-3 grid-margin stretch-card">
       <div
         className="card"
         style={{ backgroundImage: config.background, borderRadius: "10px" }}
       >
-        <div className="card-body">
+        <div className="card-body d-flex align-items-center">
           <div className="row">
             <div
               className="align-items-center col-6 col-md-7 flex flex-column justify-content-center"
@@ -25,7 +25,7 @@ const DashboardItem = (props) => {
               <h2 className="mb-2" style={{ fontSize: "1.75rem" }}>
                 {new Number(total).toLocaleString("vi-VI")}
               </h2>
-              <h5>{config.title}</h5>
+              <h5>{title}</h5>
             </div>
             <div className="col-6 col-md-5">
               <div id="apexChart1" className="mt-md-3 mt-xl-0">

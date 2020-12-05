@@ -44,24 +44,24 @@ const ReviewTable = (props) => {
           </th>
           <th
             onClick={() => {
-              onSort("reviewId");
+              onSort("id");
             }}
           >
             ID
           </th>
           <th
             onClick={() => {
-              onSort("nameBook");
+              onSort("user");
             }}
           >
-            Sách
+            Người đánh giá
           </th>
           <th
             onClick={() => {
-              onSort("email");
+              onSort("seller");
             }}
           >
-            Email
+            Người bán
           </th>
           <th
             onClick={() => {
@@ -91,9 +91,9 @@ const ReviewTable = (props) => {
         <tbody>
           {reviews.map((review) => (
             <tr
-              key={review.reviewId}
+              key={review.id}
               className={
-                selectedReviews.indexOf(review.reviewId) > -1
+                selectedReviews.indexOf(review.id) > -1
                   ? "selected tr-body"
                   : "tr-body"
               }
@@ -102,30 +102,30 @@ const ReviewTable = (props) => {
                 <input
                   type="checkbox"
                   onChange={(e) => {
-                    onSelect(e, review.reviewId);
+                    onSelect(e, review.id);
                   }}
-                  checked={selectedReviews.indexOf(review.reviewId) > -1}
+                  checked={selectedReviews.indexOf(review.id) > -1}
                 />
               </td>
-              <td>{review.reviewId}</td>
-              <td>{review.nameBook}</td>
-              <td>{review.email}</td>
-              <td style={{ textAlign: "center" }}>{review.rating}</td>
+              <td>{review.id}</td>
+              <td>{review.user.email}</td>
+              <td>{review.seller.email}</td>
+              <td style={{ textAlign: "center" }}>{review.rate}</td>
               <td>
-                <div className="overflow">{review.comment}</div>
+                <div className="overflow">{review.review}</div>
                 <a
                   style={{ color: "blue", fontSize: "0.875em" }}
-                  onClick={() => setDetailedReviewId(review.reviewId)}
+                  onClick={() => setDetailedReviewId(review.id)}
                 >
                   Xem chi tiết
                 </a>
               </td>
-              <td>{new Date(review.date).toLocaleDateString("en-GB")}</td>
+              <td>{new Date(review.createdAt).toLocaleDateString("en-GB")}</td>
               <td style={{ textAlign: "center" }}>
                 <button
                   className="icon-button"
                   onClick={() => {
-                    onDelete(review.reviewId);
+                    onDelete(review.id);
                   }}
                 >
                   {del}

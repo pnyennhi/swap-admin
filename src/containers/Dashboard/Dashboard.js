@@ -1,90 +1,39 @@
 import React, { useState, useRef, useEffect } from "react";
 import DashboardItem from "./components/DashboardItem";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { DatePicker } from "antd";
 
-import { calendar } from "../../components/svg/icon";
 import loading from "../../assets/images/loading.gif";
 
 import Axios from "../../Instance";
+
+const { RangePicker } = DatePicker;
 
 const Dashboard = () => {
   const [date, setDate] = useState({ from: null, to: new Date() });
 
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [data, setData] = useState([
-    { type: "order", count: null },
-    { type: "completed", count: null },
-    { type: "total", count: null },
-    { type: "user", count: null },
-    { type: "subscriber", count: null },
-  ]);
-  const calendarIcon = useRef();
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    (async () => {
-      if (date.from && date.to) {
-        const formatedDate = {
-          from: date.from.toLocaleDateString("en-GB"),
-          to: date.to.toLocaleDateString("en-GB"),
-        };
-        const query = `from=${formatedDate.from}&to=${formatedDate.to}`;
-        getDataFromApi(
-          `https://bookstoreprojectdut.azurewebsites.net/api/applicationuser/statistic/all?${query}`
-        );
-        getDataFromApi(
-          `https://bookstoreprojectdut.azurewebsites.net/api/subcribers/statistic/all?${query}`
-        );
-        getDataFromApi(
-          `https://bookstoreprojectdut.azurewebsites.net/api/orders/statistic/all?${query}`
-        );
-        getDataFromApi(
-          `https://bookstoreprojectdut.azurewebsites.net/api/orders/statistic/completed?${query}`
-        );
-        getDataFromApi(
-          `https://bookstoreprojectdut.azurewebsites.net/api/orders/statistic/total?${query}`
-        );
-      }
-    })();
-  }, [date]);
-
-  useEffect(() => {
-    const data = [];
-
-    getDataFromApi(
-      `https://bookstoreprojectdut.azurewebsites.net/api/applicationuser/statistic/all`
-    );
-    getDataFromApi(
-      `https://bookstoreprojectdut.azurewebsites.net/api/subcribers/statistic/all`
-    );
-    getDataFromApi(
-      `https://bookstoreprojectdut.azurewebsites.net/api/orders/statistic/all`
-    );
-    getDataFromApi(
-      `https://bookstoreprojectdut.azurewebsites.net/api/orders/statistic/completed`
-    );
-    getDataFromApi(
-      `https://bookstoreprojectdut.azurewebsites.net/api/orders/statistic/total`
-    );
-  }, []);
-
-  const getDataFromApi = (api) => {
-    setIsLoading(true);
-    Axios.get(api)
+    Axios.get("http://localhost:3001/dashboard")
       .then((res) => {
-        const resData = res.data;
-        const key = Object.keys(resData)[0];
-        const type = key.substring(0, key.indexOf("Count"));
-        const types = data.map((item) => item.type);
-        const newData = [...data];
-        newData[types.indexOf(type)].count = resData[key];
-        setData(newData);
-        setIsLoading(false);
+        setData(res.data);
       })
       .catch((err) => {
-        setHasError(true);
-        setIsLoading(false);
+        setHasError("Đã có lỗi xảy ra");
+      });
+  }, []);
+
+  const handleChangeCalendar = (moment, stringDate) => {
+    Axios.get(
+      `http://localhost:3001/dashboard?fromDate=${stringDate[0]}&toDate=${stringDate[1]}`
+    )
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => {
+        setHasError("Đã có lỗi xảy ra");
       });
   };
 
@@ -93,46 +42,7 @@ const Dashboard = () => {
       <nav className="page-breadcrumb flex justify-content-between">
         <h5>DASHBOARD</h5>
         <div className="flex jusify-content-end">
-          <div className="input-group date datepicker dashboard-date mr-2 mb-2 mb-md-0  d-xl-flex">
-            <span
-              className="input-group-addon bg-transparent"
-              onClick={() => {
-                calendarIcon.current.setOpen(true);
-              }}
-            >
-              {calendar}
-            </span>
-            <DatePicker
-              className="form-control"
-              dateFormat="dd/MM/yyyy"
-              popperPlacement="top-left"
-              selected={date.from}
-              onChange={(selectedDate) =>
-                setDate({ ...date, from: selectedDate })
-              }
-              ref={calendarIcon}
-            />
-          </div>
-          <div className="input-group date datepicker dashboard-date mr-2 mb-2 mb-md-0  d-xl-flex">
-            <span
-              className="input-group-addon bg-transparent"
-              onClick={() => {
-                calendarIcon.current.setOpen(true);
-              }}
-            >
-              {calendar}
-            </span>
-            <DatePicker
-              className="form-control"
-              dateFormat="dd/MM/yyyy"
-              popperPlacement="top-left"
-              selected={date.to}
-              onChange={(selectedDate) =>
-                setDate({ ...date, to: selectedDate })
-              }
-              ref={calendarIcon}
-            />
-          </div>
+          <RangePicker onChange={handleChangeCalendar} />
         </div>
       </nav>
 
@@ -146,8 +56,9 @@ const Dashboard = () => {
             <div className="row flex-grow justify-content-center">
               {data.map((item) => (
                 <DashboardItem
-                  key={item.title}
-                  type={item.type}
+                  key={item.key}
+                  title={item.title}
+                  type={item.key}
                   total={item.count}
                 />
               ))}

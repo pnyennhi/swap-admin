@@ -56,11 +56,9 @@ const Review = () => {
         sort: filters.sort,
       });
     setIsLoading(true);
-    Axios.get(
-      `https://bookstoreprojectdut.azurewebsites.net/api/reviews?${query}`
-    )
+    Axios.get(`http://localhost:3001/reviews?${query}`)
       .then((res) => {
-        setReviews(res.data.items);
+        setReviews(res.data.data);
         setTotalRows(res.data.total);
         setIsLoading(false);
       })

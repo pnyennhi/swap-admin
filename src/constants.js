@@ -129,7 +129,7 @@ export const DASHBOARD = [
       "linear-gradient(to right, rgb(103, 115, 255), rgb(84, 206, 239))",
   },
   {
-    type: "subscriber",
+    type: "product",
     title: "Total Subscribers",
     background: "linear-gradient(to right, orange, rgb(255, 204, 44))",
   },
@@ -140,7 +140,7 @@ export const DASHBOARD = [
       "linear-gradient(to right, rgb(135, 60, 154), rgb(222, 164, 207))",
   },
   {
-    type: "completed",
+    type: "completedOrder",
     title: "Completed Orders",
     background:
       "linear-gradient(to right, rgb(59, 193, 42), rgb(64, 228, 107))",
