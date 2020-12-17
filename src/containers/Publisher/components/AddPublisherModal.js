@@ -18,12 +18,9 @@ const AddPublisherModal = (props) => {
 
   const handleSubmit = (values, formikBag) => {
     setIsLoading(true);
-    Axios.post(
-      `https://bookstoreprojectdut.azurewebsites.net/api/publishers`,
-      values
-    )
+    Axios.post(`http://localhost:3001/conditions`, values)
       .then((res) => {
-        toast.success("Thêm nhà xuất bản thành công");
+        toast.success("Thêm tình trạng thành công");
         setIsLoading(false);
         setIsSubmitted(true);
         formikBag.resetForm({ values: "" });
@@ -42,18 +39,20 @@ const AddPublisherModal = (props) => {
   };
 
   const initialValues = {
-    publisher: "",
+    condition: "",
+    description: "",
   };
 
   const SignupSchema = Yup.object().shape({
-    publisher: Yup.string().required("Please fill out this field"),
+    condition: Yup.string().required("Please fill out this field"),
+    description: Yup.string().required("Please fill out this field"),
   });
 
   return (
     <Modal show={show}>
       <div className="modal-header">
         <h5 className="modal-title" id="exampleModalLabel">
-          Thêm nhà xuất bản
+          Thêm tình trạng
         </h5>
         <button className="close" onClick={handleClose}>
           <span>×</span>
@@ -83,14 +82,26 @@ const AddPublisherModal = (props) => {
               <div className="modal-body">
                 <Field
                   type="text"
-                  name="publisher"
+                  name="condition"
                   component={TextInput}
                   className={
-                    errors.publisher && touched.publisher
+                    errors.condition && touched.condition
                       ? "form-control error"
                       : "form-control"
                   }
-                  label="Tên thể loại"
+                  label="Tình trạng"
+                />
+
+                <Field
+                  type="text"
+                  name="description"
+                  component={TextInput}
+                  className={
+                    errors.description && touched.description
+                      ? "form-control error"
+                      : "form-control"
+                  }
+                  label="Mô tả"
                 />
 
                 <ErrorFocus />

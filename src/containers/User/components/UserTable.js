@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { edit, del, user } from "../../../components/svg/icon";
+import { edit, unlock, ban } from "../../../components/svg/icon";
 import EditUserModal from "./EditUserModal";
 import UserDetailModal from "./UserDetailModal";
 
@@ -9,7 +9,7 @@ const UserTable = (props) => {
     selectedUsers,
     onDelete,
     onSelect,
-    onSelectAll,
+    onUnlock,
     onSort,
     onEdit,
   } = props;
@@ -172,14 +172,25 @@ const UserTable = (props) => {
                   {edit}
                 </button>
                 {"  "}
-                <button
-                  className="icon-button"
-                  onClick={() => {
-                    onDelete(user.id);
-                  }}
-                >
-                  {del}
-                </button>
+                {user.isActive ? (
+                  <button
+                    className="icon-button"
+                    onClick={() => {
+                      onDelete(user.id);
+                    }}
+                  >
+                    {ban}
+                  </button>
+                ) : (
+                  <button
+                    className="icon-button"
+                    onClick={() => {
+                      onUnlock(user.id);
+                    }}
+                  >
+                    {unlock}
+                  </button>
+                )}
               </td>
             </tr>
           ))}
@@ -187,7 +198,7 @@ const UserTable = (props) => {
       </table>
 
       {Boolean(editedUserId) && (
-        <EditUserModal
+        <UserDetailModal
           show={Boolean(editedUserId)}
           userId={editedUserId}
           onClose={handleCloseEditModal}

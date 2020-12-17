@@ -122,14 +122,14 @@ const PublisherTable = (props) => {
                   {edit}
                 </button>
                 {"  "}
-                <button
+                {/* <button
                   className="icon-button"
                   onClick={() => {
                     onDelete(publisher.id);
                   }}
                 >
                   {del}
-                </button>
+                </button> */}
               </td>
             </tr>
           ))}

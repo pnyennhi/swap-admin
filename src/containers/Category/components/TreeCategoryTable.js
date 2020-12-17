@@ -82,14 +82,14 @@ export default (props) => {
           {edit}
         </button>
 
-        <button
+        {/* <button
           className="icon-button"
           onClick={() => {
             props.onDelete(row.data.id);
           }}
         >
           {del}
-        </button>
+        </button> */}
       </>
     );
   };

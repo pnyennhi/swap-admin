@@ -107,12 +107,12 @@ export const ROUTES = [
     icon: publisher,
   },
   { type: "order", path: "/order", title: "Quản lí đơn hàng", icon: order },
-  {
-    type: "review",
-    path: "/review",
-    title: "Quản lí đánh giá",
-    icon: review,
-  },
+  // {
+  //   type: "review",
+  //   path: "/review",
+  //   title: "Quản lí đánh giá",
+  //   icon: review,
+  // },
   {
     type: "shipping",
     path: "/shipping",

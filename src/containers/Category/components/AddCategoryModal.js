@@ -52,13 +52,13 @@ const AddCategoryModal = (props) => {
 
   const initialValues = {
     category: "",
-    path: "",
+    // path: "",
     parentId: "",
   };
 
   const SignupSchema = Yup.object().shape({
     category: Yup.string().required("Please fill out this field"),
-    path: Yup.string().required("Please fill out this field"),
+    // path: Yup.string().required("Please fill out this field"),
   });
 
   return (
@@ -104,7 +104,7 @@ const AddCategoryModal = (props) => {
                   }
                   label="Tên thể loại"
                 />
-                <Field
+                {/* <Field
                   type="text"
                   name="path"
                   component={TextInput}
@@ -114,7 +114,7 @@ const AddCategoryModal = (props) => {
                       : "form-control"
                   }
                   label="Đường dẫn"
-                />
+                /> */}
                 <div className="form-group">
                   <label>
                     <b>Thể loại cha</b>

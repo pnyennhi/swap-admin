@@ -129,7 +129,7 @@ const EditCategoryModal = (props) => {
                     }
                     label="Tên"
                   />
-                  <Field
+                  {/* <Field
                     type="text"
                     name="path"
                     component={TextInput}
@@ -139,7 +139,7 @@ const EditCategoryModal = (props) => {
                         : "form-control"
                     }
                     label="Đường dẫn"
-                  />
+                  /> */}
                   <div className="form-group">
                     <label>
                       <b>Thể loại cha</b>

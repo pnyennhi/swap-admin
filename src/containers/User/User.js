@@ -110,6 +110,29 @@ const User = () => {
     // handleDeleteUsers(ids);
   };
 
+  const handleUnlockUser = (id) => {
+    //delete user API
+    //id is an array
+    Axios.put(`http://localhost:3001/users/unlock/${id}`)
+      .then((res) => {
+        toast.success("Kích hoạt người dùng thành công");
+        setSelectedUsers([]);
+        setDeletedUser(null);
+        setShowDeleteModal(false);
+        handleGetUser();
+      })
+      .catch((err) => {
+        toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau");
+        setSelectedUsers([]);
+        setDeletedUser(null);
+        setShowDeleteModal(false);
+      });
+
+    // setDeletedUser(null);
+    // setShowDeleteModal(false);
+    // handleDeleteUsers(ids);
+  };
+
   const handleSelectOneUser = (e, id) => {
     const selectedIndex = selectedUsers.indexOf(id);
     let newSelectedUsers = [...selectedUsers];
@@ -195,6 +218,7 @@ const User = () => {
                     onSelectAll={handleSelectAll}
                     onSort={handleSort}
                     onEdit={handleGetUser}
+                    onUnlock={handleUnlockUser}
                   />
 
                   <Pagination

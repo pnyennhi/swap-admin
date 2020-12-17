@@ -55912,3 +55912,8 @@ table.no-border td {
   color: #666;
   font-size: 12px;
 }
+
+.col-20 {
+  width: 20%;
+  padding: 0 15px;
+}
