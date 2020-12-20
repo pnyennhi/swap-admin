@@ -30,26 +30,31 @@ export const PRODUCT_STATUS = [
 
 export const ORDER_STATUS = [
   {
+    id: 1,
     status: "Chờ thanh toán",
     color: "badge-secondary",
   },
   {
+    id: 2,
     status: "Chờ xác nhận",
     color: "badge-info-muted",
     nextStep: "Tiếp nhận",
   },
   {
+    id: 3,
     status: "Chờ lấy hàng",
     color: "badge-warning",
     nextStep: "Bắt đầu vận chuyển",
   },
   {
+    id: 4,
     status: "Đang vận chuyển",
     color: "badge-primary",
     nextStep: "Hoàn thành",
   },
-  { status: "Đã giao hàng", color: "badge-success" },
-  { status: "Đã hủy", color: "badge-danger" },
+  { id: 5, status: "Đã giao hàng", color: "badge-success" },
+  { id: 6, status: "Hoàn thành", color: "badge-success" },
+  { id: 7, status: "Đã hủy", color: "badge-danger" },
 ];
 
 export const CONTACT_STATUS = [

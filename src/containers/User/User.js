@@ -59,7 +59,7 @@ const User = () => {
         sort: filters.sort,
       });
     setIsLoading(true);
-    Axios.get(`http://localhost:3001/users?${query}`)
+    Axios.get(`http://localhost:3001/users?isAdmin=true&${query}`)
       .then((res) => {
         setUsers(res.data.data);
         setTotalRows(res.data.total);
